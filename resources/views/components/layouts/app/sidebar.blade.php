@@ -20,6 +20,9 @@
                 <flux:navlist.item icon="presentation-chart-line" :href="route('projects.index')"
                     :current="request()->routeIs('projects.index')" wire:navigate>Progetti
                 </flux:navlist.item>
+                <flux:navlist.item icon="presentation-chart-line" :href="route('approved-projects.index')"
+                    :current="request()->routeIs('approved-projects.index')" wire:navigate>Progetti Approvati
+                </flux:navlist.item>
                 <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')"
                     wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
             </flux:navlist.group>

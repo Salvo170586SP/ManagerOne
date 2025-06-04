@@ -4,6 +4,7 @@ use App\Livewire\Clients\CreateClients;
 use App\Livewire\Clients\EditClients;
 use App\Livewire\Clients\IndexClients;
 use App\Livewire\Clients\ShowClients;
+use App\Livewire\Projects\ApprovedProjects;
 use App\Livewire\Projects\CreateProject;
 use App\Livewire\Projects\EditProjects;
 use App\Livewire\Projects\IndexProjects;
@@ -29,7 +30,8 @@ Route::middleware(['auth', 'role:super_admin'])->group(function () {
     Route::get('/projects/create', CreateProject::class)->name('projects.create');
     Route::get('/projects/{project}', ShowProjects::class)->name('projects.show');
     Route::get('/projects/{project}/edit', EditProjects::class)->name('projects.edit');
-
+    
+    Route::get('/approved-projects', ApprovedProjects::class)->name('approved-projects.index');
 
     Route::redirect('settings', 'settings/profile');
     Volt::route('settings/profile', 'settings.profile')->name('settings.profile');
