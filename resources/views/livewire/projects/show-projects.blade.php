@@ -1,6 +1,6 @@
-<div>
+<div class="-mt-2">
     <h2 class="text-xl font-bold mb-5">Dettagli Progetto</h2>
-    <div class="flex mx-auto text-black h-[calc(100vh-7rem)]">
+    <div class="flex mx-auto text-black h-[calc(100vh-13rem)]">
         <div class="w-[450px] h-auto bg-white p-5 me-5 rounded">
             <div class="font-bold text-sm text-center uppercase my-5">
                 {{$project->name}}

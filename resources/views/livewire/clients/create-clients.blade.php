@@ -1,12 +1,11 @@
-<div>
+<div class="-mt-2">
     <h2 class="text-xl font-bold mb-5">Aggiungi Cliente</h2>
-    <div class="bg-white rounded h-[calc(100vh-7rem)] overflow-y-auto p-6">
+    <div class="bg-white rounded h-[calc(100vh-13rem)] overflow-y-auto p-6">
 
         <div class="flex justify-end items-center">
             <x-button icon="arrow-left" black label="Torna ai Clienti" class="font-bold w-[200px] h-[32px]"
                 wire:navigate href="/clients" />
         </div>
-
 
         <form wire:submit.prevent="submit" class="border-t my-4">
             <div x-data="{ imageUrl: '' }" @form-reset.window="imageUrl = ''"

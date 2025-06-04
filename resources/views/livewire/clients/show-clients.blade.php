@@ -1,6 +1,6 @@
-<div>
+<div class="-mt-2">
     <h2 class="text-xl font-bold mb-5">Dettagli Cliente</h2>
-    <div class="flex mx-auto text-black h-[calc(100vh-7rem)]">
+    <div class="flex mx-auto text-black h-[calc(100vh-13rem)]">
         <div class="w-[350px] h-auto bg-white p-5 me-5 rounded">
             <div class="flex items-center justify-center">
                 <figure class="w-[200px] h-[200px]">

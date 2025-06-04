@@ -1,4 +1,4 @@
-<div>
+<div class="-mt-2">
     <div class="flex justify-between items-center">
         <h2 class="text-xl font-bold mb-5">Anagrafica Clienti</h2>
         @if (session('message'))
@@ -8,7 +8,7 @@
         @endif
     </div>
 
-    <div class="bg-white rounded h-[calc(100vh-7rem)] overflow-y-auto p-6">
+    <div class="bg-white rounded h-[calc(100vh-13rem)] overflow-y-auto p-6">
 
         <div class="flex justify-between items-center">
 

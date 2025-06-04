@@ -1,6 +1,6 @@
-<div>
+<div class="-mt-2">
     <h2 class="text-xl font-bold mb-5">Aggiungi Progetto</h2>
-    <div class="bg-white rounded h-[calc(100vh-7rem)] overflow-y-auto p-6">
+    <div class="bg-white rounded h-[calc(100vh-13rem)] overflow-y-auto p-6">
 
         <div class="flex justify-end items-center">
             <x-button icon="arrow-left" black label="Torna ai Progetti" class="font-bold w-[200px] h-[32px]"
