@@ -115,7 +115,7 @@
                         <td class="px-6 py-4 whitespace-nowrap text-sm">
                             <div class="flex justify-center">
                                 <x-button flat black icon="eye" wire:navigate href="/projects/{{$project->id}}" />
-                                <x-button flat gray icon="pencil" wire:navigate
+                                <x-button flat blue icon="pencil" wire:navigate
                                     href="/projects/{{$project->id}}/edit" />
                                 <x-button flat red icon="trash"
                                     x-on:click="$openModal('simpleModal-{{$project->id}}')" />

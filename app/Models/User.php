@@ -72,6 +72,11 @@ class User extends Authenticatable
         return $this->hasMany(Project::class, 'client_id');
     }
 
+    public function invoices()
+    {
+        return $this->hasMany(Invoce::class , 'client_id');
+    }
+
 
     public function fullName()
     {
