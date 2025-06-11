@@ -4,6 +4,10 @@ use App\Livewire\Clients\CreateClients;
 use App\Livewire\Clients\EditClients;
 use App\Livewire\Clients\IndexClients;
 use App\Livewire\Clients\ShowClients;
+use App\Livewire\Developers\CreateDevelopers;
+use App\Livewire\Developers\EditDevelopers;
+use App\Livewire\Developers\IndexDevelopers;
+use App\Livewire\Developers\ShowDevelopers;
 use App\Livewire\Invoices\EditInvoices;
 use App\Livewire\Invoices\IndexInvoices;
 use App\Livewire\Invoices\ShowInvoices;
@@ -12,6 +16,9 @@ use App\Livewire\Projects\CreateProject;
 use App\Livewire\Projects\EditProjects;
 use App\Livewire\Projects\IndexProjects;
 use App\Livewire\Projects\ShowProjects;
+use App\Livewire\Teams\CreateTeam;
+use App\Livewire\Teams\EditTeam;
+use App\Livewire\Teams\IndexTeams;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
@@ -35,10 +42,19 @@ Route::middleware(['auth', 'role:super_admin'])->group(function () {
     Route::get('/projects/{project}/edit', EditProjects::class)->name('projects.edit');
     
     Route::get('/approved-projects', ApprovedProjects::class)->name('approved-projects.index');
-
+    
     Route::get('/invoices', IndexInvoices::class)->name('invoices.index');
     Route::get('/invoices/{invoice}', ShowInvoices::class)->name('invoices.show');
     Route::get('/invoices/{invoice}/edit', EditInvoices::class)->name('invoices.edit');
+    
+    Route::get('/developers', IndexDevelopers::class)->name('developers.index');
+    Route::get('/developers/create', CreateDevelopers::class)->name('developers.create');
+    Route::get('/developers/{developer}', ShowDevelopers::class)->name('developers.show');
+    Route::get('/developers/{developer}/edit', EditDevelopers::class)->name('developers.edit');
+
+    Route::get('/teams', IndexTeams::class)->name('teams.index');
+    Route::get('/teams/create', CreateTeam::class)->name('teams.create');
+    Route::get('/teams/{team}/edit', EditTeam::class)->name('teams.edit');
 
     Route::redirect('settings', 'settings/profile');
     Volt::route('settings/profile', 'settings.profile')->name('settings.profile');

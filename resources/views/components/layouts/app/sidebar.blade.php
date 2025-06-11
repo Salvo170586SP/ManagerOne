@@ -26,6 +26,13 @@
                 <flux:navlist.item icon="document-currency-euro" :href="route('invoices.index')"
                     :current="request()->routeIs('invoices.index')" wire:navigate>Fatture
                 </flux:navlist.item>
+                <flux:spacer />
+                <flux:navlist.item icon="identification" :href="route('developers.index')"
+                    :current="request()->routeIs('developers.index')" wire:navigate>Developers
+                </flux:navlist.item>
+                <flux:navlist.item icon="identification" :href="route('teams.index')"
+                    :current="request()->routeIs('teams.index')" wire:navigate>Gestione Teams
+                </flux:navlist.item>
                 <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')"
                     wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
             </flux:navlist.group>

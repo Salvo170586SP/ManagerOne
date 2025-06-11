@@ -27,6 +27,9 @@ class User extends Authenticatable
         'IdClient',
         'img_url',
         'phone',
+        'category',
+        'level',
+        'workplace',
         'city',
         'type',
         'email',
@@ -67,6 +70,7 @@ class User extends Authenticatable
             ->implode('');
     }
 
+    //Relazioni
     public function projects()
     {
         return $this->hasMany(Project::class, 'client_id');
@@ -74,8 +78,16 @@ class User extends Authenticatable
 
     public function invoices()
     {
-        return $this->hasMany(Invoce::class , 'client_id');
+        return $this->hasMany(Invoce::class, 'client_id');
     }
+
+    public function teams()
+    {
+        return $this->belongsToMany(Team::class, 'team_user', 'developer_id', 'team_id');
+    }
+    //
+
+
 
 
     public function fullName()
