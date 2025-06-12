@@ -1,6 +1,6 @@
 <div class="-mt-2">
     <div class="flex justify-between items-center">
-        <h2 class="text-xl font-bold mb-5">Progetti Approvati</h2>
+        <h2 class="text-xl font-bold mb-5">Progetti Consegnati</h2>
         @if (session('message'))
             <div class="bg-gray-200 border dark:bg-[#474747] dark:border-0 mx-8 rounded relative mb-4">
                 <span class="block p-5">{{ session('message') }}</span>
@@ -89,9 +89,7 @@
                                 <td class="px-6 py-4 text-center whitespace-nowrap">id</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $project->name }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <x-select shadow placeholder="Seleziona un Team"
-                                        wire:model.live="teamSelections.project-{{ $project->id }}" :options="$teams"
-                                        option-label="name" option-value="id" />
+                                   {{ $project->team->name }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $project->client->fullName() }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $project->preventive }} €</td>
@@ -117,7 +115,7 @@
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <x-select shadow placeholder="Seleziona uno Stato"
                                         wire:model.live="stateSelections.project-{{ $project->id }}" :options="$states_project"
-                                        option-label="name" option-value="name" class="{{ $selectColor }} rounded" />
+                                        option-label="name" option-value="name" class="{{ $selectColors[$project->id] }} rounded" />
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $project->createDate() }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm">

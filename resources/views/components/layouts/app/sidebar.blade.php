@@ -23,6 +23,9 @@
                 <flux:navlist.item icon="presentation-chart-line" :href="route('approved-projects.index')"
                     :current="request()->routeIs('approved-projects.index')" wire:navigate>Progetti Approvati
                 </flux:navlist.item>
+                <flux:navlist.item icon="presentation-chart-line" :href="route('delivered-projects.index')"
+                    :current="request()->routeIs('delivered-projects.index')" wire:navigate>Progetti Consegnati
+                </flux:navlist.item>
                 <flux:navlist.item icon="document-currency-euro" :href="route('invoices.index')"
                     :current="request()->routeIs('invoices.index')" wire:navigate>Fatture
                 </flux:navlist.item>
