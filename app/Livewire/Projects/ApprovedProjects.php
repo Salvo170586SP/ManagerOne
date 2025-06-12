@@ -21,9 +21,10 @@ class ApprovedProjects extends Component
         $project = Project::findOrFail($projectId);
         $project->team_id = $team_id;
         $project->save();
+        
+        
 
         if ($team_id) {
-            $team = Team::findOrFail($team_id);
             session()->flash('message', "Team assegnato al progetto $project->name");
         } else {
             session()->flash('message', "Team rimosso dal progetto $project->name");

@@ -33,7 +33,7 @@
             </div>
 
             <div class="flex justify-end mt-5">
-                <x-button type="submit" black label="Aggiungi" class="font-bold w-[200px] h-[32px]" />
+                <x-button type="submit" black label="Modifica" class="font-bold w-[200px] h-[32px]" />
             </div>
         </form>
     </div>

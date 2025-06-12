@@ -89,7 +89,7 @@
                                 <td class="px-6 py-4 text-center whitespace-nowrap">id</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $project->name }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                   {{ $project->team->name }}
+                                   {{ $project->team->name ?? '-' }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $project->client->fullName() }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $project->preventive }} €</td>
