@@ -14,6 +14,8 @@ class Project extends Model
         'description',
         'preventive',
         'is_available',
+        'team_id',
+        'state',
     ];
 
     protected $attributes = [
@@ -23,6 +25,16 @@ class Project extends Model
     public function client()
     {
         return $this->belongsTo(User::class, 'client_id');
+    }
+
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
+
+    public function invoices()
+    {
+        return $this->hasMany(Invoce::class);
     }
 
     public function createDate()

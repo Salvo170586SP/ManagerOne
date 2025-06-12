@@ -8,7 +8,7 @@
         @endif
     </div>
 
-    <div class="bg-white rounded h-[calc(100vh-13rem)] overflow-y-auto p-6">
+    <div class="bg-white rounded h-full h-[calc(100vh-13rem)] overflow-y-auto p-6">
 
         <div class="flex justify-between items-center">
 

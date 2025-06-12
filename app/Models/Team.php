@@ -13,6 +13,11 @@ class Team extends Model
     ];
 
     //relazioni
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
+
     // Relazione con tutti gli utenti del team (sia PM che developers)
     public function users()
     {

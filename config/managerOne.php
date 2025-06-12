@@ -56,5 +56,19 @@ return [
             'name' => 'senior',
             'color' => 'bg-gray-600',
         ]
+    ],
+    'states_project' => [
+        [
+            'name' => 'In Progettazione',
+            'color' => 'bg-yellow-200',
+        ],
+        [
+            'name' => 'Annullato',
+            'color' => 'bg-red-200',
+        ],
+        [
+            'name' => 'Consegnato',
+            'color' => 'bg-gray-200',
+        ]
     ]
 ];
