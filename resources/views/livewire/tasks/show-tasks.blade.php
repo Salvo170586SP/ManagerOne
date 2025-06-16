@@ -49,7 +49,11 @@
             <div class="flex flex-col items-start mb-5">
                 <div class="font-medium text-sm">Progetto affidato al Team:</div>
                 <div class="text-sm mt-1">
-                    {{ $project->team->name }}
+                   @isset($project->team->name)
+                   {{ $project->team->name }}
+                   @else
+                   -
+                   @endisset
                 </div>
             </div>
         </div>
@@ -100,7 +104,7 @@
                                             <div class="text-sm">{{ $task->title }}</div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm">{{ $task->developer->fullname() }}</div>
+                                            <div class="text-sm">@isset($task->developer) {{ $task->developer->fullname() }} @endisset</div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-center">
                                             <div

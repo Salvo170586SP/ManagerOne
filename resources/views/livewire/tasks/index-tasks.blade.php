@@ -42,7 +42,7 @@
                                 <div class="text-sm">{{ $project->name }}</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm">{{ $project->team->name }}</div>
+                                <div class="text-sm">@isset($project->team->name) {{ $project->team->name }} @else - @endisset</div>
                             </td>
                             <td class="px-6 py-4 max-w-[80px] whitespace-nowrap text-center">
                                 @if ($project->state)
@@ -50,6 +50,8 @@
                                         class="rounded ms-2 font-medium text-center {{ $this->getStateColor($project->state) }}">
                                         {{ $this->getStateName($project->state) }}
                                     </div>
+                                @else
+                                -
                                 @endif
                             </td>
                             <td class="whitespace-nowrap text-sm text-center text-gray-500">

@@ -35,7 +35,7 @@ class IndexTasks extends Component
             $projects = $projects->whereDate('created_at', '=', \Carbon\Carbon::parse($this->searchDate)->toDateString());
         }
 
-        $projects = $projects->get();
+        $projects = $projects->whereNotNull('team_id')->get();
 
         $tasks = Task::all();
 
