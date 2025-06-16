@@ -9,14 +9,15 @@
     <flux:sidebar sticky stashable class="bg-white">
         <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
 
-        <a href="{{ route('dashboard') }}" class="me-5 flex items-center space-x-2 rtl:space-x-reverse" wire:navigate>
-            <x-app-logo />
-        </a>
+        <div class="ms-4 flex items-center font-bold text-xl">
+             ManagerOne
+        </div>
 
         <flux:navlist variant="outline">
             <flux:navlist.group class="grid mt-5">
                 <flux:navlist.item icon="users" :href="route('clients.index')"
                     :current="request()->routeIs('clients.index')" wire:navigate>Anagrafica Clienti</flux:navlist.item>
+                    <hr class="my-3">
                 <flux:navlist.item icon="presentation-chart-line" :href="route('projects.index')"
                     :current="request()->routeIs('projects.index')" wire:navigate>Progetti
                 </flux:navlist.item>
@@ -26,16 +27,21 @@
                 <flux:navlist.item icon="presentation-chart-line" :href="route('delivered-projects.index')"
                     :current="request()->routeIs('delivered-projects.index')" wire:navigate>Progetti Consegnati
                 </flux:navlist.item>
+                <hr class="my-3">
+                <flux:navlist.item icon="puzzle-piece" :href="route('tasks.task-list')"
+                :current="request()->routeIs('tasks.task-list')" wire:navigate>Gestione Tasks
+                </flux:navlist.item>
                 <flux:navlist.item icon="document-currency-euro" :href="route('invoices.index')"
-                    :current="request()->routeIs('invoices.index')" wire:navigate>Fatture
+                :current="request()->routeIs('invoices.index')" wire:navigate>Fatture
                 </flux:navlist.item>
-                <flux:spacer />
+                <hr class="my-3">
                 <flux:navlist.item icon="identification" :href="route('developers.index')"
-                    :current="request()->routeIs('developers.index')" wire:navigate>Developers
+                :current="request()->routeIs('developers.index')" wire:navigate>Developers
                 </flux:navlist.item>
-                <flux:navlist.item icon="identification" :href="route('teams.index')"
-                    :current="request()->routeIs('teams.index')" wire:navigate>Gestione Teams
+                <flux:navlist.item icon="user-group" :href="route('teams.index')"
+                :current="request()->routeIs('teams.index')" wire:navigate>Gestione Teams
                 </flux:navlist.item>
+                <hr class="my-3">
                 <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')"
                     wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
             </flux:navlist.group>

@@ -17,6 +17,9 @@ use App\Livewire\Projects\DeliveredProjects;
 use App\Livewire\Projects\EditProjects;
 use App\Livewire\Projects\IndexProjects;
 use App\Livewire\Projects\ShowProjects;
+use App\Livewire\Tasks\CreateTask;
+use App\Livewire\Tasks\IndexTasks;
+use App\Livewire\Tasks\ShowTasks;
 use App\Livewire\Teams\CreateTeam;
 use App\Livewire\Teams\EditTeam;
 use App\Livewire\Teams\IndexTeams;
@@ -43,8 +46,12 @@ Route::middleware(['auth', 'role:super_admin'])->group(function () {
     Route::get('/projects/{project}/edit', EditProjects::class)->name('projects.edit');
     
     Route::get('/approved-projects', ApprovedProjects::class)->name('approved-projects.index');
-
+    
     Route::get('/delivered-projects', DeliveredProjects::class)->name('delivered-projects.index');
+
+    Route::get('/tasks', IndexTasks::class)->name('tasks.task-list');
+    Route::get('/tasks/{project}/show', ShowTasks::class)->name('tasks.create-tasks');
+    Route::get('/tasks/{project}/create', CreateTask::class)->name('tasks.create-task');
     
     Route::get('/invoices', IndexInvoices::class)->name('invoices.index');
     Route::get('/invoices/{invoice}', ShowInvoices::class)->name('invoices.show');

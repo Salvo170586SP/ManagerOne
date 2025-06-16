@@ -76,16 +76,16 @@
             @else
             <div class="flex gap-2 mt-10">
                 <x-select label="Cerca un Tipo" id="type" shadow placeholder="Seleziona un Tipo" wire:key="type-{{ $currentStep }}-{{ now() }}"
-                    wire:model.live="developerStep2.type" :options="$types" option-label="name" option-value="name" />
+                    wire:model.live="developerStep2.type" :options="$types" option-label="name" option-value="id" />
                 <x-select label="Cerca una categoria" id="category" wire:key="category-{{ $currentStep }}-{{ now() }}"
                     shadow wire:model.live="developerStep2.category" placeholder="Seleziona una categoria"
-                    :options="$categories" option-label="name" option-value="name" />
+                    :options="$categories" option-label="name" option-value="id" />
                 <x-select label="Cerca una sede" id="workplace" wire:key="workplace-{{ $currentStep }}-{{ now() }}"
                     shadow wire:model.live="developerStep2.workplace" placeholder="Seleziona una sede"
-                    :options="$workplaces" option-label="name" option-value="name" />
+                    :options="$workplaces" option-label="name" option-value="id" />
                 <x-select label="Cerca una posizione" id="level" wire:key="level-{{ $currentStep }}-{{ now() }}" shadow
                     wire:model.live="developerStep2.level" placeholder="Seleziona una posizione" :options="$levels"
-                    option-label="name" option-value="name" />
+                    option-label="name" option-value="id" />
             </div>
             <div class="flex justify-end gap-2 mt-5">
                 <x-button type="button" wire:click="backStep" gray label="Indietro"

@@ -31,27 +31,29 @@
                     </div>
                 @endif
             </div>
-            <div class="flex items-center justify-start mb-5">
+            <div class="mb-5">
                 <div class="font-medium text-sm">Cliente Proprietario:</div>
-                <div class="text-sm ms-1">
+                <div class="text-sm">
                     {{ $project->client->fullName() }}</div>
             </div>
-            <div class="flex items-center justify-start mb-5">
+            <div class="mb-5">
                 <div class="font-medium text-sm">Preventivo:</div>
-                <div class="text-sm ms-1">
+                <div class="text-sm">
                     {{ $project->preventive . ' €' }}
                 </div>
             </div>
 
             <div class="flex  items-center justify-start mb-2">
                 <div class="font-medium text-sm">Descrizione:</div>
-                <x-button class="ms-5" slate icon="eye"
+                <x-button class="ms-5" slate flat icon="eye"
                     x-on:click="$openModal('simpleModal-{{ $project->id }}')" />
                 <x-modal name="simpleModal-{{ $project->id }}" blur="sm" align="center">
                     <x-card shadow="xl" class="max-w-[700px]">
-                        <p class="text-base break-words">
-                            {{ $project->description ?? '-' }}
-                        </p>
+                        <div class="p-4">
+                            <p class="text-base break-all whitespace-pre-wrap">
+                                {{ $project->description ?? '-' }}
+                            </p>
+                        </div>
                         <x-slot name="footer" class="flex justify-end gap-x-4">
                             <x-button black label="Chiudi" x-on:click="close" />
                         </x-slot>
@@ -60,25 +62,48 @@
             </div>
             <div class="flex flex-col items-start mb-5">
                 <div class="font-medium text-sm mb-2">Progetto affidato al Team:</div>
-                <div class="text-sm uppercase border rounded px-2 py-1 bg-gray-50 text-center">
-                    {{ $project->team->name }}
+                <div class="text-sm">
+                  @isset($project->team->name)  {{ $project->team->name }} @else da assegnare @endisset
                 </div>
             </div>
         </div>
 
         <div class="w-full">
+            <div class="mb-5 p-6 bg-white rounded pb-5">
+                <div class="flex justify-between">
+                    <h3 class="font-bold text-xl">Avanzamento Stato Progettazione</h3>
+                    <x-button icon="arrow-left" black label="Torna ai Progetti" class="font-bold w-[200px] h-[32px]"
+                        wire:navigate href="/projects" />
+                </div>
+
+                <div class="mt-5">
+                    <div class="flex justify-between items-center mb-2">
+                        <div class="text-lg font-medium text-gray-700">
+                         {{ $project->getProgressPercentage() }}%
+                        </div>
+                        <div class="text-sm font-medium text-gray-700">
+                            Tempo rimanente: {{ $project->getRemainingTime() }}
+                        </div>
+                    </div>
+                    {{-- barra di progresso --}}
+                    <div class="w-full bg-gray-200 rounded-full h-1.5">
+                        <div class="bg-gray-600 h-1.5 rounded-full transition-all duration-500" 
+                             style="width: {{ $project->getProgressPercentage() }}%">
+                        </div>
+                    </div>
+                    <div class="mt-2 text-sm text-gray-600">
+                        Data di fine prevista: {{ $project->getEndDate() }}
+                    </div>
+                </div>
+            </div>
             <div class="mb-5 flex items-center p-6 bg-white rounded">
                 <div class="text-sm w-full h-full ">
-                    <div class="flex justify-between items-center mb-5">
-                        <h3 class="font-bold text-xl ">Fatturazione</h3>
-                        <x-button icon="arrow-left" black label="Torna ai Progetti" class="font-bold w-[200px] h-[32px]"
-                            wire:navigate href="/projects" />
-                    </div>
+                    <h3 class="font-bold text-xl mb-5">Fatturazione</h3>
                     @foreach ($project->invoices as $invoice)
                         <div class="flex gap-5">
                             @isset($invoice->pdf_path)
                                 <iframe
-                                    class="h-[500px] w-[400px]  rounded-lg border dark:border-[#505050] dark:bg-[#505050]"
+                                    class="h-[600px] w-[400px]  rounded-lg border dark:border-[#505050] dark:bg-[#505050]"
                                     src="{{ asset('/storage/' . $invoice->pdf_path) }}" type="application/pdf">
                                 </iframe>
                             @endisset
@@ -101,24 +126,13 @@
                                         {{ $invoice->createDate() }}
                                     </div>
                                 </div>
-
-
                             </div>
                         </div>
                     @endforeach
                 </div>
             </div>
-
-            <div class="flex justify-between mb-5 p-6 bg-white rounded pb-5">
-                <h3 class="font-bold text-xl">Stato di Progettazione</h3>
-                <span class="rounded px-2 py-1 font-bold text-lg @if($project->state == 'Consegnato') bg-gray-200 @elseif($project->state == 'In Progettazione') bg-yellow-200 @else bg-red-200   @endif">
-                    {{ $project->state }}
-                </span>
-            </div>
-
         </div>
 
     </div>
 
-</div>
 </div>

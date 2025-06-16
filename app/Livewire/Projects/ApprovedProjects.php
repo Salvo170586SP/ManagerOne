@@ -15,14 +15,13 @@ class ApprovedProjects extends Component
 
     public function updatedTeamSelections($team_id, $project_id)
     {
-        // Extract project ID from the key (format: "project-{id}")
         $projectId = explode('-', $project_id)[1];
 
         $project = Project::findOrFail($projectId);
         $project->team_id = $team_id;
         $project->save();
-        
-        
+
+
 
         if ($team_id) {
             session()->flash('message', "Team assegnato al progetto $project->name");
@@ -33,7 +32,6 @@ class ApprovedProjects extends Component
 
     public function updatedStateSelections($state, $project_id)
     {
-        // Extract project ID from the key (format: "project-{id}")
         $projectId = explode('-', $project_id)[1];
 
         $project = Project::findOrFail($projectId);
@@ -56,29 +54,22 @@ class ApprovedProjects extends Component
         }
 
         $projects = $projects->get();
-        $teams = Team::all();
-
-       /*  $states_project =  config('managerOne.states_project'); */
-        $states_project = collect(config('managerOne.states_project'))->map(function ($state) {
-            return [
-                'name' => $state['name'],
-                'value' => $state['name'],
-                'color' => $state['color']
-            ];
-        })->toArray();
-
         
-        // Initialize team selections for each project
+        $teams = Team::all();
+        $states_project = config('managerOne.states_project');
+        $selectColors = [];
+
+        // Initialize team selections and state colors for each project
         foreach ($projects as $project) {
             $this->teamSelections["project-{$project->id}"] = $project->team_id;
-            $this->stateSelections["project-{$project->id}"] = in_array($project->state, array_column($states_project, 'name'))
-            ? $project->state
-            : null;
+            $this->stateSelections["project-{$project->id}"] = in_array($project->state, array_column($states_project, 'id'))
+                ? $project->state
+                : null;
+            
+            $currentState = collect($states_project)->firstWhere('id', $this->stateSelections["project-{$project->id}"]);
+            $selectColors[$project->id] = $currentState ? $currentState['color'] : 'bg-white';
         }
 
-        $currentState = collect($states_project)->firstWhere('name', $this->stateSelections["project-{$project->id}"]);
-        $selectColor = $currentState ? $currentState['color'] : 'bg-white';
-        
-        return view('livewire.projects.approved-projects', compact('projects', 'teams', 'states_project', 'selectColor'));
+        return view('livewire.projects.approved-projects', compact('projects', 'teams', 'states_project', 'selectColors'));
     }
 }

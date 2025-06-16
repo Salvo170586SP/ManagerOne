@@ -11,8 +11,12 @@
             <div class="flex gap-2 mt-5">
                 <x-input label="Nome" shadow wire:model="name" />
                 <x-input label="Preventivo" shadow wire:model="preventive" />
+            </div>
+            
+            <div class="flex gap-2 mt-5">
                 <x-select label="Cerca un Cliente" shadow placeholder="Seleziona un Cliente" wire:model="client_id"   :options="$clients"
-                    option-label="name" option-value="id" />
+                option-label="name" option-value="id" />
+                <x-input  type="date"  label="Data Consegna" shadow  wire:model="end_date" />
             </div>
             <div class="mt-5">
                 <x-textarea label="Descrizione" wire:model="description" shadow />

@@ -35,7 +35,7 @@
 
         <x-card shadow="false" class="w-[350px] border my-5">
             <div class="flex justify-between">
-                <div class="bg-slate-500 w-[50px] h-[50px] flex justify-center items-center">
+                <div class="bg-slate-500 w-[50px] h-[50px] rounded-full flex justify-center items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="white" class="size-7">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -95,7 +95,7 @@
                         <td class="px-6 py-4 text-center whitespace-nowrap">id</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{$invoice->name}}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{$invoice->client_name}}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{$invoice->project->name}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">@isset($invoice->project->name){{$invoice->project->name}} @else - @endisset</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{$invoice->preventive}} €</td>
                         <td class="px-6 py-4 flex justify-center text-center whitespace-nowrap">
                             @if($invoice->is_available)

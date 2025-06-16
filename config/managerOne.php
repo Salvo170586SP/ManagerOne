@@ -3,72 +3,131 @@
 return [
     'types' => [
         [
-            'name' => 'pm',
+            'id' => 'project_manager',
+            'name' => 'Project Manager',
             'color' => 'bg-yellow-700',
         ],
         [
-            'name' => 'developer',
+            'id' => 'developer',
+            'name' => 'Developer',
             'color' => 'bg-yellow-500',
         ]
     ],
     'categories' => [
         [
-            'name' => 'project manager',
+            'id' => 'project_manager',
+            'name' => 'Project Manager',
             'color' => 'bg-yellow-700',
         ],
         [
-            'name' => 'front end',
+            'id' => 'front_end',
+            'name' => 'Front end',
             'color' => 'bg-yellow-500',
         ],
         [
-            'name' => 'back end',
+            'id' => 'back_end',
+            'name' => 'Back end',
             'color' => 'bg-black',
         ],
         [
-            'name' => 'full stack',
+            'id' => 'full_stack',
+            'name' => 'Full stack',
             'color' => 'bg-blue-800',
         ],
         [
-            'name' => 'cyber security',
+            'id' => 'cyber_security',
+            'name' => 'Cyber Security',
             'color' => 'bg-gray-600',
         ],
     ],
     'workplaces' => [
         [
-            'name' => 'smartworking',
+            'id' => 'smartworking',
+            'name' => 'Smartworking',
             'color' => 'bg-orange-500',
         ],
         [
-            'name' => 'in sede',
+            'id' => 'office',
+            'name' => 'In Sede',
             'color' => 'bg-green-700',
         ]
     ],
     'levels' => [
         [
-            'name' => 'junior',
+            'id' => 'junior',
+            'name' => 'Junior',
             'color' => 'bg-yellow-500',
         ],
         [
-            'name' => 'middle',
+            'id' => 'middle',
+            'name' => 'Middle',
             'color' => 'bg-blue-600',
         ],
         [
-            'name' => 'senior',
+            'id' => 'senior',
+            'name' => 'Senior',
             'color' => 'bg-gray-600',
         ]
     ],
     'states_project' => [
         [
+            'id' => 'planning',
             'name' => 'In Progettazione',
             'color' => 'bg-yellow-200',
         ],
         [
+            'id' => 'pending',
+            'name' => 'In Sospeso',
+            'color' => 'bg-yellow-400',
+        ],
+        [
+            'id' => 'deleted',
             'name' => 'Annullato',
             'color' => 'bg-red-200',
         ],
         [
+            'id' => 'delivered',
             'name' => 'Consegnato',
             'color' => 'bg-gray-200',
+        ]
+    ],
+    'states_task' => [
+        [
+            'id' => 'planning',
+            'name' => 'In Progettazione',
+            'color' => 'bg-green-400',
+        ],
+        [
+            'id' => 'pending',
+            'name' => 'In Sospeso',
+            'color' => 'bg-yellow-400',
+        ],
+        [
+            'id' => 'deleted',
+            'name' => 'Annullato',
+            'color' => 'bg-red-400',
+        ],
+        [
+            'id' => 'delivered',
+            'name' => 'Consegnato',
+            'color' => 'bg-gray-400',
+        ]
+    ],
+    'priorities_task' => [
+        [
+            'id' => 'low',
+            'name' => 'Bassa',
+            'color' => 'bg-green-400',
+        ],
+        [
+            'id' => 'medium',
+            'name' => 'Media',
+            'color' => 'bg-yellow-500',
+        ],
+        [
+            'id' => 'high',
+            'name' => 'Alta',
+            'color' => 'bg-red-500',
         ]
     ]
 ];

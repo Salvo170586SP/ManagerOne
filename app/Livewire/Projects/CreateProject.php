@@ -16,13 +16,15 @@ class CreateProject extends Component
     public $name;
     public $description;
     public $preventive;
+    public $end_date;
     public $is_available = false;
 
     protected $rules = [
         'client_id' => 'required',
         'name' => 'required',
         'description' => 'nullable',
-        'preventive' => 'nullable',
+        'preventive' => 'required|numeric|min:0|max:999999.99',
+        'end_date' => 'required|date|after:now',
     ];
 
     public function submit()
@@ -35,6 +37,7 @@ class CreateProject extends Component
             'description' => $this->description,
             'preventive' => $this->preventive ?? 0.00,
             'is_available' => $this->is_available,
+            'end_date' => $this->end_date,
         ]);
 
         if ($project->is_available == true) {

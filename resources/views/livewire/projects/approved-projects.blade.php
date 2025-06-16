@@ -25,7 +25,7 @@
 
         <x-card shadow="false" class="w-[350px] border my-5">
             <div class="flex justify-between">
-                <div class="bg-slate-500 w-[50px] h-[50px] flex justify-center items-center">
+                <div class="bg-slate-500 w-[50px] h-[50px] rounded-full flex justify-center items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="white" class="size-7">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -117,7 +117,7 @@
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <x-select shadow placeholder="Seleziona uno Stato"
                                         wire:model.live="stateSelections.project-{{ $project->id }}" :options="$states_project"
-                                        option-label="name" option-value="name" class="{{ $selectColor }} rounded" />
+                                        option-label="name" option-value="id" class="{{ $selectColors[$project->id] }} rounded" />
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $project->createDate() }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm">

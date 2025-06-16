@@ -48,22 +48,22 @@
                 <div class="flex items-center justify-start mb-5">
                     <div class="font-medium text-sm">Fattura Cliente:</div>
                     <div class="text-sm ms-1">
-                        {{$invoice->client->fullName()}}</div>
+                        {{$invoice->client_name}}</div>
                 </div>
                 <div class="flex items-center justify-start mb-5">
                     <div class="font-medium text-sm">Email Cliente:</div>
                     <div class="text-sm ms-1">
-                        {{$invoice->client->email}}</div>
+                      @isset($invoice->client->email) {{$invoice->client->email}} @else - @endisset</div>
                 </div>
                 <div class="flex items-center justify-start mb-5">
                     <div class="font-medium text-sm">Città Cliente:</div>
                     <div class="text-sm ms-1">
-                        {{$invoice->client->city}}</div>
+                        @isset($invoice->client->city) {{$invoice->client->city}} @else - @endisset</div>
                 </div>
                 <div class="flex items-center justify-start mb-5">
                     <div class="font-medium text-sm">Progetto:</div>
                     <div class="text-sm ms-1">
-                        {{$invoice->project->name}}
+                      @isset($invoice->project->name)  {{$invoice->project->name}} @else - @endisset
                     </div>
                 </div>
                 <div class="flex items-center justify-start mb-5">

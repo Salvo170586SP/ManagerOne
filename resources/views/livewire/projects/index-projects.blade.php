@@ -35,7 +35,7 @@
 
         <x-card shadow="false" class="w-[350px] border my-5">
             <div class="flex justify-between">
-                <div class="bg-slate-500 w-[50px] h-[50px] flex justify-center items-center">
+                <div class="bg-slate-500 w-[50px] h-[50px] rounded-full flex justify-center items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="white" class="size-7">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -82,6 +82,10 @@
                             Creazione</th>
                         <th scope="col"
                             class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                            Data
+                            Consegna</th>
+                        <th scope="col"
+                            class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
                         </th>
                     </tr>
                 </thead>
@@ -112,6 +116,7 @@
                             @endif
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">{{$project->createDate()}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{$project->getEndDate()}}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm">
                             <div class="flex justify-center">
                                 <x-button flat black icon="eye" wire:navigate href="/projects/{{$project->id}}" />

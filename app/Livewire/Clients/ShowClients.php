@@ -13,7 +13,19 @@ class ShowClients extends Component
     {
         $this->client = $client;
     }
-   
+
+    public function getStateName($state)
+    {
+        $projectData = collect(config('managerOne.states_project'))->firstWhere('id', $state);
+        return $projectData['name'] ?? $state;
+    }
+
+    public function getStateColor($state)
+    {
+        $projectData = collect(config('managerOne.states_project'))->firstWhere('id', $state);
+        return $projectData['color'] ?? 'bg-gray-300';
+    }
+
     public function render()
     {
         return view('livewire.clients.show-clients');

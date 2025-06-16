@@ -14,9 +14,7 @@ class DeliveredProjects extends Component
 
     public function updatedStateSelections($state, $project_id)
     {
-        // Extract project ID from the key (format: "project-{id}")
         $projectId = explode('-', $project_id)[1];
-
         $project = Project::findOrFail($projectId);
         $project->state = $state;
         $project->save();
@@ -27,7 +25,7 @@ class DeliveredProjects extends Component
 
     public function render()
     {
-        $projects = Project::where('state', 'Consegnato');
+        $projects = Project::where('state', 'delivered');
 
         if ($this->search) {
             $projects = $projects->where('name', 'like', '%' . $this->search . '%');
@@ -38,25 +36,18 @@ class DeliveredProjects extends Component
         }
 
         $projects = $projects->get();
- 
-       /*  $states_project =  config('managerOne.states_project'); */
-        $states_project = collect(config('managerOne.states_project'))->map(function ($state) {
-            return [
-                'name' => $state['name'],
-                'value' => $state['name'],
-                'color' => $state['color']
-            ];
-        })->toArray();
+
+        $states_project =  config('managerOne.states_project');
 
         $selectColors = [];
-        
+
         // Initialize state selections for each project
         foreach ($projects as $project) {
-            $this->stateSelections["project-{$project->id}"] = in_array($project->state, array_column($states_project, 'name'))
+            $this->stateSelections["project-{$project->id}"] = in_array($project->state, array_column($states_project, 'id'))
                 ? $project->state
                 : null;
-                
-            $currentState = collect($states_project)->firstWhere('name', $this->stateSelections["project-{$project->id}"]);
+
+            $currentState = collect($states_project)->firstWhere('id', $this->stateSelections["project-{$project->id}"]);
             $selectColors[$project->id] = $currentState ? $currentState['color'] : 'bg-white';
         }
 

@@ -5,35 +5,36 @@
             <div class="flex items-center justify-center">
                 <figure class="w-[200px] h-[200px]">
                     <img class="w-full h-full rounded-lg border dark:border-[#505050] dark:bg-[#505050] object-cover object-top"
-                        src="{{ isset($client->img_url) ? asset('/storage/'.$client->img_url) : 'https://static.thenounproject.com/png/261694-200.png' }}"
-                        alt="{{$client->fullName()}}">
+                        src="{{ isset($client->img_url) ? asset('/storage/' . $client->img_url) : 'https://static.thenounproject.com/png/261694-200.png' }}"
+                        alt="{{ $client->fullName() }}">
                 </figure>
             </div>
             <div class="font-bold text-sm text-center uppercase my-5">
-                {{$client->fullName()}}
+                {{ $client->fullName() }}
             </div>
-            <div class="flex items-center justify-start mb-2">
+            <div class="mb-5">
                 <div class="font-medium text-sm">Email:</div>
-                <div class="text-sm ms-1">
-                    {{$client->email ?? '-'}}
+                <div class="text-sm">
+                    {{ $client->email ?? '-' }}
                 </div>
             </div>
-            <div class="flex items-center justify-start mb-2">
+            <div class="mb-5">
                 <div class="font-medium text-sm">Telefono:</div>
-                <div class="text-sm ms-1">
-                    {{$client->phone ?? '-'}}</div>
+                <div class="text-sm">
+                    {{ $client->phone ?? '-' }}</div>
             </div>
 
-            <div class="flex  items-center justify-start mb-2">
+            <div class="mb-5">
                 <div class="font-medium text-sm">Città:</div>
-                <div class="text-sm ms-1">
-                    {{$client->city ?? '-'}}
+                <div class="text-sm">
+                    {{ $client->city ?? '-' }}
                 </div>
             </div>
         </div>
 
         <div class="w-full  p-6 bg-white rounded">
-            <div class="w-full flex justify-end mb-5 pb-5">
+            <div class="w-full flex justify-between mb-5 pb-5">
+                <h3 class="text-xl font-semibold ">Progetti</h3>
                 <x-button icon="arrow-left" black label="Torna ai Clienti" class="font-bold w-[200px] h-[32px]"
                     wire:navigate href="/clients" />
             </div>
@@ -41,7 +42,7 @@
                 <div>
                     <x-card shadow="false" class="w-[350px] border my-5">
                         <div class="flex justify-between">
-                            <div class="bg-slate-500 w-[50px] h-[50px] flex justify-center items-center">
+                            <div class="bg-slate-500 w-[50px] h-[50px] rounded-full flex justify-center items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="white" class="size-7">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -50,7 +51,7 @@
                             </div>
                             <div>
                                 <div class="text-xl text-end font-bold">
-                                    {{$client->projects->count()}}
+                                    {{ $client->projects->count() }}
                                 </div>
                                 <div class="text-sm">
                                     Numero Progetti
@@ -61,51 +62,91 @@
 
 
                     <div class="{{-- overflow-x-auto --}}">
-                        @if($client->projects->count() > 0)
-                        <table class="min-w-full divide-y border divide-gray-200">
-                            <thead>
-                                <tr>
-                                    <th scope="col"
-                                        class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
-                                        ID</th>
-                                    <th scope="col"
-                                        class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
-                                        Nome
-                                    </th>
-                                    <th scope="col"
-                                        class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
-                                        Preventivo
-                                    </th>
-                                    <th scope="col"
-                                        class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
-                                        Data
-                                        Creazione</th>
-                                    <th scope="col"
-                                        class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
-                                @foreach($client->projects as $project)
-                                <tr wire:key="clientproject-{{$project->id}}">
-                                    <td class="px-6 py-4 whitespace-nowrap">id</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{$project->name}} </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{$project->preventive}} €</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{$project->createDate()}}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                        <div class="flex justify-center">
-                                            <x-button flat black icon="eye" wire:navigate
-                                                href="/projects/{{$project->id}}" />
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                        @if ($client->projects->count() > 0)
+                            <table class="min-w-full divide-y border divide-gray-200">
+                                <thead>
+                                    <tr>
+                                        <th scope="col"
+                                            class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                            ID</th>
+                                        <th scope="col"
+                                            class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                            Nome
+                                        </th>
+                                        <th scope="col"
+                                            class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                            Preventivo
+                                        </th>
+                                        <th scope="col"
+                                            class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                            Stato
+                                            Approvazione</th>
+                                        <th scope="col"
+                                            class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                            Stato
+                                            Progettazione</th>
+                                        <th scope="col"
+                                            class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                            Data
+                                            Creazione</th>
+                                        <th scope="col"
+                                            class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    @foreach ($client->projects as $project)
+                                        <tr wire:key="clientproject-{{ $project->id }}">
+                                            <td class="px-6 py-4 whitespace-nowrap">id</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">{{ $project->name }} </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">{{ $project->preventive }} €</td>
+                                            <td class="px-6 py-4 flex justify-center text-center whitespace-nowrap">
+                                                @if ($project->is_available)
+                                                    <div class="bg-green-600 rounded-full text-white">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                            class="size-6">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
+                                                        </svg>
+                                                    </div>
+                                                @else
+                                                    <div class="bg-red-600 rounded-full text-white">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                            class="size-6">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                                        </svg>
+                                                    </div>
+                                                @endif
+                                            </td>
+
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                @if ($project->state)
+                                                    <div
+                                                        class="rounded ms-2 font-medium text-center {{ $this->getStateColor($project->state) }}">
+                                                        {{ $this->getStateName($project->state) }}
+                                                    </div>
+                                                @else
+                                                    -
+                                                @endif
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">{{ $project->createDate() }}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                                <div class="flex justify-center">
+                                                    <x-button flat black icon="eye" wire:navigate
+                                                        href="/projects/{{ $project->id }}" />
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         @else
-                        <div class="text-center font-medium">
-                            Non ci sono progetti associati a questo cliente
-                        </div>
+                            <div class="text-center font-medium">
+                                Non ci sono progetti associati a questo cliente
+                            </div>
                         @endif
                     </div>
                 </div>

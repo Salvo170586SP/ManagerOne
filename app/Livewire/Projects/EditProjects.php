@@ -13,13 +13,15 @@ class EditProjects extends Component
     public $name;
     public $description;
     public $preventive;
+    public $end_date;
     public $is_available = false;
 
     protected $rules = [
         'client_id' => 'required',
         'name' => 'required',
         'description' => 'nullable',
-        'preventive' => 'nullable|numeric|min:0|max:999999.99',
+        'end_date' => 'required|date|after:now',
+        'preventive' => 'required|numeric|min:0|max:999999.99',
     ];
 
     public function mount(Project $project)
@@ -29,6 +31,7 @@ class EditProjects extends Component
         $this->name = $project->name;
         $this->description = $project->description;
         $this->preventive = $project->preventive;
+        $this->end_date = $project->end_date;
         $this->is_available = (bool) $project->is_available;
     }
 
@@ -40,6 +43,7 @@ class EditProjects extends Component
             'client_id' => $this->client_id,
             'name' => $this->name,
             'description' => $this->description,
+            'end_date' => $this->end_date,
             'preventive' => $this->preventive ?? 0.00,
             'is_available' => $this->is_available,
         ]);
