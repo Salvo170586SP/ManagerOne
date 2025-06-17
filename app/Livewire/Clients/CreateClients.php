@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Clients;
 
+use App\Jobs\GenerateIdClient;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -9,7 +10,7 @@ use Livewire\WithFileUploads;
 class CreateClients extends Component
 {
     use WithFileUploads;
-    
+
     public $name;
     public $surname;
     public $img_url = null;
@@ -40,7 +41,7 @@ class CreateClients extends Component
 
         $this->validate();
 
-        User::create([
+        $client =  User::create([
             'name' => $this->name,
             'surname' => $this->surname,
             'img_url' => $url,
@@ -50,6 +51,8 @@ class CreateClients extends Component
             'email' => $this->email,
             'password' => $this->password,
         ])->assignRole('client');
+
+        GenerateIdClient::dispatch($client);
 
         session()->flash('message', 'Cliente creato con successo');
 

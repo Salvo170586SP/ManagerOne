@@ -19,7 +19,7 @@
                     option-value="id" />
             
     
-                <x-input shadow label="Scadenza" type="datetime-local" wire:model="due_date" id="due_date" />
+                <x-input shadow label="Scadenza" type="date" wire:model="due_date" id="due_date" />
             </div>
     
             <div class="flex justify-end">

@@ -72,10 +72,10 @@
                             <thead>
                                 <tr>
                                     <th scope="col"
-                                        class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                        class="py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
                                         Nome Task</th>
                                     <th scope="col"
-                                        class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                        class="py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
                                         Assegnato a
                                     </th>
                                     <th scope="col"
@@ -84,11 +84,10 @@
                                     </th>
                                     <th scope="col"
                                         class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
-
                                         Scadenza
                                     </th>
                                     <th scope="col"
-                                        class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                        class="px-3 text-center py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
                                         Chiusura Task
                                     </th>
                                     <th scope="col"
@@ -97,7 +96,7 @@
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
+                            <tbody class="bg-white divide-y text-sm divide-gray-200">
                                 @foreach ($project->tasks as $task)
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap">
@@ -119,8 +118,7 @@
                                             {{ $task->getDate($task->completed_at) }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="w-[250px]">
-
+                                            <div class="w-[220px]">
                                                 <div class="text-xs text-start font-medium text-gray-700">
                                                     {{ $task->getProgressPercentage() }}%
                                                 </div>

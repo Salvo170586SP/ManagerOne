@@ -5,68 +5,68 @@ return [
         [
             'id' => 'project_manager',
             'name' => 'Project Manager',
-            'color' => 'bg-yellow-700',
+            'color' => 'bg-yellow-100 border border-yellow-400 text-yellow-800',
         ],
         [
             'id' => 'developer',
             'name' => 'Developer',
-            'color' => 'bg-yellow-500',
+            'color' => 'bg-gray-100 border border-gray-400 text-gray-800',
         ]
     ],
     'categories' => [
         [
             'id' => 'project_manager',
             'name' => 'Project Manager',
-            'color' => 'bg-yellow-700',
+            'color' => 'bg-yellow-200 border border-yellow-400 text-yellow-800',
         ],
         [
             'id' => 'front_end',
-            'name' => 'Front end',
-            'color' => 'bg-yellow-500',
+            'name' => 'Front End',
+            'color' => 'bg-yellow-100 border border-yellow-400 text-yellow-700',
         ],
         [
             'id' => 'back_end',
-            'name' => 'Back end',
-            'color' => 'bg-black',
+            'name' => 'Back End',
+            'color' => 'bg-gray-200 border border-gray-400 text-gray-700',
         ],
         [
             'id' => 'full_stack',
-            'name' => 'Full stack',
-            'color' => 'bg-blue-800',
+            'name' => 'Full Stack',
+            'color' => 'bg-blue-200 border border-blue-400 text-blue-700',
         ],
         [
             'id' => 'cyber_security',
             'name' => 'Cyber Security',
-            'color' => 'bg-gray-600',
+            'color' => 'bg-gray-50 border border-gray-400 text-gray-700',
         ],
     ],
     'workplaces' => [
         [
             'id' => 'smartworking',
             'name' => 'Smartworking',
-            'color' => 'bg-orange-500',
+            'color' => 'bg-orange-100 border border-orange-400 text-orange-700',
         ],
         [
             'id' => 'office',
             'name' => 'In Sede',
-            'color' => 'bg-green-700',
+            'color' => 'bg-green-100 border border-green-400 text-green-700',
         ]
     ],
     'levels' => [
         [
             'id' => 'junior',
             'name' => 'Junior',
-            'color' => 'bg-yellow-500',
+            'color' => 'bg-yellow-100 border border-yellow-400 text-yellow-700',
         ],
         [
             'id' => 'middle',
             'name' => 'Middle',
-            'color' => 'bg-blue-600',
+            'color' => 'bg-blue-100 border border-blue-400 text-blue-700',
         ],
         [
             'id' => 'senior',
             'name' => 'Senior',
-            'color' => 'bg-gray-600',
+            'color' => 'bg-gray-100 border border-gray-400 text-gray-700',
         ]
     ],
     'states_project' => [

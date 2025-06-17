@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedInteger('IdProject')->nullable();
             $table->foreignId('client_id')->constrained('users');
             $table->string('name');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->decimal('preventive', 8, 2)->nullable();
             $table->boolean('is_available')->default(false);
             $table->timestamps();

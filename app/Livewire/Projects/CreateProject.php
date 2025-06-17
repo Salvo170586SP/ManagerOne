@@ -2,6 +2,8 @@
 
 namespace App\Livewire\Projects;
 
+use App\Jobs\GenerateIdInvoces;
+use App\Jobs\GenerateIdProject;
 use App\Models\Invoce;
 use App\Models\Project;
 use App\Models\User;
@@ -40,6 +42,8 @@ class CreateProject extends Component
             'end_date' => $this->end_date,
         ]);
 
+        GenerateIdProject::dispatch($project);
+        
         if ($project->is_available == true) {
             $invoice =  Invoce::create([
                 'admin_id' => Auth::id(),
@@ -49,6 +53,8 @@ class CreateProject extends Component
                 'client_name' => $project->client->fullName(),
                 'preventive' => $project->preventive,
             ]);
+            
+            GenerateIdInvoces::dispatch($invoice);
 
             $this->generateInvoicePdf($invoice->id);
         }

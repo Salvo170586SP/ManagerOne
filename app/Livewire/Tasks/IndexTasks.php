@@ -5,11 +5,17 @@ namespace App\Livewire\Tasks;
 use App\Models\Project;
 use App\Models\Task;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class IndexTasks extends Component
 {
+    use WithPagination;
     public $search = "";
-    public $searchDate;
+ 
+    public function updatedSearch()
+    {
+        $this->resetPage();
+    }
     
     public function getStateName($state)
     {
@@ -31,13 +37,9 @@ class IndexTasks extends Component
             $projects = $projects->where('name', 'like', '%' . $this->search . '%');
         }
 
-        if ($this->searchDate) {
-            $projects = $projects->whereDate('created_at', '=', \Carbon\Carbon::parse($this->searchDate)->toDateString());
-        }
-
         $projects = $projects->whereNotNull('team_id')->get();
 
-        $tasks = Task::all();
+        $tasks = Task::latest()->paginate(10);
 
         return view('livewire.tasks.index-tasks', compact('tasks', 'projects'));
     }

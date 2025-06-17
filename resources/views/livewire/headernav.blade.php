@@ -4,11 +4,11 @@
             class="flex items-center justify-end hover:bg-gray-50 focus:bg-gray-100 cursor-pointer transition rounded p-2">
             @isset(auth()->user()->img_url)
             <figure class="w-[50px] h-[50px]">
-                <img class="w-full h-full rounded-lg border bg-white  dark:border-[#505050] dark:bg-[#505050] object-cover object-top"
+                <img class="w-full h-full rounded-full border bg-white  dark:border-[#505050] dark:bg-[#505050] object-cover object-top"
                     src="{{ auth()->user()->img_url  }}" alt="{{auth()->user()->fullName()}}">
             </figure>
             @else
-            <div class="w-[50px] h-[50px] rounded-lg border bg-white">
+            <div class="w-[50px] h-[50px] rounded-full border bg-white">
                 <div class="w-full h-full text-4xl font-bold text-gray-200 ">
                     {{ auth()->user()->initials() }}
                 </div>

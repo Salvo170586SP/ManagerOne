@@ -25,8 +25,9 @@
 
                 <div class="me-5 h-[32px] flex justify-between items-center">
                     <span class="text-sm whitespace-nowrap me-2">Cerca per città:</span>
-                    <x-select shadow placeholder="Seleziona una città"  wire:model.live="searchCity" :options="$clients"
-                        option-label="city" option-value="city" />
+                 {{--    <x-select shadow placeholder="Seleziona una città"  wire:model.live="searchCity" :options="$clients"
+                        option-label="city" option-value="city" /> --}}
+                        <x-select shadow placeholder="Seleziona una città" wire:model.live="searchCity" :options="$cities" />
                 </div>
 
                 <x-button icon="plus" black label="Aggiungi Cliente" class="font-bold w-[200px] h-[32px]" wire:navigate
@@ -34,9 +35,9 @@
             </div>
         </div>
 
-        <x-card shadow="false" class="w-[350px] border my-5">
+        <x-card shadow="false" class="w-[350px]  border  my-5">
             <div class="flex justify-between">
-                <div class="bg-slate-500 w-[50px] h-[50px] flex justify-center items-center">
+                <div class="bg-slate-500 w-[50px] h-[50px] rounded-full flex justify-center items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="white" class="size-7">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -55,46 +56,63 @@
         </x-card>
 
 
-        <div class="{{-- overflow-x-auto --}}">
+        <div class="overflow-x-auto">
             @if($clients->count() > 0)
-            <table class="min-w-full divide-y border divide-gray-200">
+            <table @if($pollCondition) wire:poll.2s @endif class="min-w-full divide-y border divide-gray-200">
                 <thead>
                     <tr>
                         <th scope="col"
-                            class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                            class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider w-20">
                             ID</th>
                         <th scope="col"
-                            class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                            class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider w-48">
                             Nome
                             e Cognome</th>
                         <th scope="col"
-                            class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                            class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider w-64">
                             Email
                         </th>
                         <th scope="col"
-                            class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                            class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider w-32">
                             Telefono</th>
                         <th scope="col"
-                            class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                            class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider w-32">
                             Città
                         </th>
                         <th scope="col"
-                            class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                            class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider w-32">
                             Data
                             Creazione</th>
                         <th scope="col"
-                            class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                            class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider w-32">
                         </th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+                <tbody class="bg-white divide-y divide-gray-200 text-sm">
                     @foreach($clients as $client)
                     <tr wire:key="client-{{$client->id}}">
-                        <td class="px-6 py-4 whitespace-nowrap">id</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{$client->fullName()}}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{$client->email}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            @if($client->IdClient)
+                            #CL-{{ $client->IdClient}}
+                            @else
+                            #CL
+                            @endif</td>
+                        <td class="px-6 py-4">
+                            <div class="max-w-xs truncate" title="{{$client->fullName()}}">
+                                {{$client->fullName()}}
+                            </div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="max-w-xs truncate" title="{{$client->email}}">
+                                {{$client->email}}
+                            </div>
+                        </td>
                         <td class="px-6 py-4 whitespace-nowrap">{{$client->phone}}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{$client->city}}</td>
+                        <td class="px-6 py-4">
+                            <div class="max-w-xs truncate" title="{{$client->city}}">
+                                {{$client->city}}
+                            </div>
+                        </td>
                         <td class="px-6 py-4 whitespace-nowrap">{{$client->createDate()}}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm">
                             <div class="flex justify-center">
@@ -129,6 +147,9 @@
                     @endforeach
                 </tbody>
             </table>
+            <div class="py-3">
+                {{ $clients->links('vendor.pagination.tailwind') }}
+            </div>
             @else
             <div class="text-center font-medium">
                 Non ci sono Clienti registrati

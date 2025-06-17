@@ -35,7 +35,7 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+                <tbody class="bg-white divide-y text-sm divide-gray-200">
                     @foreach ($projects as $project)
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap">
@@ -66,6 +66,9 @@
                     @endforeach
                 </tbody>
             </table>
+            <div class="py-3">
+                {{ $tasks->links('vendor.pagination.tailwind') }}
+            </div>
         @else
             <div class="px-6 py-4 text-center text-gray-500">
                 Nessuna progetto presente

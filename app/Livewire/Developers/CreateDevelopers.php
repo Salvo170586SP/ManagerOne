@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Developers;
 
+use App\Jobs\GenerateIdDev;
 use App\Livewire\Forms\Developers\CreateDevelopers\Step1;
 use App\Livewire\Forms\Developers\CreateDevelopers\Step2;
 use App\Models\User;
@@ -47,7 +48,7 @@ class CreateDevelopers extends Component
             $url = $this->developerStep1->img_url->store('imgsDeveloper');
         }
 
-        $user = User::create([
+        $dev = User::create([
             'name' => $this->developerStep1->name,
             'surname' => $this->developerStep1->surname,
             'img_url' => $url,
@@ -61,7 +62,9 @@ class CreateDevelopers extends Component
             'level' => $this->developerStep2->level,
         ]);
 
-        $user->assignRole($user->type);
+        GenerateIdDev::dispatch($dev);
+
+        $dev->assignRole($dev->type);
     
         session()->flash('message', 'Developer creato con successo!');
 

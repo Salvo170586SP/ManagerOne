@@ -5,12 +5,30 @@ namespace App\Livewire\Clients;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class IndexClients extends Component
 {
+    use WithPagination;
+
     public $search = "";
     public $searchDate;
     public $searchCity;
+
+    public function updatedSearch()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedSearchCity()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedSearchDate()
+    {
+        $this->resetPage();
+    }
 
     public function deleteClient($client_id)
     {
@@ -46,8 +64,19 @@ class IndexClients extends Component
             $clients = $clients->whereDate('created_at', '=', \Carbon\Carbon::parse($this->searchDate)->toDateString());
         }
 
-        $clients = $clients->where('type', 'client')->get();
+        $clients = $clients->where('type', 'client')->latest()->paginate(10);
+        $pollCondition = User::whereNull('IdClient')->exists();
 
-        return view('livewire.clients.index-clients', compact('clients'));
+        // Ottieni la lista delle città disponibili per il filtro
+        $cities = User::where(function ($query) {
+            $query->where('type', 'client');
+        })
+            ->whereNotNull('city')
+            ->distinct()
+            ->pluck('city')
+            ->filter()
+            ->values();
+
+        return view('livewire.clients.index-clients', compact('clients', 'pollCondition', 'cities'));
     }
 }

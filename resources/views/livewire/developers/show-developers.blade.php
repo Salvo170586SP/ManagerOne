@@ -1,16 +1,26 @@
 <div class="-mt-2">
     <h2 class="text-xl font-bold mb-5">Dettagli Developer</h2>
-    <div class="flex mx-auto text-black h-[calc(100vh-13rem)]">
+    <div class="flex mx-auto text-black{{--  h-[calc(100vh-13rem)] --}}">
         <div class="w-[350px] h-auto bg-white p-5 me-5 rounded">
             <div class="flex items-center justify-center">
-                <figure class="w-[200px] h-[200px]">
-                    <img class="w-full h-full rounded-lg border dark:border-[#505050] dark:bg-[#505050] object-cover object-top"
+                <figure class="w-[130px] h-[130px]">
+                    <img class="w-full h-full rounded-full border dark:border-[#505050] dark:bg-[#505050] object-cover object-top"
                         src="{{ isset($developer->img_url) ? asset('/storage/' . $developer->img_url) : 'https://static.thenounproject.com/png/261694-200.png' }}"
                         alt="{{ $developer->fullName() }}">
                 </figure>
             </div>
             <div class="font-bold text-sm text-center uppercase my-5">
                 {{ $developer->fullName() }}
+            </div>
+            <div class="mb-4">
+                <div class="font-medium text-sm">ID:</div>
+                <div class="text-sm">
+                    @if ($developer->IdDev)
+                        #DEV-{{ $developer->IdDev }}
+                    @else
+                        #DEV
+                    @endif
+                </div>
             </div>
             <div class="mb-4">
                 <div class="font-medium text-sm">Email:</div>
@@ -32,37 +42,37 @@
             </div>
             <hr class="my-5">
             <div class="mb-4">
-                <div class="font-medium text-sm">Ruolo:</div>
+                <div class="font-medium text-sm mb-1">Ruolo:</div>
                 @if ($developer->type)
                     <div
-                        class="rounded text-white max-w-[150px] text-center text-sm  font-medium {{ $this->getColorType($developer->type) }}">
+                        class="rounded-full max-w-[150px] text-center text-sm py-1 font-medium {{ $this->getColorType($developer->type) }}">
                         {{ $this->getNameType($developer->type) }}
                     </div>
                 @endif
             </div>
             <div class="mb-4">
-                <div class="font-medium text-sm">Grado In Azienda:</div>
+                <div class="font-medium text-sm mb-1">Grado In Azienda:</div>
                 @if ($developer->level)
                     <div
-                        class="rounded text-white max-w-[150px] text-center text-sm font-medium {{ $this->getColorLevel($developer->level) }}">
+                        class="rounded-full   max-w-[150px] text-center py-1 text-sm font-medium {{ $this->getColorLevel($developer->level) }}">
                         {{ $this->getNameLevel($developer->level) }}
                     </div>
                 @endif
             </div>
             <div class="mb-4">
-                <div class="font-medium text-sm">Categoria:</div>
+                <div class="font-medium text-sm mb-1">Categoria:</div>
                 @if ($developer->category)
                     <div
-                        class="rounded text-white max-w-[150px] text-center text-sm  font-medium {{ $this->getColorCategory($developer->category) }}">
+                        class="rounded-full  max-w-[150px] text-center text-sm py-1 font-medium {{ $this->getColorCategory($developer->category) }}">
                         {{ $this->getNameCategory($developer->category) }}
                     </div>
                 @endif
             </div>
             <div class="mb-4">
-                <div class="font-medium text-sm">Sede:</div>
+                <div class="font-medium text-sm mb-1">Sede:</div>
                 @if ($developer->workplace)
                     <div
-                        class="rounded text-white max-w-[150px] text-center text-sm  font-medium {{ $this->getColorWorkplace($developer->workplace) }}">
+                        class="rounded-full max-w-[150px] text-center text-sm py-1 font-medium {{ $this->getColorWorkplace($developer->workplace) }}">
                         {{ $this->getNameWorkplace($developer->workplace) }}
                     </div>
                 @endif
@@ -125,7 +135,7 @@
                                     Chiusura Task</th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
+                        <tbody class="bg-white divide-y text-sm divide-gray-200">
                             @foreach ($developer->tasks as $task)
                                 <tr wire:key="task-{{ $task->id }}">
                                     <td class="px-6 py-4 whitespace-nowrap">
@@ -151,9 +161,12 @@
                                         @endif
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <input class="border border-gray-300 px-5 bg-gray-50 rounded"  wire:model="taskDates.{{ $task->id }}" wire:change.live="changeDate({{ $task->id }})" type="datetime-local" id="completed_at-{{ $task->id }}" />
+                                        <input class="border border-gray-300 px-5 bg-gray-50 rounded"
+                                            wire:model="taskDates.{{ $task->id }}"
+                                            wire:change.live="changeDate({{ $task->id }})" type="datetime-local"
+                                            id="completed_at-{{ $task->id }}" />
 
-                                       {{--  @if ($task->completed_at)
+                                        {{--  @if ($task->completed_at)
                                             {{ $task->getDate($task->completed_at) }}
                                         @else
                                             -

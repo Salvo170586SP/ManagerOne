@@ -5,12 +5,29 @@ namespace App\Livewire\Invoices;
 use App\Models\Invoce;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class IndexInvoices extends Component
 {
+    use WithPagination;
     public $search = "";
     public $searchDate = "";
     public $searchAvailable = "";
+
+    public function updatedSearch()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedSearchCity()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedSearchAvailable()
+    {
+        $this->resetPage();
+    }
 
     public function deleteInvoice($invoice_id)
     {
@@ -62,8 +79,10 @@ class IndexInvoices extends Component
             $invoices = $invoices->where('is_available', (int) $this->searchAvailable);
         }
 
-        $invoices = $invoices->get();
+        $invoices = $invoices->latest()->paginate(10);
 
-        return view('livewire.invoices.index-invoices', compact('invoices'));
+        $pollCondition =  Invoce::whereNull('IdInvoice')->exists();
+
+        return view('livewire.invoices.index-invoices', compact('invoices', 'pollCondition'));
     }
 }

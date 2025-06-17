@@ -55,8 +55,9 @@
 
 
         <div class="{{-- overflow-x-auto --}}">
+          
             @if($projects->count() > 0)
-            <table class="min-w-full divide-y border divide-gray-200">
+            <table @if($pollCondition) wire:poll.2s @endif class="min-w-full divide-y border divide-gray-200">
                 <thead>
                     <tr>
                         <th scope="col"
@@ -89,10 +90,16 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+                <tbody class="bg-white divide-y divide-gray-200 text-sm">
                     @foreach($projects as $project)
                     <tr wire:key="project-{{$project->id}}">
-                        <td class="px-6 py-4 text-center whitespace-nowrap">id</td>
+                        <td class="px-6 py-4  whitespace-nowrap">
+                            @if($project->IdProject)
+                            #PR-{{ $project->IdProject}}
+                            @else
+                            #PR
+                            @endif
+                        </td>
                         <td class="px-6 py-4 whitespace-nowrap">{{$project->name}}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{$project->client->fullName()}}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{$project->preventive}} €</td>
@@ -152,6 +159,9 @@
                     @endforeach
                 </tbody>
             </table>
+            <div class="py-3">
+                {{ $projects->links('vendor.pagination.tailwind') }}
+            </div>
             @else
             <div class="text-center font-medium">
                 Non ci sono Progetti registrati

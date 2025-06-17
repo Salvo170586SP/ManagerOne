@@ -11,7 +11,6 @@
     <div class="bg-white rounded h-full h-[calc(100vh-13rem)] overflow-y-auto p-6">
 
         <div class="flex justify-between items-center">
-
             <div class="w-[350px] h-[32px]">
                 <x-input type="search" wire:model.live="search" placeholder="Cerca.." shadow="false" />
             </div>
@@ -25,8 +24,7 @@
 
                 <div class="me-5 h-[32px] flex justify-between items-center">
                     <span class="text-sm whitespace-nowrap me-2">Cerca per città:</span>
-                    <x-select shadow placeholder="Seleziona una città" wire:model.live="searchCity" :options="$developers"
-                        option-label="city" option-value="city" />
+                    <x-select shadow placeholder="Seleziona una città" wire:model.live="searchCity" :options="$cities" />
                 </div>
 
                 <x-button icon="plus" black label="Aggiungi Developer" class="font-bold w-[200px] h-[32px]"
@@ -78,11 +76,12 @@
 
 
         @if ($developers->count() > 0)
-            <table class="min-w-full divide-y border divide-gray-200">
+            <table @if ($pollCondition) wire:poll.2s @endif
+                class="min-w-full divide-y border divide-gray-200">
                 <thead>
                     <tr>
                         <th scope="col"
-                            class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                            class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
                             ID</th>
                         <th scope="col"
                             class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
@@ -113,16 +112,22 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+                <tbody class="bg-white divide-y text-sm divide-gray-200">
                     @foreach ($developers as $developer)
                         <tr wire:key="developer-{{ $developer->id }}">
-                            <td class="px-6 py-4 whitespace-nowrap">id</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                @if ($developer->IdDev)
+                                    #DEV-{{ $developer->IdDev }}
+                                @else
+                                    #DEV
+                                @endif
+                            </td>
                             <td class="px-6 py-4 whitespace-nowrap">{{ $developer->fullName() }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">{{ $developer->city }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-center">
                                 @if ($developer->workplace)
                                     <div
-                                        class="rounded text-white font-medium text-sm px-4 py-1 {{ $this->getColorWorkplace($developer->workplace) }}">
+                                        class="rounded-full font-medium text-sm px-4 py-1 {{ $this->getColorWorkplace($developer->workplace) }}">
                                         {{ $this->getNameWorkplace($developer->workplace) }}
                                     </div>
                                 @endif
@@ -130,17 +135,17 @@
                             <td class="px-6 py-4 whitespace-nowrap text-center">
                                 @if ($developer->level)
                                     <div
-                                        class="rounded text-white font-medium text-sm px-4 py-1 {{ $this->getColorLevel($developer->level) }}">
+                                        class="rounded-full font-medium text-sm px-4 py-1 {{ $this->getColorLevel($developer->level) }}">
                                         {{ $this->getNameLevel($developer->level) }}
                                     </div>
-                                    @endif
-                                </td>
-                                
-                                <td class="px-6 py-4 whitespace-nowrap text-center">
-                                    @if ($developer->category)
+                                @endif
+                            </td>
+
+                            <td class="px-6 py-4 whitespace-nowrap text-center">
+                                @if ($developer->category)
                                     <div
-                                    class="rounded text-white font-medium text-sm px-4 py-1 {{ $this->getColorCategory($developer->category) }}">
-                                    {{ $this->getNameCategory($developer->category) }}
+                                        class="rounded-full font-medium text-sm px-4 py-1 {{ $this->getColorCategory($developer->category) }}">
+                                        {{ $this->getNameCategory($developer->category) }}
                                     </div>
                                 @endif
                             </td>
@@ -182,6 +187,9 @@
                     @endforeach
                 </tbody>
             </table>
+            <div class="py-3">
+                {{ $developers->links('vendor.pagination.tailwind') }}
+            </div>
         @else
             <div class="text-center font-medium">
                 Non ci sono developers registrati

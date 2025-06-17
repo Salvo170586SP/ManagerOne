@@ -5,13 +5,27 @@ namespace App\Livewire\Projects;
 use App\Models\Project;
 use App\Models\Team;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class ApprovedProjects extends Component
 {
+    use WithPagination;
+
     public $search = "";
     public $searchDate = "";
     public $teamSelections = [];
     public $stateSelections = [];
+
+    public function updatedSearch()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedSearchDate()
+    {
+        $this->resetPage();
+    }
+
 
     public function updatedTeamSelections($team_id, $project_id)
     {
@@ -53,8 +67,8 @@ class ApprovedProjects extends Component
             $projects = $projects->whereDate('created_at', '=', \Carbon\Carbon::parse($this->searchDate)->toDateString());
         }
 
-        $projects = $projects->get();
-        
+        $projects = $projects->latest()->paginate(10);
+
         $teams = Team::all();
         $states_project = config('managerOne.states_project');
         $selectColors = [];
@@ -65,7 +79,7 @@ class ApprovedProjects extends Component
             $this->stateSelections["project-{$project->id}"] = in_array($project->state, array_column($states_project, 'id'))
                 ? $project->state
                 : null;
-            
+
             $currentState = collect($states_project)->firstWhere('id', $this->stateSelections["project-{$project->id}"]);
             $selectColors[$project->id] = $currentState ? $currentState['color'] : 'bg-white';
         }

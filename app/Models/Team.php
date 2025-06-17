@@ -27,7 +27,7 @@ class Team extends Model
     // Relazione con il Project Manager (uno per team)
     public function pms()
     {
-        return $this->users()->where('type', 'pm');
+        return $this->users()->where('type', 'project_manager');
     }
 
     // Relazione con i Developers (molti per team)

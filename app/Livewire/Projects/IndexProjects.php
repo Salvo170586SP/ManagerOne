@@ -4,12 +4,30 @@ namespace App\Livewire\Projects;
 
 use App\Models\Project;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class IndexProjects extends Component
 {
+    use WithPagination;
+
     public $search = "";
     public $searchDate = "";
     public $searchAvailable;
+
+    public function updatedSearch()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedSearchDate()
+    {
+        $this->resetPage();
+    }
+ 
+    public function updatedSearchAvailable()
+    {
+        $this->resetPage();
+    }
 
     public function deleteProject($project_id)
     {
@@ -38,8 +56,10 @@ class IndexProjects extends Component
             $projects = $projects->where('is_available', (int) $this->searchAvailable);
         }
         
-        $projects = $projects->get();
+        $projects = $projects->latest()->paginate(10);
+        
+        $pollCondition = Project::whereNull('IdProject')->exists();
 
-        return view('livewire.projects.index-projects', compact('projects'));
+        return view('livewire.projects.index-projects', compact('projects', 'pollCondition'));
     }
 }

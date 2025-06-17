@@ -56,7 +56,7 @@
                                 class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
                                 Nome</th>
                             <th scope="col"
-                                class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
                                 Team di sviluppo
                             </th>
                             <th scope="col"
@@ -83,10 +83,14 @@
                             </th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
+                    <tbody class="bg-white divide-y text-sm divide-gray-200">
                         @foreach ($projects as $project)
                             <tr wire:key="project-{{ $project->id }}">
-                                <td class="px-6 py-4 text-center whitespace-nowrap">id</td>
+                                <td class="px-6 py-4 whitespace-nowrap"> @if($project->IdProject)
+                                    #PR-{{ $project->IdProject}}
+                                    @else
+                                    #PR
+                                    @endif</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $project->name }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <x-select shadow placeholder="Seleziona un Team"
@@ -130,6 +134,9 @@
                         @endforeach
                     </tbody>
                 </table>
+                <div class="py-3">
+                    {{ $projects->links('vendor.pagination.tailwind') }}
+                </div>
             @else
                 <div class="text-center font-medium">
                     Non ci sono progetti approvati

@@ -3,14 +3,24 @@
     <div class="flex mx-auto text-black h-[calc(100vh-13rem)]">
         <div class="w-[350px] h-auto bg-white p-5 me-5 rounded">
             <div class="flex items-center justify-center">
-                <figure class="w-[200px] h-[200px]">
-                    <img class="w-full h-full rounded-lg border dark:border-[#505050] dark:bg-[#505050] object-cover object-top"
+                <figure class="w-[150px] h-[150px]">
+                    <img class="w-full h-full rounded-full border dark:border-[#505050] dark:bg-[#505050] object-cover object-top"
                         src="{{ isset($client->img_url) ? asset('/storage/' . $client->img_url) : 'https://static.thenounproject.com/png/261694-200.png' }}"
                         alt="{{ $client->fullName() }}">
                 </figure>
             </div>
             <div class="font-bold text-sm text-center uppercase my-5">
                 {{ $client->fullName() }}
+            </div>
+            <div class="mb-5">
+                <div class="font-medium text-sm">ID:</div>
+                <div class="text-sm">
+                    @if($client->IdClient)
+                    #CL-{{ $client->IdClient}}
+                    @else
+                    #CL
+                    @endif
+                </div>
             </div>
             <div class="mb-5">
                 <div class="font-medium text-sm">Email:</div>
@@ -94,7 +104,7 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody class="bg-white divide-y divide-gray-200">
+                                <tbody class="bg-white divide-y divide-gray-200 text-sm">
                                     @foreach ($client->projects as $project)
                                         <tr wire:key="clientproject-{{ $project->id }}">
                                             <td class="px-6 py-4 whitespace-nowrap">id</td>

@@ -16,7 +16,7 @@
                     option-label="name" option-value="id" />
             </div>
             <div class="flex items-center gap-2 mt-5">
-                <x-checkbox label="Disponibilità Team" id="is_available" wire:model="is_available" />
+                <x-checkbox label="In progettazione" id="is_available" wire:model="is_available" />
             </div>
           
             <div class="flex justify-end mt-5">

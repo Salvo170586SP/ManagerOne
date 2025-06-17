@@ -4,13 +4,27 @@ namespace App\Livewire\Projects;
 
 use App\Models\Project;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class DeliveredProjects extends Component
 {
+    use WithPagination;
+
     public $search = "";
     public $searchDate = "";
     public $teamSelections = [];
     public $stateSelections = [];
+
+    public function updatedSearch()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedSearchDate()
+    {
+        $this->resetPage();
+    }
+ 
 
     public function updatedStateSelections($state, $project_id)
     {
@@ -35,7 +49,7 @@ class DeliveredProjects extends Component
             $projects = $projects->whereDate('created_at', '=', \Carbon\Carbon::parse($this->searchDate)->toDateString());
         }
 
-        $projects = $projects->get();
+        $projects = $projects->latest()->paginate(10);
 
         $states_project =  config('managerOne.states_project');
 

@@ -60,8 +60,8 @@
                 </div>
             </x-card>
 
-            <x-card shadow="false" class="w-[350px] border">
-                <div class="flex justify-between">
+            <x-card shadow="false" class="w-[350px] border ">
+                <div class="flex justify-between ">
                     <div class="bg-green-500 w-[50px] h-[50px] rounded-full flex justify-center items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="white" class="size-7">
@@ -87,7 +87,7 @@
                 @foreach ($teams as $team)
                     <x-card color="blue" shadow="false" class="border">
                         <div class="flex justify-between items-center mb-5">
-                            <div class="text-base font-bold uppercase">
+                            <div class="text-sm font-bold uppercase">
                                 {{ $team->name }}
                             </div>
                             <div class="flex justify-end items-center">
@@ -134,9 +134,9 @@
                             <div
                                 class="text-sm flex justify-center items-center border rounded-lg px-2 py-1 bg-gray-100 mx-2">
                                 @if ($team->is_available)
-                                    In progettazione
+                                In progettazione
                                 @else
-                                    Disponibile
+                                Disponibile
                                 @endif
                             </div>
                         </div>
@@ -144,12 +144,12 @@
                         <hr>
                         <div>
                             @foreach ($team->pms as $pm)
-                                <div class="my-5">
+                                <div class="my-5 ">
                                     <div class="text-sm font-bold">
                                         Project Manager
                                     </div>
                                     <div class="flex justify-between items-center">
-                                        <div class="text-base">
+                                        <div class="text-sm">
                                             {{ $pm->fullName() }}
                                         </div>
                                         <div>
@@ -193,7 +193,7 @@
                                 </div>
                                 @foreach ($team->developers->where('category', '!=', 'project manager') as $dev)
                                     <div class="flex justify-between items-center my-2">
-                                        <div class="text-base ">
+                                        <div class="text-sm">
                                             {{ $dev->fullName() }}
                                         </div>
                                         <div>
@@ -232,8 +232,11 @@
                             </div>
                         </div>
                     </x-card>
-                @endforeach
-            </div>
+                    @endforeach
+                </div>
+                <div class="py-3">
+                    {{ $teams->links('vendor.pagination.tailwind') }}
+                </div>
         @else
             <div class="text-center font-medium">
                 Non ci sono teams registrati

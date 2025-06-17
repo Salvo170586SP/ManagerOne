@@ -16,7 +16,7 @@ class CreateTeam extends Component
 
 
     protected $rules = [
-        'pm_id' => 'required|exists:users,id,type,pm',
+        'pm_id' => 'required|exists:users,id,type,project_manager',
         'developer_ids' => 'required|array|max:4',
         'developer_ids.*' => 'exists:users,id,type,developer',
         'name' => 'required',
@@ -60,12 +60,13 @@ class CreateTeam extends Component
             ];
         });
 
-        $pms = User::where('category', 'project manager')->get()->map(function ($pm) {
+        $pms = User::where('type', 'project_manager')->get()->map(function ($pm) {
             return [
                 'id' => $pm->id,
                 'name' => $pm->fullName(),
             ];
         });
+     
 
         return view('livewire.teams.create-team', compact('developers', 'pms'));
     }
