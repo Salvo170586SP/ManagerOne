@@ -14,7 +14,7 @@
                 class="flex flex-col items-center justify-center mb-10 mt-5">
                 <div class="text-sm text-gray-600">
                     <div class="space-y-2">
-                        <figure class="w-[200px] h-[200px] overflow-hidden shadow-md">
+                        <figure class="w-[150px] h-[150px] overflow-hidden border border-2 rounded-full">
                             <img :src="imageUrl ? imageUrl : '{{ $img_url ?? 'https://static.thenounproject.com/png/261694-200.png' }}'"
                                 class="w-full h-full object-cover object-top bg-gray-100 dark:bg-[#4b4b4b] opacity-50 @if($img_url) opacity-100 @endif rounded-lg"
                                 alt="Anteprima immagine">

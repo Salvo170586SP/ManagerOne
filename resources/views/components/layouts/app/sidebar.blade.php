@@ -15,16 +15,16 @@
 
         <flux:navlist variant="outline">
             <flux:navlist.group class="grid mt-5">
-                <flux:navlist.item icon="users" :href="route('clients.index')"
+                 <flux:navlist.item icon="users" :href="route('clients.index')"
                     :current="request()->routeIs('clients.index')" wire:navigate>Anagrafica Clienti</flux:navlist.item>
                     <hr class="my-3">
-                <flux:navlist.item icon="presentation-chart-line" :href="route('projects.index')"
+                 <flux:navlist.item icon="presentation-chart-line" :href="route('projects.index')"
                     :current="request()->routeIs('projects.index')" wire:navigate>Progetti
                 </flux:navlist.item>
-                <flux:navlist.item icon="presentation-chart-line" :href="route('approved-projects.index')"
+                <flux:navlist.item icon="shield-check" :href="route('approved-projects.index')"
                     :current="request()->routeIs('approved-projects.index')" wire:navigate>Progetti Approvati
                 </flux:navlist.item>
-                <flux:navlist.item icon="presentation-chart-line" :href="route('delivered-projects.index')"
+                <flux:navlist.item icon="lock-closed" :href="route('delivered-projects.index')"
                     :current="request()->routeIs('delivered-projects.index')" wire:navigate>Progetti Consegnati
                 </flux:navlist.item>
                 <hr class="my-3">

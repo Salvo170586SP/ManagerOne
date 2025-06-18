@@ -12,7 +12,7 @@
                 class="flex flex-col justify-center items-center mb-10 mt-5">
                 <div class="text-sm text-gray-600">
                     <div class="space-y-2">
-                        <figure class="w-[200px] h-[200px] overflow-hidden shadow-md rounded-lg">
+                        <figure class="w-[150px] h-[150px] overflow-hidden border border-2 rounded-full">
                             <img :src="imageUrl ? imageUrl : 'https://static.thenounproject.com/png/261694-200.png'"
                                 class="w-full h-full object-cover object-top bg-gray-100 dark:bg-[#4b4b4b] opacity-50"
                                 :class="imageUrl ? 'opacity-100' : ''" alt="Anteprima immagine">
@@ -42,7 +42,7 @@
                 </div>
             </div>
             <div class="flex gap-2 mt-10">
-                <x-input label="Nome" shadow wire:model="name" />
+                <x-input label="Nome"  shadow wire:model="name" />
                 <x-input label="Cognome" shadow wire:model="surname" />
             </div>
             <div class="flex gap-2 mt-10">
