@@ -35,6 +35,11 @@ class Task extends Model
         return $this->belongsTo(User::class, 'developer_id');
     }
 
+    public function notes()
+    {
+        return $this->hasMany(Note::class);
+    }
+
     public function getDate($date)
     {
         if (!$date) {

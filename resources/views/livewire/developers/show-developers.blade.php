@@ -1,7 +1,7 @@
-<div class="-mt-2">
+<div class="-mt-2 min-h-screen overflow-x-hidden">
     <h2 class="text-xl font-bold mb-5">Dettagli Developer</h2>
-    <div class="flex mx-auto text-black{{--  h-[calc(100vh-13rem)] --}}">
-        <div class="w-[350px] h-auto bg-white p-5 me-5 rounded">
+    <div class="flex flex-wrap w-full mx-auto text-black h-screen  {{--  h-[calc(100vh-13rem)] --}}">
+        <div class="w-full max-w-[250px] h-auto bg-white p-5 me-5 rounded break-words">
             <div class="flex items-center justify-center">
                 <figure class="w-[130px] h-[130px]">
                     <img class="w-full h-full rounded-full border dark:border-[#505050] dark:bg-[#505050] object-cover object-top"
@@ -24,7 +24,7 @@
             </div>
             <div class="mb-4">
                 <div class="font-medium text-sm">Email:</div>
-                <div class="text-sm">
+                <div class="text-sm whitespace-normal break-words max-w-[180px]">
                     {{ $developer->email ?? '-' }}
                 </div>
             </div>
@@ -85,7 +85,7 @@
             </div>
         </div>
 
-        <div class="w-full  p-6 bg-white rounded">
+        <div class="flex-1 min-w-0 p-6 bg-white rounded">
             <div class="w-full flex justify-end mb-5 pb-5">
                 <x-button icon="arrow-left" black label="Torna ai Developers" class="font-bold w-[200px] h-[32px]"
                     wire:navigate href="/developers" />
@@ -113,9 +113,9 @@
             </x-card>
 
 
-            <div class="overflow-x-auto">
-                @if ($developer->tasks->count() > 0)
-                    <table class="min-w-full divide-y border divide-gray-200">
+            @if ($developer->tasks->count() > 0)
+                <div class="overflow-x-auto w-full max-w-full">
+                    <table class="min-w-max divide-y border divide-gray-200">
                         <thead>
                             <tr>
                                 <th scope="col"
@@ -133,12 +133,18 @@
                                 <th scope="col"
                                     class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
                                     Chiusura Task</th>
+                                <th scope="col"
+                                    class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                    Descrizione</th>
+                                <th scope="col"
+                                    class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                    Note</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y text-sm divide-gray-200">
                             @foreach ($developer->tasks as $task)
                                 <tr wire:key="task-{{ $task->id }}">
-                                    <td class="px-6 py-4 whitespace-nowrap">
+                                    <td class="px-6 py-4 whitespace-normal break-words max-w-[200px]">
                                         {{ $task->title }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
@@ -149,7 +155,7 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div
-                                            class="rounded text-white max-w-[150px] py-1 text-center text-sm font-medium {{ $this->getColorStatusTask($task->status) }}">
+                                            class="rounded text-white w-[130px] py-1 text-center text-sm font-medium {{ $this->getColorStatusTask($task->status) }}">
                                             {{ $this->getStatusNameTask($task->status) }}
                                         </div>
                                     </td>
@@ -165,14 +171,8 @@
                                             wire:model="taskDates.{{ $task->id }}"
                                             wire:change.live="changeDate({{ $task->id }})" type="datetime-local"
                                             id="completed_at-{{ $task->id }}" />
-
-                                        {{--  @if ($task->completed_at)
-                                            {{ $task->getDate($task->completed_at) }}
-                                        @else
-                                            -
-                                        @endif --}}
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
+                                    <td class="px-6 py-4 whitespace-normal break-words max-w-[200px] text-center">
                                         <x-button flat gray icon="eye"
                                             x-on:click="$openModal('tasks-{{ $task->id }}')" />
                                         <x-modal name="tasks-{{ $task->id }}" blur="sm" align="center">
@@ -180,27 +180,39 @@
                                                 <div class="p-2 bg-gray-300 text-white rounded-md mb-2 text-xl">
                                                     Descrizione Task
                                                 </div>
-                                                <p class="text-sm p-2 break-words break-all whitespace-pre-wrap">
+                                                <p class="text-sm p-2 break-words break-all whitespace-pre-wrap max-w-[400px] mx-auto">
                                                     {{ $task->description }}
                                                 </p>
-
                                                 <x-slot name="footer" class="flex justify-end gap-x-4">
                                                     <x-button black label="Annulla" x-on:click="close" />
-
                                                 </x-slot>
                                             </x-card>
                                         </x-modal>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-normal break-words max-w-[120px] text-center">
+                                        <div class="relative">
+                                            <x-button flat blue icon="document-text"
+                                                wire:click="openNotesSidebar({{ $task->id }})"
+                                                title="Visualizza Note" />
+                                            <div
+                                                class="absolute right-2 top-0  rounded-full bg-blue-500 h-[15px] w-[15px] text-center text-xs font-bold text-white">
+                                                {{ $task->notes->count() }}</div>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
-                @else
-                    <div class="px-6 py-4 text-center text-gray-500">
-                        Nessuna task presente
-                    </div>
-                @endif
-            </div>
+                </div>
+            @else
+                <div class="px-6 py-4 text-center text-gray-500">
+                    Nessuna task presente
+                </div>
+            @endif
 
         </div>
+        <!-- Componente Sidebar per le Note -->
+        <x-notes-sidebar wire:model="showDrawer2" :notes="$selectedTaskNotes" :item="$selectedTask" :edit-note-id="$editNoteId"
+            onClose="closeNotesSidebar" />
     </div>
+</div>

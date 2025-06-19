@@ -60,6 +60,10 @@
                                 Team di sviluppo
                             </th>
                             <th scope="col"
+                                class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                Note
+                            </th>
+                            <th scope="col"
                                 class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
                                 Cliente
                             </th>
@@ -100,6 +104,16 @@
                                         option-label="name" option-value="id" />
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $project->client->fullName() }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="relative">
+                                        <x-button flat blue icon="document-text"
+                                            wire:click="openNotesSidebar({{ $project->id }})"
+                                            title="Visualizza Note" />
+                                        <div
+                                            class="absolute right-2 top-0  rounded-full bg-blue-500 h-[15px] w-[15px] text-center text-xs font-bold text-white">
+                                            {{ $project->notes->count() }}</div>
+                                    </div>
+                                </td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $project->preventive }} €</td>
                                 <td class="px-6 py-6 flex justify-center items-center">
                                     @if ($project->is_available)
@@ -147,4 +161,8 @@
             @endif
         </div>
     </div>
+
+     <!-- Componente Sidebar per le Note -->
+     <x-notes-sidebar wire:model="showDrawer2" :notes="$selectedProjectNotes" :project="$selectedProject" :edit-note-id="$editNoteId"
+     onClose="closeNotesSidebar" />
 </div>

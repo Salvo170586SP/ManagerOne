@@ -84,6 +84,10 @@
                                     </th>
                                     <th scope="col"
                                         class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                        Note
+                                    </th>
+                                    <th scope="col"
+                                        class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
                                         Scadenza
                                     </th>
                                     <th scope="col"
@@ -109,6 +113,15 @@
                                             <div
                                                 class="max-w-[150px] px-5 py-1 text-white text-sm font-semibold rounded {{ $this->getPriorityColor($task->priority) }}">
                                                 {{ $this->getPriorityName($task->priority) }}
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-center">
+                                            <div class="relative">
+                                                <x-button flat blue icon="document-text"
+                                                wire:click="openNotesSidebar({{ $task->id }})" title="Visualizza Note" />
+                                                <div
+                                                class="absolute right-2 top-0  rounded-full bg-blue-500 h-[15px] w-[15px] text-center text-xs font-bold text-white">
+                                                {{ $task->notes->count() }}</div>
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-center">
@@ -150,4 +163,9 @@
             </div>
         </div>
     </div>
+
+
+     <!-- Componente Sidebar per le Note -->
+     <x-notes-sidebar wire:model="showDrawer2" :notes="$selectedTaskNotes" :item="$selectedTask" :edit-note-id="$editNoteId"
+     onClose="closeNotesSidebar" />
 </div>
