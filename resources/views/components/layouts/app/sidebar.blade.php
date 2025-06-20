@@ -34,6 +34,9 @@
                 <flux:navlist.item icon="document-currency-euro" :href="route('invoices.index')"
                 :current="request()->routeIs('invoices.index')" wire:navigate>Fatture
                 </flux:navlist.item>
+                <flux:navlist.item icon="document-duplicate" :href="route('documents.index')"
+                :current="request()->routeIs('documents.index')" wire:navigate>Documenti
+                </flux:navlist.item>
                 <hr class="my-3">
                 <flux:navlist.item icon="identification" :href="route('developers.index')"
                 :current="request()->routeIs('developers.index')" wire:navigate>Developers

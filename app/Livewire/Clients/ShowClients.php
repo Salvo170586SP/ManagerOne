@@ -8,10 +8,12 @@ use Livewire\Component;
 class ShowClients extends Component
 {
     public $client;
+    public $invoices;
 
     public function mount(User $client)
     {
         $this->client = $client;
+        $this->invoices = $client->invoices;
     }
 
     public function getStateName($state)

@@ -161,6 +161,31 @@
                     </div>
                 </div>
             </div>
+            <div class="mt-10">
+                <h3 class="text-lg font-semibold mb-5">Fatture</h3>
+                <div class="flex flex-wrap gap-6">
+                    @forelse ($invoices as $invoice)
+                        <x-card class="border w-[300px]">
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="font-bold text-sm">{{ $invoice->name ?? 'Fattura #' . $invoice->IdInvoice }}</div>
+                                @if ($invoice->pdf_path)
+                                    <a href="{{ asset('storage/' . $invoice->pdf_path) }}" target="_blank" class="text-blue-600 underline text-sm">PDF</a>
+                                @endif
+                            </div>
+                            <div class="text-sm mb-1">
+                                <span class="font-semibold">Progetto:</span>
+                                {{ $invoice->project ? $invoice->project->name : '-' }}
+                            </div>
+                            <div class="text-sm mb-1">
+                                <span class="font-semibold">Data creazione:</span>
+                                {{ $invoice->createDate() }}
+                            </div>
+                        </x-card>
+                    @empty
+                        <div class="col-span-3 text-center font-medium py-10">Non ci sono fatture per questo cliente</div>
+                    @endforelse
+                </div>
+            </div>
         </div>
     </div>
 </div>

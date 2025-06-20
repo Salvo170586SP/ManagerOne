@@ -8,6 +8,8 @@ use App\Livewire\Developers\CreateDevelopers;
 use App\Livewire\Developers\EditDevelopers;
 use App\Livewire\Developers\IndexDevelopers;
 use App\Livewire\Developers\ShowDevelopers;
+use App\Livewire\Documents\IndexDocument;
+use App\Livewire\Documents\ShowDocument;
 use App\Livewire\Invoices\EditInvoices;
 use App\Livewire\Invoices\IndexInvoices;
 use App\Livewire\Invoices\ShowInvoices;
@@ -48,6 +50,9 @@ Route::middleware(['auth', 'role:super_admin'])->group(function () {
     Route::get('/approved-projects', ApprovedProjects::class)->name('approved-projects.index');
     
     Route::get('/delivered-projects', DeliveredProjects::class)->name('delivered-projects.index');
+
+    Route::get('/documents', IndexDocument::class)->name('documents.index');
+    Route::get('/documents/{user}', ShowDocument::class)->name('documents.show');
 
     Route::get('/tasks', IndexTasks::class)->name('tasks.task-list');
     Route::get('/tasks/{project}/show', ShowTasks::class)->name('tasks.create-tasks');
