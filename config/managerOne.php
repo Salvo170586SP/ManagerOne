@@ -73,22 +73,22 @@ return [
         [
             'id' => 'planning',
             'name' => 'In Progettazione',
-            'color' => 'bg-yellow-200',
+            'color' => 'bg-yellow-100 border border-yellow-300 text-yellow-700' ,
         ],
         [
             'id' => 'pending',
             'name' => 'In Sospeso',
-            'color' => 'bg-yellow-400',
+            'color' => 'bg-orange-100 border border-orange-300 text-orange-700',
         ],
         [
             'id' => 'deleted',
             'name' => 'Annullato',
-            'color' => 'bg-red-200',
+            'color' => 'bg-red-100 border border-red-300 text-red-700',
         ],
         [
             'id' => 'delivered',
             'name' => 'Consegnato',
-            'color' => 'bg-gray-200',
+            'color' => 'bg-gray-100 border border-gray-300 text-gray-700',
         ]
     ],
     'states_task' => [

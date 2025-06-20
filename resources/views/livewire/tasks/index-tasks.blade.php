@@ -38,16 +38,16 @@
                 <tbody class="bg-white divide-y text-sm divide-gray-200">
                     @foreach ($projects as $project)
                         <tr>
-                            <td class="px-6 py-4 whitespace-nowrap">
+                            <td class="px-6 py-4 whitespace-nowrap w-[250px]">
                                 <div class="text-sm">{{ $project->name }}</div>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm">@isset($project->team->name) {{ $project->team->name }} @else - @endisset</div>
+                            <td class="px-6 py-4 whitespace-nowrap w-[250px]">
+                                <div class="text-sm w-full">@isset($project->team->name) {{ $project->team->name }} @else - @endisset</div>
                             </td>
                             <td class="px-6 py-4 max-w-[80px] whitespace-nowrap text-center">
                                 @if ($project->state)
                                     <div
-                                        class="rounded ms-2 font-medium text-center {{ $this->getStateColor($project->state) }}">
+                                        class="rounded ms-2 py-1 font-medium text-center {{ $this->getStateColor($project->state) }}">
                                         {{ $this->getStateName($project->state) }}
                                     </div>
                                 @else
