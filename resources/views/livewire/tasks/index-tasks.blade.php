@@ -21,10 +21,17 @@
                     <tr>
                         <th scope="col"
                             class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                        </th>
+                        <th scope="col"
+                            class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
                             Progetto</th>
                         <th scope="col"
                             class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
                             Team
+                        </th>
+                        <th scope="col"
+                            class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                            Tasks
                         </th>
                         <th scope="col"
                             class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
@@ -35,14 +42,34 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y text-sm divide-gray-200">
+                <tbody class="bg-white divide-y text-sm divide-gray-200" x-data="{ openRow: null }">
                     @foreach ($projects as $project)
                         <tr>
+                            <td class="px-6 py-4 whitespace-nowrap w-[50px]">
+                                @if ($project->tasks->count() > 0)
+                                    <x-button black flat class="w-2" icon="chevron-down" title="vedi tasks"
+                                        @click="openRow === {{ $project->id }} ? openRow = null : openRow = {{ $project->id }}" />
+                                @else
+                                    <x-button light icon="no-symbol" class="w-2" />
+                                @endif
+                            </td>
                             <td class="px-6 py-4 whitespace-nowrap w-[250px]">
                                 <div class="text-sm">{{ $project->name }}</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap w-[250px]">
-                                <div class="text-sm w-full">@isset($project->team->name) {{ $project->team->name }} @else - @endisset</div>
+                                <div class="text-sm w-full">
+                                    @isset($project->team->name)
+                                        {{ $project->team->name }}
+                                    @else
+                                        -
+                                    @endisset
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 flex justify-center">
+                                <div
+                                    class="bg-gray-600 text-white font-bold h-6 w-6 flex items-center justify-center rounded-full">
+                                    {{ $project->tasks->count() }}
+                                </div>
                             </td>
                             <td class="px-6 py-4 max-w-[80px] whitespace-nowrap text-center">
                                 @if ($project->state)
@@ -51,7 +78,7 @@
                                         {{ $this->getStateName($project->state) }}
                                     </div>
                                 @else
-                                -
+                                    -
                                 @endif
                             </td>
                             <td class="whitespace-nowrap text-sm text-center text-gray-500">
@@ -61,6 +88,45 @@
                                     <x-button icon="plus" flat blue title="Aggiungi Tasks" wire:navigate
                                         href="/tasks/{{ $project->id }}/create" class="font-bold h-[32px]" />
                                 @endif
+                            </td>
+                        </tr>
+
+                        <tr x-show="openRow == {{ $project->id }}" x-cloak>
+                            <td colspan="6" class="bg-gray-50 p-0">
+                                <div class="p-4">
+                                    <table class="w-full border divide-y divide-gray-200 bg-white">
+                                        <thead>
+                                            <tr>
+                                                <th
+                                                    class="px-6 py-2 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                                    Task</th>
+                                                <th
+                                                    class="px-6 py-2 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                                    Assegnato a</th>
+                                                <th
+                                                    class="px-6 py-2 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                                    Scadenza a</th>
+                                                <th
+                                                    class="px-6 py-2 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                                    Completato il</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($project->tasks->take(4) as $task)
+                                                <tr wire:key="proj-task-{{ $project->id }}-{{ $task->id }}">
+                                                    <td class="px-6 py-2">{{ $task->title }}</td>
+                                                    <td class="px-6 py-2">{{ $task->developer->name ?? '-' }}</td>
+                                                    <td class="px-6 py-2">{{ $task->getDate($task->due_date) }} </td>
+                                                    <td class="px-6 py-2">{{ $task->getDate($task->completed_at) }}
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                                <tr>
+                                                    <td class="px-6 py-2 text-sm text-gray-500">....Vai nei dettagli per vedere altro</td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </td>
                         </tr>
                     @endforeach

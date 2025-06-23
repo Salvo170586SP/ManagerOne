@@ -44,7 +44,7 @@
         </x-card>
 
 
-        <div class="{{-- overflow-x-auto --}}">
+        <div class="overflow-x-auto">
             @if ($projects->count() > 0)
                 <table class="min-w-full divide-y border divide-gray-200">
                     <thead>
