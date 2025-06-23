@@ -1,30 +1,5 @@
 <?php
 
-use App\Livewire\Clients\CreateClients;
-use App\Livewire\Clients\EditClients;
-use App\Livewire\Clients\IndexClients;
-use App\Livewire\Clients\ShowClients;
-use App\Livewire\Developers\CreateDevelopers;
-use App\Livewire\Developers\EditDevelopers;
-use App\Livewire\Developers\IndexDevelopers;
-use App\Livewire\Developers\ShowDevelopers;
-use App\Livewire\Documents\IndexDocument;
-use App\Livewire\Documents\ShowDocument;
-use App\Livewire\Invoices\EditInvoices;
-use App\Livewire\Invoices\IndexInvoices;
-use App\Livewire\Invoices\ShowInvoices;
-use App\Livewire\Projects\ApprovedProjects;
-use App\Livewire\Projects\CreateProject;
-use App\Livewire\Projects\DeliveredProjects;
-use App\Livewire\Projects\EditProjects;
-use App\Livewire\Projects\IndexProjects;
-use App\Livewire\Projects\ShowProjects;
-use App\Livewire\Tasks\CreateTask;
-use App\Livewire\Tasks\IndexTasks;
-use App\Livewire\Tasks\ShowTasks;
-use App\Livewire\Teams\CreateTeam;
-use App\Livewire\Teams\EditTeam;
-use App\Livewire\Teams\IndexTeams;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
@@ -37,40 +12,49 @@ Route::view('dashboard', 'dashboard')
     ->name('dashboard');
 
 Route::middleware(['auth', 'role:super_admin'])->group(function () {
-    Route::get('/clients', IndexClients::class)->name('clients.index');
-    Route::get('/clients/create', CreateClients::class)->name('clients.create');
-    Route::get('/clients/{client}', ShowClients::class)->name('clients.show');
-    Route::get('/clients/{client}/edit', EditClients::class)->name('clients.edit');
+    //clients
+    Volt::route('/clients', 'clients.index-clients')->name('clients.index');
+    Volt::route('/clients/create', 'clients.create-clients')->name('clients.create');
+    Volt::route('/clients/{client}', 'clients.show-clients')->name('clients.show');
+    Volt::route('/clients/{client}/edit', 'clients.edit-clients')->name('clients.edit');
 
-    Route::get('/projects', IndexProjects::class)->name('projects.index');
-    Route::get('/projects/create', CreateProject::class)->name('projects.create');
-    Route::get('/projects/{project}', ShowProjects::class)->name('projects.show');
-    Route::get('/projects/{project}/edit', EditProjects::class)->name('projects.edit');
+    //projects
+    Volt::route('/projects', 'projects.index-projects')->name('projects.index');
+    Volt::route('/projects/create', 'projects.create-project')->name('projects.create');
+    Volt::route('/projects/{project}', 'projects.show-projects')->name('projects.show');
+    Volt::route('/projects/{project}/edit', 'projects.edit-projects')->name('projects.edit');
+    Volt::route('/approved-projects', 'projects.approved-projects')->name('approved-projects.index');
+    Volt::route('/delivered-projects', 'projects.approved-projects')->name('delivered-projects.index');
+
+    //documents
+    Volt::route('/documents', 'documents.index-document')->name('documents.index');
+    Volt::route('/documents/{user}', 'documents.show-document')->name('documents.show');
     
-    Route::get('/approved-projects', ApprovedProjects::class)->name('approved-projects.index');
+    //tasks
+    Volt::route('/tasks', 'tasks.index-tasks')->name('tasks.index-tasks');
+    Volt::route('/tasks/{project}/show', 'tasks.show-tasks')->name('tasks.show-tasks');
+    Volt::route('/tasks/{project}/create', 'tasks.create-task')->name('tasks.create-task');
     
-    Route::get('/delivered-projects', DeliveredProjects::class)->name('delivered-projects.index');
-
-    Route::get('/documents', IndexDocument::class)->name('documents.index');
-    Route::get('/documents/{user}', ShowDocument::class)->name('documents.show');
-
-    Route::get('/tasks', IndexTasks::class)->name('tasks.task-list');
-    Route::get('/tasks/{project}/show', ShowTasks::class)->name('tasks.create-tasks');
-    Route::get('/tasks/{project}/create', CreateTask::class)->name('tasks.create-task');
+    //invoices
+    Volt::route('/invoices', 'invoices.index-invoices')->name('invoices.index');
+    Volt::route('/invoices/{invoice}', 'invoices.show-invoices')->name('invoices.show');
+    Volt::route('/invoices/{invoice}/edit', 'invoices.edit-invoices')->name('invoices.edit');
     
-    Route::get('/invoices', IndexInvoices::class)->name('invoices.index');
-    Route::get('/invoices/{invoice}', ShowInvoices::class)->name('invoices.show');
-    Route::get('/invoices/{invoice}/edit', EditInvoices::class)->name('invoices.edit');
+    //developers
+    Volt::route('/developers', 'developers.index-developers')->name('developers.index');
+    Volt::route('/developers/create', 'developers.create-developers')->name('developers.create');
+    Volt::route('/developers/{developer}', 'developers.show-developers')->name('developers.show');
+    Volt::route('/developers/{developer}/edit', 'developers.edit-developers')->name('developers.edit');
     
-    Route::get('/developers', IndexDevelopers::class)->name('developers.index');
-    Route::get('/developers/create', CreateDevelopers::class)->name('developers.create');
-    Route::get('/developers/{developer}', ShowDevelopers::class)->name('developers.show');
-    Route::get('/developers/{developer}/edit', EditDevelopers::class)->name('developers.edit');
-
-    Route::get('/teams', IndexTeams::class)->name('teams.index');
-    Route::get('/teams/create', CreateTeam::class)->name('teams.create');
-    Route::get('/teams/{team}/edit', EditTeam::class)->name('teams.edit');
-
+    //teams
+    Volt::route('/teams', 'teams.index-teams')->name('teams.index');
+    Volt::route('/teams/create', 'teams.create-team')->name('teams.create');
+    Volt::route('/teams/{team}/edit', 'teams.edit-team')->name('teams.edit');
+    
+    //calendar
+    Volt::route('/calendar', 'calendar.index-calendar')->name('calendar.index');
+    
+    //settings
     Route::redirect('settings', 'settings/profile');
     Volt::route('settings/profile', 'settings.profile')->name('settings.profile');
     Volt::route('settings/password', 'settings.password')->name('settings.password');

@@ -32,14 +32,18 @@
                     :current="request()->routeIs('delivered-projects.index')" wire:navigate>Progetti Consegnati
                 </flux:navlist.item>
                 <hr class="my-3">
-                <flux:navlist.item icon="puzzle-piece" :href="route('tasks.task-list')"
-                :current="request()->routeIs('tasks.task-list')" wire:navigate>Gestione Tasks
+                <flux:navlist.item icon="puzzle-piece" :href="route('tasks.index-tasks')"
+                :current="request()->routeIs('tasks.index-tasks')" wire:navigate>Gestione Tasks
                 </flux:navlist.item>
                 <flux:navlist.item icon="document-currency-euro" :href="route('invoices.index')"
                 :current="request()->routeIs('invoices.index')" wire:navigate>Fatture
                 </flux:navlist.item>
                 <flux:navlist.item icon="document-duplicate" :href="route('documents.index')"
                 :current="request()->routeIs('documents.index')" wire:navigate>Documenti
+                </flux:navlist.item>
+                
+                <flux:navlist.item icon="calendar" :href="route('calendar.index')"
+                :current="request()->routeIs('calendar.index')" wire:navigate>Calendario
                 </flux:navlist.item>
                 <hr class="my-3">
                 <flux:navlist.item icon="identification" :href="route('developers.index')"
@@ -108,6 +112,7 @@
     {{ $slot }}
 
     @fluxScripts
+    @stack('scripts')
 </body>
 
 </html>

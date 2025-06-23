@@ -90,6 +90,16 @@ class User extends Authenticatable
     {
         return $this->hasMany(Task::class, 'developer_id');
     }
+
+    public function events()
+    {
+        return $this->belongsToMany(Event::class);
+    }
+
+    public function createdEvents()
+    {
+        return $this->hasMany(Event::class, 'user_id');
+    }
     //
 
 
