@@ -2,22 +2,36 @@
 
 namespace App\Livewire\Tasks;
 
-use App\Models\Task;
 use App\Models\Project;
-use App\Models\User;
+use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
-class CreateTask extends Component
+class EditTask extends Component
 {
-    public Project $project;
+    public $task;
+    public $project;
+
     public $title = '';
     public $description = '';
     public $developer_id;
     public $priority = '';
     public $due_date = '';
     public $state_task;
+
+    public function mount(Task $task, Project $project)
+    {
+        $this->task = $task;
+        $this->title = $task->title;
+        $this->description = $task->description;
+        $this->developer_id = $task->developer_id;
+        $this->priority = $task->priority;
+        $this->due_date = $task->due_date;
+        $this->state_task = $task->status;
+
+        $this->project = $project;
+    }
 
     protected $rules = [
         'title' => 'required|string|max:255',
@@ -27,16 +41,11 @@ class CreateTask extends Component
         'due_date' => 'nullable|date|after:now',
     ];
 
-    public function mount(Project $project)
-    {
-        $this->project = $project;
-    }
-
     public function createTask()
     {
         $this->validate();
 
-        $task = $this->project->tasks()->create([
+        $this->task->update([
             'title' => $this->title,
             'developer_id' => $this->developer_id,
             'description' => $this->description,
@@ -47,14 +56,14 @@ class CreateTask extends Component
 
         session()->flash('message', 'Task creata con successo!');
 
-        Log::info('Task creata', [
-            'id' => $task->id,
-            'title' => $task->title,
-            'developer_id' => $task->developer_id,
-            'description' => $task->description,
-            'priority' => $task->priority,
-            'due_date' => $task->due_date,
-            'status' => $task->status,
+        Log::info('Task modificata', [
+            'id' =>  $this->task->id,
+            'title' => $this->task->title,
+            'developer_id' => $this->task->developer_id,
+            'description' => $this->task->description,
+            'priority' => $this->task->priority,
+            'due_date' => $this->task->due_date,
+            'status' => $this->task->status,
             'created_by' => Auth::id(),
             'project_id' => $this->project->id,
         ]);
@@ -74,10 +83,10 @@ class CreateTask extends Component
                 'name' => $dev->fullName(),
             ];
         }) ?? collect();
-        
+
         $states =  config('managerOne.states_task');
         $priorities =  config('managerOne.priorities_task');
 
-        return view('livewire.tasks.create-task', compact('developers','states','priorities'));
+        return view('livewire.tasks.edit-task', compact('developers', 'states', 'priorities'));
     }
 }

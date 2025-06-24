@@ -1,6 +1,6 @@
 <div class="-mt-2 min-h-screen overflow-x-hidden">
     <h2 class="text-xl font-bold mb-5">Dettagli Developer</h2>
-    <div class="flex flex-wrap w-full mx-auto text-black h-screen  {{--  h-[calc(100vh-13rem)] --}}">
+    <div class="flex flex-wrap w-full mx-auto text-black h-screen   h-[calc(100vh-13rem)]">
         <div class="w-full max-w-[250px] h-auto bg-white p-5 me-5 rounded break-words">
             <div class="flex items-center justify-center">
                 <figure class="w-[130px] h-[130px]">
@@ -114,18 +114,18 @@
 
 
             @if ($developer->tasks->count() > 0)
-                <div class="overflow-x-auto w-full max-w-full">
-                    <table class="min-w-max divide-y border divide-gray-200">
+                <div class="w-full {{-- overflow-x-auto --}}">
+                    <table class="w-full divide-y border divide-gray-200 ">
                         <thead>
                             <tr>
                                 <th scope="col"
                                     class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
                                     Titolo</th>
                                 <th scope="col"
-                                    class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                    class="px-6 py-5 text-cenetr text-xs font-medium border text-gray-500 uppercase tracking-wider">
                                     Priorità</th>
                                 <th scope="col"
-                                    class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                    class="px-6 py-5 text-cenetr text-xs font-medium border text-gray-500 uppercase tracking-wider">
                                     Stato</th>
                                 <th scope="col"
                                     class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
@@ -145,7 +145,7 @@
                             @foreach ($developer->tasks as $task)
                                 <tr wire:key="task-{{ $task->id }}">
                                     <td class="px-6 py-4 whitespace-normal break-words max-w-[200px]">
-                                        {{ $task->title }}
+                                        {{ \Illuminate\Support\Str::limit($task->title, 10) }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div
@@ -166,11 +166,9 @@
                                             -
                                         @endif
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <input class="border border-gray-300 px-5 bg-gray-50 rounded"
-                                            wire:model="taskDates.{{ $task->id }}"
-                                            wire:change.live="changeDate({{ $task->id }})" type="datetime-local"
-                                            id="completed_at-{{ $task->id }}" />
+                                    <td class="px-6 py-4 whitespace-nowrap" >
+                                        <x-datetime-picker without-time wire:model.live="taskDates.{{ $task->id }}"
+                                            id="completed_at-{{ $task->id }}" shadow  />
                                     </td>
                                     <td class="px-6 py-4 whitespace-normal break-words max-w-[200px] text-center">
                                         <x-button flat gray icon="eye"
@@ -180,7 +178,8 @@
                                                 <div class="p-2 bg-gray-300 text-white rounded-md mb-2 text-xl">
                                                     Descrizione Task
                                                 </div>
-                                                <p class="text-sm p-2 break-words break-all whitespace-pre-wrap max-w-[400px] mx-auto">
+                                                <p
+                                                    class="text-sm p-2 break-words break-all whitespace-pre-wrap max-w-[400px] mx-auto">
                                                     {{ $task->description }}
                                                 </p>
                                                 <x-slot name="footer" class="flex justify-end gap-x-4">

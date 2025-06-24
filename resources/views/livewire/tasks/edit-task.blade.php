@@ -1,7 +1,8 @@
 <div>
     <div class="flex justify-between items-center mb-4">
-        <h2 class="text-2xl font-bold">Crea Nuova Task</h2>
-        <x-button icon="arrow-left" black label="Torna ai Tasks" wire:navigat href="/tasks" class="font-bold h-[32px]" />
+        <h2 class="text-2xl font-bold">Modifica Task</h2>
+        <x-button icon="arrow-left" black label="Torna ai Tasks" wire:navigat href="/tasks/{{ $project->id }}/show"
+            class="font-bold h-[32px]" />
     </div>
     <div class="bg-white p-6 rounded">
         <form wire:submit.prevent="createTask" class="space-y-4">

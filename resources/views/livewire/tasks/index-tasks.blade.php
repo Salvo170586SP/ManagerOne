@@ -16,8 +16,9 @@
         </div>
 
         @if ($projects->count() > 0)
-            <table class="min-w-full border divide-y divide-gray-200">
-                <thead>
+            <div class="overflow-x-auto">
+                <table class="min-w-full border divide-y divide-gray-200">
+                    <thead>
                     <tr>
                         <th scope="col"
                             class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
@@ -41,14 +42,14 @@
                             class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
                         </th>
                     </tr>
-                </thead>
-                <tbody class="bg-white divide-y text-sm divide-gray-200" x-data="{ openRow: null }">
+                    </thead>
+                    <tbody class="bg-white divide-y text-sm divide-gray-200" x-data="{ openRow: null }">
                     @foreach ($projects as $project)
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap w-[50px]">
                                 @if ($project->tasks->count() > 0)
                                     <x-button black flat class="w-2" icon="chevron-down" title="vedi tasks"
-                                        @click="openRow === {{ $project->id }} ? openRow = null : openRow = {{ $project->id }}" />
+                                              @click="openRow === {{ $project->id }} ? openRow = null : openRow = {{ $project->id }}" />
                                 @else
                                     <x-button light icon="no-symbol" class="w-2" />
                                 @endif
@@ -83,55 +84,57 @@
                             </td>
                             <td class="whitespace-nowrap text-sm text-center text-gray-500">
                                 <x-button icon="eye" gray flat wire:navigate title="Vedi dettagli"
-                                    href="/tasks/{{ $project->id }}/show" class="font-bold h-[32px]" />
+                                          href="/tasks/{{ $project->id }}/show" class="font-bold h-[32px]" />
                                 @if ($project->state !== 'Annullato')
                                     <x-button icon="plus" flat blue title="Aggiungi Tasks" wire:navigate
-                                        href="/tasks/{{ $project->id }}/create" class="font-bold h-[32px]" />
+                                              href="/tasks/{{ $project->id }}/create" class="font-bold h-[32px]" />
                                 @endif
                             </td>
                         </tr>
 
                         <tr x-show="openRow == {{ $project->id }}" x-cloak>
                             <td colspan="6" class="bg-gray-50 p-0">
-                                <div class="p-4">
+                                <div class="p-4 overflow-x-auto">
                                     <table class="w-full border divide-y divide-gray-200 bg-white">
                                         <thead>
-                                            <tr>
-                                                <th
-                                                    class="px-6 py-2 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
-                                                    Task</th>
-                                                <th
-                                                    class="px-6 py-2 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
-                                                    Assegnato a</th>
-                                                <th
-                                                    class="px-6 py-2 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
-                                                    Scadenza a</th>
-                                                <th
-                                                    class="px-6 py-2 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
-                                                    Completato il</th>
-                                            </tr>
+                                        <tr>
+                                            <th
+                                                class="px-6 py-2 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                                Task</th>
+                                            <th
+                                                class="px-6 py-2 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                                Assegnato a</th>
+                                            <th
+                                                class="px-6 py-2 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                                Scadenza a</th>
+                                            <th
+                                                class="px-6 py-2 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                                Completato il</th>
+                                        </tr>
                                         </thead>
-                                        <tbody>
-                                            @foreach ($project->tasks->take(4) as $task)
-                                                <tr wire:key="proj-task-{{ $project->id }}-{{ $task->id }}">
-                                                    <td class="px-6 py-2">{{ $task->title }}</td>
-                                                    <td class="px-6 py-2">{{ $task->developer->name ?? '-' }}</td>
-                                                    <td class="px-6 py-2">{{ $task->getDate($task->due_date) }} </td>
-                                                    <td class="px-6 py-2">{{ $task->getDate($task->completed_at) }}
-                                                    </td>
-                                                </tr>
-                                                @endforeach
-                                                <tr>
-                                                    <td class="px-6 py-2 text-sm text-gray-500">....Vai nei dettagli per vedere altro</td>
-                                                </tr>
+                                        <tbody class="divide-y text-xs divide-gray-200">
+                                        @foreach ($project->tasks->take(4) as $task)
+                                            <tr wire:key="proj-task-{{ $project->id }}-{{ $task->id }}">
+                                                <td class="px-6 py-2">{{ \Illuminate\Support\Str::limit($task->title, 10) }}</td>
+                                                <td class="px-6 py-2">{{ $task->developer->name ?? '-' }}</td>
+                                                <td class="px-6 py-2">{{ $task->getDate($task->due_date) }} </td>
+                                                <td class="px-6 py-2">{{ $task->getDate($task->completed_at) }}
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        <tr>
+                                            <td class="px-6 py-2 text-sm text-gray-500">....Vai nei dettagli per
+                                                vedere altro</td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </td>
                         </tr>
                     @endforeach
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
             <div class="py-3">
                 {{ $tasks->links('vendor.pagination.tailwind') }}
             </div>

@@ -45,6 +45,18 @@ class ShowTasks extends Component
         $fullPath = Storage::disk('public')->path($filePath);
         return response()->download($fullPath);
     }
+    
+    public function deleteTask($taskId)
+    {
+        $task = Task::findOrFail($taskId);
+        if ($task) {
+            $task->delete();
+        }
+
+        $projectId = $this->project->id;
+
+        $this->redirect("/tasks/$projectId/show", navigate: true);
+    }
 
     public function deleteFile($note_id)
     {
@@ -118,7 +130,7 @@ class ShowTasks extends Component
         $this->selectedTaskNotes = $task->fresh()->notes;
         $this->editNoteId = null;
     }
-    
+
     public function editNote($note_id)
     {
         $note = Note::findOrFail($note_id);
@@ -217,6 +229,18 @@ class ShowTasks extends Component
     public function getPriorityColor($priority)
     {
         $taskData = collect(config('managerOne.priorities_task'))->firstWhere('id', $priority);
+        return $taskData['color'] ?? 'bg-gray-300';
+    }
+  
+    public function getStatusName($priority)
+    {
+        $taskData = collect(config('managerOne.states_task'))->firstWhere('id', $priority);
+        return $taskData['name'] ?? $priority;
+    }
+
+    public function getStatusColor($priority)
+    {
+        $taskData = collect(config('managerOne.states_task'))->firstWhere('id', $priority);
         return $taskData['color'] ?? 'bg-gray-300';
     }
 

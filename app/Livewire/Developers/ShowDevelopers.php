@@ -36,18 +36,19 @@ class ShowDevelopers extends Component
         
         // Initialize taskDates with current completed_at values
         foreach ($developer->tasks as $task) {
-            $this->taskDates[$task->id] = $task->completed_at ? $task->completed_at->format('Y-m-d\TH:i') : '';
+            $this->taskDates[$task->id] = $task->completed_at ? $task->completed_at->format('Y-m-d') : '';
         }
     }
    
-    public function changeDate($task_id)
+    public function updatedTaskDates($value, $key)
     {
-        
-        $task = Task::find($task_id);
+        $task = Task::find($key);
         
         if ($task) {
+            $completed_at = $value ? \Carbon\Carbon::parse($value)->startOfDay() : null;
+
             $task->update([
-                'completed_at' => $this->taskDates[$task_id] ?: null
+                'completed_at' => $completed_at
             ]);
         }
     }
@@ -129,7 +130,7 @@ class ShowDevelopers extends Component
     public function getStatusNameTask($priority)
     {
         $taskData = collect(config('managerOne.states_task'))->first(function ($item) use ($priority) {
-            return $item['name'] === $priority;
+            return $item['id'] === $priority;
         });
         return $taskData['name'] ?? $priority;
     }
@@ -138,7 +139,7 @@ class ShowDevelopers extends Component
     {
         $priorityId = is_string($task) ? $task : $task->priority;
         $taskData = collect(config('managerOne.states_task'))->first(function ($item) use ($priorityId) {
-            return $item['name'] === $priorityId;
+            return $item['id'] === $priorityId;
         });
 
         return $taskData['color'] ?? 'bg-gray-300';

@@ -17,7 +17,7 @@
                     @endif
                 </h3>
             </div>
-            <button wire:click="{{ $onClose }}" class="text-gray-400 hover:text-gray-600">
+            <button wire:click="{{ $onClose }}" class="text-gray-400 hover:text-gray-600 cursor-pointer">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
                     </path>
@@ -37,11 +37,11 @@
 
                 <div x-show="openForm == true" class="mt-10 flex flex-col items-end border rounded p-5">
                     <div>
-                        <x-input wire:model="newNoteTitle" label="Titolo"
+                        <x-input wire:model="newNoteTitle" label="Titolo" shadow
                             placeholder="Inserisci il titolo della nota" />
-                        <x-textarea wire:model="newNoteDescription" class="mt-2" label="Descrizione"
+                        <x-textarea wire:model="newNoteDescription" class="mt-2" label="Descrizione" shadow
                             placeholder="Inserisci la descrizione della nota" />
-                        <x-input type="file" wire:model="url_file" label="Allega" class="font-bold w-[100px] mt-2" />
+                        <x-input type="file" shadow wire:model="url_file" label="Allega" class="font-bold w-[100px] mt-2" />
                     </div>
                     @if ($item)
                         <x-button @click="openForm = false" wire:click="addNote({{ $item->id }})" gray
@@ -60,7 +60,7 @@
                                 <div class="flex items-start justify-between mb-2">
                                     <h4 class="font-medium text-gray-900 text-sm"
                                         style="overflow-wrap: break-word; word-break: break-word;">
-                                        {{ $note->title }}</h4>
+                                        {{ \Illuminate\Support\Str::limit($note->title, 10) }}</h4>
                                     <span
                                         class="text-xs text-gray-500 ms-10">{{ $note->getDate($note->created_at) }}</span>
                                 </div>
@@ -88,11 +88,11 @@
                                 <h3 class="font-semibold text-sm mb-2">Modifica Nota</h3>
 
                                 <div>
-                                    <x-input wire:model="editNoteTitle" label="Titolo"
+                                    <x-input wire:model="editNoteTitle" label="Titolo" shadow
                                         placeholder="Inserisci il titolo della nota" />
-                                    <x-textarea wire:model="editNoteDescription" class="mt-2" label="Descrizione"
+                                    <x-textarea  shadow wire:model="editNoteDescription" class="mt-2" label="Descrizione"
                                         placeholder="Inserisci la descrizione della nota" />
-                                    <x-input type="file" wire:model="url_file" label="Allega"
+                                    <x-input shadow type="file" wire:model="url_file" label="Allega"
                                         class="font-bold w-[100px] mt-2" />
                                 </div>
                                 <div class="flex gap-2 mt-3">
