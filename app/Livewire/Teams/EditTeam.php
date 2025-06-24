@@ -4,6 +4,7 @@ namespace App\Livewire\Teams;
 
 use App\Models\Team;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 class EditTeam extends Component
@@ -55,6 +56,12 @@ class EditTeam extends Component
 
         // Sincronizziamo tutti gli utenti in una volta sola
         $this->team->pms()->sync($allUserIds);
+
+        Log::info('Team modificato', [
+            'id' => $this->team->id,
+            'name' => $this->team->name,
+            'is_available' => $this->team->is_available,
+        ]);
 
         session()->flash('message', 'Team aggiornato con successo!');
         $this->redirect('/teams', navigate: true);

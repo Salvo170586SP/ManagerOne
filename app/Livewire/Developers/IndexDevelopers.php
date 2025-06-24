@@ -3,6 +3,8 @@
 namespace App\Livewire\Developers;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -70,6 +72,39 @@ class IndexDevelopers extends Component
         $workplaceData = collect(config('managerOne.workplaces'))->firstWhere('id', $workplace);
         $name = $workplaceData['name'] ?? '-';
         return $name;
+    }
+    
+    public function deleteDev($devId)
+    {
+        $dev = User::findOrFail($devId);
+
+        if ($dev) {
+
+            if (!empty($client->img_url)) {
+                if (Storage::disk('public')->exists($dev->img_url)) {
+                    Storage::disk('public')->delete($dev->img_url);
+                }
+            }
+
+            $dev->delete();
+            
+            Log::info('Developer eliminato', [
+                'id' => $dev->id,
+                'name' => $dev->name,
+                'surname' => $dev->surname,
+                'img_url' => $dev->img_url,
+                'phone' => $dev->phone,
+                'city' => $dev->city,
+                'type' => $dev->type,
+                'email' => $dev->email,
+                'category' => $dev->category,
+                'workplace' => $dev->workplace,
+                'level' => $dev->level,
+            ]);
+        }
+
+        return $this->redirect('/developers', navigate: true);
+
     }
 
     public function render()

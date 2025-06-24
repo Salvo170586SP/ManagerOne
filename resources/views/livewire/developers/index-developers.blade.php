@@ -157,7 +157,7 @@
                                     <x-button flat blue icon="pencil" wire:navigate
                                         href="/developers/{{ $developer->id }}/edit" />
                                     <x-button flat red icon="trash"
-                                        x-on:click="$openModal('simpleModal-{{ $developer->id }}')" />
+                                        x-on:click="$openModal('developers-{{ $developer->id }}')" />
                                     <x-modal name="developers-{{ $developer->id }}" blur="sm" align="center">
                                         <x-card shadow="xl">
                                             <div
@@ -177,7 +177,7 @@
                                             <x-slot name="footer" class="flex justify-end gap-x-4">
                                                 <x-button black label="Annulla" x-on:click="close" />
                                                 <x-button red label="Elimina"
-                                                    wire:click="deleteDeveloper({{ $developer->id }})" />
+                                                    wire:click="deleteDev({{ $developer->id }})" />
                                             </x-slot>
                                         </x-card>
                                     </x-modal>

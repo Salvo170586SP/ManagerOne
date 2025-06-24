@@ -8,6 +8,7 @@ use App\Models\Task;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Livewire\Attributes\On;
 
@@ -103,6 +104,15 @@ class IndexCalendar extends Component
                 'creator' => Auth::user()->name,
                 'user_id' => Auth::id(),
             ]);
+
+            Log::info('Evento in calendario modificato', [
+                'id' => $event->id,
+                'title' => $event->title,
+                'description' => $event->description,
+                'start' => $event->start,
+                'end' => $event->end,
+                'is_available' => $event->is_available,
+            ]);
         } else {
             $event = Event::create([
                 'user_id' => Auth::id(),
@@ -126,7 +136,17 @@ class IndexCalendar extends Component
                 'creator' => Auth::user()->name,
                 'user_id' => Auth::id(),
             ]);
+            Log::info('Evento in calendario creato', [
+                'id' => $event->id,
+                'title' => $event->title,
+                'description' => $event->description,
+                'start' => $event->start,
+                'end' => $event->end,
+                'is_available' => $event->is_available,
+            ]);
         }
+
+
         $this->resetForm();
     }
 
@@ -150,15 +170,32 @@ class IndexCalendar extends Component
             $event->start = $newStart;
             $event->end = $newEnd;
             $event->save();
+
+            Log::info('Evento in calendario spotato di data', [
+                'id' => $event->id,
+                'title' => $event->title,
+                'description' => $event->description,
+                'start' => $event->start,
+                'end' => $event->end,
+                'is_available' => $event->is_available,
+            ]);
         }
     }
-
+    
     #[On('delete-event')]
     public function deleteEvent($eventId)
     {
         $event = Event::find($eventId);
         if ($event && $event->user_id === Auth::id()) {
             $event->delete();
+            Log::info('Evento in calendario eliminato', [
+                'id' => $event->id,
+                'title' => $event->title,
+                'description' => $event->description,
+                'start' => $event->start,
+                'end' => $event->end,
+                'is_available' => $event->is_available,
+            ]);
             $this->dispatch('event-deleted', $eventId);
         }
     }

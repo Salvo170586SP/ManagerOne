@@ -54,6 +54,9 @@ Route::middleware(['auth', 'role:super_admin'])->group(function () {
     //calendar
     Volt::route('/calendar', 'calendar.index-calendar')->name('calendar.index');
     
+    //logs
+    Volt::route('/logs', 'logs.index-logs')->name('logs.index');
+    
     //settings
     Route::redirect('settings', 'settings/profile');
     Volt::route('settings/profile', 'settings.profile')->name('settings.profile');

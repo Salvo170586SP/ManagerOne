@@ -4,13 +4,14 @@ namespace App\Livewire\Teams;
 
 use App\Models\Team;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class IndexTeams extends Component
 {
     use WithPagination;
-    
+
     public $search = "";
 
     public function updatedSearch()
@@ -25,6 +26,11 @@ class IndexTeams extends Component
         if ($team) {
             $team->developers()->detach();
             $team->delete();
+
+            Log::info('Team eliminato', [
+                'id' => $team->id,
+                'name' => $team->name
+            ]);
         }
 
         return $this->redirect('/teams', navigate: true);
@@ -36,6 +42,11 @@ class IndexTeams extends Component
 
         if ($member) {
             $member->teams()->detach();
+
+            Log::info('Team - eliminato membro del team', [
+                'member_id' => $member->id,
+                'member_name' => $member->name,
+            ]);
         }
 
         return $this->redirect('/teams', navigate: true);
@@ -49,7 +60,7 @@ class IndexTeams extends Component
             $teams = $teams->where('name', 'like', '%' . $this->search . '%');
         }
 
-        $teams = $teams->with('developers','pms')->latest()->paginate(6);
+        $teams = $teams->with('developers', 'pms')->latest()->paginate(6);
 
         return view('livewire.teams.index-teams', compact('teams'));
     }

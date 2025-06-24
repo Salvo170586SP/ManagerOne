@@ -5,6 +5,7 @@ namespace App\Livewire\Projects;
 use App\Models\Project;
 use App\Models\Note;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -50,10 +51,18 @@ class IndexProjects extends Component
     public function deleteProject($project_id)
     {
         $project = Project::findOrFail($project_id);
-
+       
+        
         if ($project) {
             $project->delete();
+       
+            Log::info('Progetto eliminato', [
+                'user_id' => Auth::id(),
+                'project_id' => $project->id,
+                'project_name' => $project->name,
+            ]);
         }
+
 
         return $this->redirect('/projects', navigate: true);
     }

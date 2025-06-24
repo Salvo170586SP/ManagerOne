@@ -5,6 +5,7 @@ namespace App\Livewire\Teams;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 class CreateTeam extends Component
@@ -45,6 +46,12 @@ class CreateTeam extends Component
         $team->developers()->attach($this->developer_ids);
 
         session()->flash('message', 'Team creato con successo');
+
+        Log::info('Team creato', [
+            'id' => $team->id,
+            'name' => $team->name,
+            'is_available' => $team->is_available,
+        ]);
 
         $this->reset();
 

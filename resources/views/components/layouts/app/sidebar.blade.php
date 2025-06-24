@@ -52,6 +52,9 @@
                 <flux:navlist.item icon="user-group" :href="route('teams.index')"
                 :current="request()->routeIs('teams.index')" wire:navigate>Gestione Teams
                 </flux:navlist.item>
+                <flux:navlist.item icon="exclamation-triangle" :href="route('logs.index')"
+                :current="request()->routeIs('logs.index')" wire:navigate>Logs
+                </flux:navlist.item>
                 <hr class="my-3">
                 <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')"
                     wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>

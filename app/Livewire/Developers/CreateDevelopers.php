@@ -6,6 +6,7 @@ use App\Jobs\GenerateIdDev;
 use App\Livewire\Forms\Developers\CreateDevelopers\Step1;
 use App\Livewire\Forms\Developers\CreateDevelopers\Step2;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 class CreateDevelopers extends Component
@@ -65,7 +66,21 @@ class CreateDevelopers extends Component
         GenerateIdDev::dispatch($dev);
 
         $dev->assignRole($dev->type);
-    
+
+        Log::info('Developer creato', [
+            'id' => $dev->id,
+            'name' => $dev->name,
+            'surname' => $dev->surname,
+            'img_url' => $dev->img_url,
+            'phone' => $dev->phone,
+            'city' => $dev->city,
+            'type' => $dev->type,
+            'email' => $dev->email,
+            'category' => $dev->category,
+            'workplace' => $dev->workplace,
+            'level' => $dev->level,
+        ]);
+
         session()->flash('message', 'Developer creato con successo!');
 
         return $this->redirect('/developers', navigate: true);

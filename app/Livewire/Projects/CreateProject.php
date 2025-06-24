@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Log;
 
 class CreateProject extends Component
 {
@@ -40,6 +41,12 @@ class CreateProject extends Component
             'preventive' => $this->preventive ?? 0.00,
             'is_available' => $this->is_available,
             'end_date' => $this->end_date,
+        ]);
+
+        Log::info('Progetto creato', [
+            'user_id' => Auth::id(),
+            'project_id' => $project->id,
+            'project_name' => $project->name,
         ]);
 
         GenerateIdProject::dispatch($project);

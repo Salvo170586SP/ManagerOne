@@ -5,6 +5,8 @@ namespace App\Livewire\Tasks;
 use App\Models\Task;
 use App\Models\Project;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 class CreateTask extends Component
@@ -34,7 +36,7 @@ class CreateTask extends Component
     {
         $this->validate();
 
-        $this->project->tasks()->create([
+        $task = $this->project->tasks()->create([
             'title' => $this->title,
             'developer_id' => $this->developer_id,
             'description' => $this->description,
@@ -45,6 +47,18 @@ class CreateTask extends Component
 
         session()->flash('message', 'Task creata con successo!');
 
+        Log::info('Task creata', [
+            'id' => $task->id,
+            'title' => $task->title,
+            'developer_id' => $task->developer_id,
+            'description' => $task->description,
+            'priority' => $task->priority,
+            'due_date' => $task->due_date,
+            'status' => $task->status,
+            'created_by' => Auth::id(),
+            'project_id' => $this->project->id,
+        ]);
+        
         $this->redirect("/developers/$this->developer_id", navigate: true);
 
         $this->reset();

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Log;
 
 class EditProjects extends Component
 {
@@ -66,6 +67,13 @@ class EditProjects extends Component
             GenerateIdInvoces::dispatch($invoice);
 
             $this->generateInvoicePdf($invoice->id);
+
+            Log::info('Progetto modificato', [
+                'user_id' => Auth::id(),
+                'project_id' => $this->project->id,
+                'project_name' => $this->project->name,
+            ]);
+    
         }
 
         session()->flash('message', 'Progetto modificato con successo');

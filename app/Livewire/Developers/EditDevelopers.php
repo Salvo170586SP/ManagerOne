@@ -3,6 +3,7 @@
 namespace App\Livewire\Developers;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
@@ -90,9 +91,22 @@ class EditDevelopers extends Component
             'category' => $this->category,
             'workplace' => $this->workplace,
             'level' => $this->level,
-        ])/* ->assignRole('client') */;
+        ]);
 
 
+        Log::info('Developer modificato', [
+            'id' => $this->developer->id,
+            'name' => $this->developer->name,
+            'surname' => $this->developer->surname,
+            'img_url' => $this->developer->img_url,
+            'phone' => $this->developer->phone,
+            'city' => $this->developer->city,
+            'type' => $this->developer->type,
+            'email' => $this->developer->email,
+            'category' => $this->developer->category,
+            'workplace' => $this->developer->workplace,
+            'level' => $this->developer->level,
+        ]);
 
 
         session()->flash('message', 'Developer modificato con successo!');
