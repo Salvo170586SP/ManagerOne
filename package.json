@@ -6,12 +6,18 @@
         "dev": "vite"
     },
     "dependencies": {
+        "@fullcalendar/core": "^5.11.5",
+        "@fullcalendar/daygrid": "^5.11.5",
+        "@fullcalendar/interaction": "^5.11.5",
+        "@fullcalendar/timegrid": "^5.11.5",
+        "@popperjs/core": "^2.11.8",
         "@tailwindcss/vite": "^4.0.7",
         "autoprefixer": "^10.4.20",
         "axios": "^1.7.4",
         "concurrently": "^9.0.1",
         "laravel-vite-plugin": "^1.0",
         "tailwindcss": "^4.0.7",
+        "tippy.js": "^6.3.7",
         "tom-select": "^2.4.3",
         "vite": "^6.0"
     },
@@ -19,5 +25,9 @@
         "@rollup/rollup-linux-x64-gnu": "4.9.5",
         "@tailwindcss/oxide-linux-x64-gnu": "^4.0.1",
         "lightningcss-linux-x64-gnu": "^1.29.1"
+    },
+    "devDependencies": {
+        "laravel-echo": "^2.1.6",
+        "pusher-js": "^8.4.0"
     }
 }

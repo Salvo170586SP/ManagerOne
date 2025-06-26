@@ -1,4 +1,4 @@
-<div class="-mt-2">
+<div class="-mt-2" wire:key="{{ $componentId }}">
     <div class="flex justify-between items-center">
         <h2 class="text-xl font-bold mb-5">Calendario</h2>
         @if (session('message'))
@@ -8,7 +8,7 @@
         @endif
     </div>
 
-    <div class="bg-white rounded {{-- h-[calc(100vh-13rem)] --}} overflow-y-auto p-6" wire:ignore>
+    <div class="bg-white rounded overflow-y-auto p-6" wire:ignore>
         <div class="mb-5">
             <div class="flex gap-3 items-center">
                 <input id="searchInput" type="text" placeholder="Cerca..." class="w-64 border border-gray-300 rounded p-2" />
@@ -19,10 +19,15 @@
                 </select>
             </div>
         </div>
-        <small class="font-bold">(*) Clicca su una cella per creare un evento</small>
+        <small class="font-bold">
+            @role('super_admin')
+                (*) Clicca su una cella per creare un evento
+            @endrole
+        </small>
         <div id="{{ $componentId }}"></div>
     </div>
 
+    @role('super_admin')
     <x-modal wire:model="showCreateModal" title="Crea Evento"  blur="sm" align="center">
         <x-form wire:submit.prevent="saveEvent" class="bg-white p-5 shadow-lg rounded-lg font-medium min-w-[1100px]">
             <h3 class="text-lg text-black">Crea Evento</h3>
@@ -40,12 +45,13 @@
             </x-slot:actions>
         </x-form>
     </x-modal>
+    @endrole
 </div>
 
 @assets
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
-    <script src="https://unpkg.com/tippy.js@6"></script>
+    <script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.min.js"></script>
 @endassets
 
 @script
@@ -175,18 +181,34 @@
                     `;
                 }
 
-                tippy(info.el, {
-                    content: popoverContent,
-                    allowHTML: true,
-                    interactive: true,
-                    trigger: 'mouseenter',
-                    hideOnClick: true,
-                    appendTo: () => document.body,
-                });
+                // Inizializza tippy solo se è definito
+                if (typeof tippy !== 'undefined') {
+                    tippy(info.el, {
+                        content: popoverContent,
+                        allowHTML: true,
+                        interactive: true,
+                        trigger: 'mouseenter',
+                        hideOnClick: true,
+                        appendTo: () => document.body,
+                    });
+                }
             }
         });
 
         calendar.render();
+
+        // Inizializza tippy dopo ogni update Livewire
+        if (window.Livewire) {
+            window.Livewire.hook('message.processed', (message, component) => {
+                if (typeof tippy !== 'undefined') {
+                    document.querySelectorAll('[data-tippy-content]').forEach(el => {
+                        if (!el._tippy) {
+                            tippy(el);
+                        }
+                    });
+                }
+            });
+        }
 
         function updateCalendarEvents() {
             const filterType = document.getElementById('eventFilter').value;

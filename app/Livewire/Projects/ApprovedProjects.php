@@ -239,17 +239,23 @@ class ApprovedProjects extends Component
 
     public function render()
     {
-        $projects = Project::where('is_available', true);
+        $user = Auth::user();
+        $query = Project::where('is_available', true);
+
+        if ($user->hasRole('developer')) {
+            $developerTeamIds = $user->teams()->pluck('teams.id')->toArray();
+            $query->whereIn('team_id', $developerTeamIds);
+        }
 
         if ($this->search) {
-            $projects = $projects->where('name', 'like', '%' . $this->search . '%');
+            $query->where('name', 'like', '%' . $this->search . '%');
         }
 
         if ($this->searchDate) {
-            $projects = $projects->whereDate('created_at', '=', \Carbon\Carbon::parse($this->searchDate)->toDateString());
+            $query->whereDate('created_at', '=', \Carbon\Carbon::parse($this->searchDate)->toDateString());
         }
 
-        $projects = $projects->latest()->paginate(10);
+        $projects = $query->latest()->paginate(10);
 
         $teams = Team::all();
         $states_project = config('managerOne.states_project');

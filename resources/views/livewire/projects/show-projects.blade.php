@@ -96,6 +96,7 @@
                     </div>
                 </div>
             </div>
+            @role('super_admin')
             <div class="mb-5 flex items-center p-6 bg-white rounded">
                 <div class="text-sm w-full h-full ">
                     <h3 class="font-bold text-xl mb-5">Fatturazione</h3>
@@ -131,6 +132,7 @@
                     @endforeach
                 </div>
             </div>
+            @endrole
         </div>
 
     </div>

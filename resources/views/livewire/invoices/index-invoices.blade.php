@@ -53,14 +53,14 @@
         </x-card>
 
 
-        <div class="overflow-x-auto">
-            @if ($invoices->count() > 0)
+        @if ($invoices->count() > 0)
+            <div class="table-scroll-x">
                 <table @if ($pollCondition) wire:poll.2s @endif
                     class="min-w-full divide-y border divide-gray-200">
                     <thead>
                         <tr>
                             <th scope="col"
-                                class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                class="sticky left-0 sticky-col-left px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
                                 ID</th>
                             <th scope="col"
                                 class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
@@ -85,14 +85,14 @@
                                 Data
                                 Creazione</th>
                             <th scope="col"
-                                class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                class="sticky right-0 sticky-col-right px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
                             </th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y text-sm divide-gray-200">
                         @foreach ($invoices as $invoice)
                             <tr wire:key="invoice-{{ $invoice->id }}">
-                                <td class="px-6 py-4 whitespace-nowrap">
+                                <td class="sticky left-0 sticky-col-left px-6 py-4 whitespace-nowrap">
                                     @if ($invoice->IdInvoice)
                                         #IN-{{ $invoice->IdInvoice }}
                                     @else
@@ -129,7 +129,7 @@
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $invoice->createDate() }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                <td class="sticky right-0 sticky-col-right px-6 py-4 whitespace-nowrap text-sm">
                                     <div class="flex justify-center gap-1">
                                         <x-button flat gray icon="arrow-down-tray" title="scarica fattura"
                                             wire:click="downloadInvoicePdf({{ $invoice->id }})" />
@@ -168,14 +168,14 @@
                         @endforeach
                     </tbody>
                 </table>
-                <div class="py-3">
-                    {{ $invoices->links('vendor.pagination.tailwind') }}
-                </div>
-            @else
-                <div class="text-center font-medium">
-                    Non ci sono fatture registrate
-                </div>
-            @endif
-        </div>
+            </div>
+            <div class="py-3">
+                {{ $invoices->links('vendor.pagination.tailwind') }}
+            </div>
+        @else
+            <div class="text-center font-medium">
+                Non ci sono fatture registrate
+            </div>
+        @endif
     </div>
 </div>

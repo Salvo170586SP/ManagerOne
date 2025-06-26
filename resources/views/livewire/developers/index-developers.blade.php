@@ -29,6 +29,7 @@
 
                 <x-button icon="plus" black label="Aggiungi Developer" class="font-bold w-[200px] h-[32px]"
                     wire:navigate href="/developers/create" />
+
             </div>
         </div>
 
@@ -154,33 +155,35 @@
                                 <div class="flex justify-center">
                                     <x-button flat black icon="eye" wire:navigate
                                         href="/developers/{{ $developer->id }}" />
-                                    <x-button flat blue icon="pencil" wire:navigate
-                                        href="/developers/{{ $developer->id }}/edit" />
-                                    <x-button flat red icon="trash"
-                                        x-on:click="$openModal('developers-{{ $developer->id }}')" />
-                                    <x-modal name="developers-{{ $developer->id }}" blur="sm" align="center">
-                                        <x-card shadow="xl">
-                                            <div
-                                                class="flex items-center justify-center py-2 bg-red-400 text-white rounded-md mb-2 text-xl">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                                    class="size-6 me-2">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
-                                                </svg>
-                                                Attenzione!
-                                            </div>
-                                            <p class="font-semubold text-lg">
-                                                Sei sicuro di eliminare definitivamente il developer?
-                                            </p>
+                                    @role('super_admin')
+                                        <x-button flat blue icon="pencil" wire:navigate
+                                            href="/developers/{{ $developer->id }}/edit" />
+                                        <x-button flat red icon="trash"
+                                            x-on:click="$openModal('developers-{{ $developer->id }}')" />
+                                        <x-modal name="developers-{{ $developer->id }}" blur="sm" align="center">
+                                            <x-card shadow="xl">
+                                                <div
+                                                    class="flex items-center justify-center py-2 bg-red-400 text-white rounded-md mb-2 text-xl">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                        class="size-6 me-2">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+                                                    </svg>
+                                                    Attenzione!
+                                                </div>
+                                                <p class="font-semubold text-lg">
+                                                    Sei sicuro di eliminare definitivamente il developer?
+                                                </p>
 
-                                            <x-slot name="footer" class="flex justify-end gap-x-4">
-                                                <x-button black label="Annulla" x-on:click="close" />
-                                                <x-button red label="Elimina"
-                                                    wire:click="deleteDev({{ $developer->id }})" />
-                                            </x-slot>
-                                        </x-card>
-                                    </x-modal>
+                                                <x-slot name="footer" class="flex justify-end gap-x-4">
+                                                    <x-button black label="Annulla" x-on:click="close" />
+                                                    <x-button red label="Elimina"
+                                                        wire:click="deleteDev({{ $developer->id }})" />
+                                                </x-slot>
+                                            </x-card>
+                                        </x-modal>
+                                    @endrole
                                 </div>
                             </td>
                         </tr>

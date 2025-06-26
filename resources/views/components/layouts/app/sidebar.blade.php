@@ -19,25 +19,31 @@
 
         <flux:navlist variant="outline">
             <flux:navlist.group class="grid mt-5">
+                @role('super_admin')
                  <flux:navlist.item icon="users" :href="route('clients.index')"
                     :current="request()->routeIs('clients.index')" wire:navigate>Anagrafica Clienti</flux:navlist.item>
                     <hr class="my-3">
+                    @endrole
                  <flux:navlist.item icon="presentation-chart-line" :href="route('projects.index')"
                     :current="request()->routeIs('projects.index')" wire:navigate>Progetti
                 </flux:navlist.item>
                 <flux:navlist.item icon="shield-check" :href="route('approved-projects.index')"
                     :current="request()->routeIs('approved-projects.index')" wire:navigate>Progetti Approvati
                 </flux:navlist.item>
+                @role('super_admin')
                 <flux:navlist.item icon="lock-closed" :href="route('delivered-projects.index')"
                     :current="request()->routeIs('delivered-projects.index')" wire:navigate>Progetti Consegnati
                 </flux:navlist.item>
+                @endrole
                 <hr class="my-3">
                 <flux:navlist.item icon="puzzle-piece" :href="route('tasks.index-tasks')"
                 :current="request()->routeIs('tasks.index-tasks')" wire:navigate>Gestione Tasks
                 </flux:navlist.item>
+                @role('super_admin')
                 <flux:navlist.item icon="document-currency-euro" :href="route('invoices.index')"
                 :current="request()->routeIs('invoices.index')" wire:navigate>Fatture
                 </flux:navlist.item>
+                @endrole
                 <flux:navlist.item icon="document-duplicate" :href="route('documents.index')"
                 :current="request()->routeIs('documents.index')" wire:navigate>Documenti
                 </flux:navlist.item>
@@ -46,15 +52,19 @@
                 :current="request()->routeIs('calendar.index')" wire:navigate>Calendario
                 </flux:navlist.item>
                 <hr class="my-3">
+                @role('super_admin')
                 <flux:navlist.item icon="identification" :href="route('developers.index')"
                 :current="request()->routeIs('developers.index')" wire:navigate>Developers
                 </flux:navlist.item>
+                @endrole
                 <flux:navlist.item icon="user-group" :href="route('teams.index')"
                 :current="request()->routeIs('teams.index')" wire:navigate>Gestione Teams
                 </flux:navlist.item>
+                @role('super_admin')
                 <flux:navlist.item icon="exclamation-triangle" :href="route('logs.index')"
                 :current="request()->routeIs('logs.index')" wire:navigate>Logs
                 </flux:navlist.item>
+                @endrole
                 <hr class="my-3">
                 <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')"
                     wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
@@ -114,6 +124,7 @@
     <livewire:headernav />
     {{ $slot }}
 
+    <wireui:scripts />
     @fluxScripts
     @stack('scripts')
 </body>

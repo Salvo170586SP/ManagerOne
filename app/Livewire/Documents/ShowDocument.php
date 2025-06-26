@@ -67,8 +67,18 @@ class ShowDocument extends Component
 
         $invoices = $invoicesQuery->latest()->paginate(12);
 
+        // Recupera tutte le note con allegato dell'utente (come client e come developer)
+        $projectNotes = \App\Models\Note::whereIn('project_id', $this->user->projects()->pluck('id')->toArray())
+            ->whereNotNull('url_file')
+            ->get();
+        $taskNotes = \App\Models\Note::whereIn('task_id', $this->user->tasks()->pluck('id')->toArray())
+            ->whereNotNull('url_file')
+            ->get();
+        $notesWithAttachments = $projectNotes->merge($taskNotes);
+
         return view('livewire.documents.show-document', [
             'invoices' => $invoices,
+            'notesWithAttachments' => $notesWithAttachments,
         ]);
     }
 }

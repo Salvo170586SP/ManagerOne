@@ -70,10 +70,12 @@
                                 class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
                                 Cliente
                             </th>
-                            <th scope="col"
-                                class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
-                                Note
-                            </th>
+                            @role('super_admin')
+                                <th scope="col"
+                                    class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                    Note
+                                </th>
+                            @endrole
                             <th scope="col"
                                 class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
                                 Preventivo</th>
@@ -106,15 +108,18 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $project->name }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $project->client->fullName() }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="relative">
-                                        <x-button flat blue icon="document-text"
-                                        wire:click="openNotesSidebar({{ $project->id }})" title="Visualizza Note" />
-                                        <div
-                                        class="absolute right-2 top-0  rounded-full bg-blue-500 h-[15px] w-[15px] text-center text-xs font-bold text-white">
-                                        {{ $project->notes->count() }}</div>
-                                    </div>
-                                </td>
+                                @role('super_admin')
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="relative">
+                                            <x-button flat blue icon="document-text"
+                                                wire:click="openNotesSidebar({{ $project->id }})"
+                                                title="Visualizza Note" />
+                                            <div
+                                                class="absolute right-2 top-0  rounded-full bg-blue-500 h-[15px] w-[15px] text-center text-xs font-bold text-white">
+                                                {{ $project->notes->count() }}</div>
+                                        </div>
+                                    </td>
+                                @endrole
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $project->preventive }} €</td>
                                 <td class="px-6 py-4 flex justify-center text-center whitespace-nowrap">
                                     @if ($project->is_available)
@@ -141,34 +146,36 @@
                                     <div class="flex justify-center">
                                         <x-button flat black icon="eye" wire:navigate
                                             href="/projects/{{ $project->id }}" />
-                                        <x-button flat blue icon="pencil" wire:navigate
-                                            href="/projects/{{ $project->id }}/edit" />
-                                        <x-button flat red icon="trash"
-                                            x-on:click="$openModal('simpleModal-{{ $project->id }}')" />
-                                        <x-modal name="simpleModal-{{ $project->id }}" blur="sm"
-                                            align="center">
-                                            <x-card shadow="xl">
-                                                <div
-                                                    class="flex items-center justify-center py-2 bg-red-400 text-white rounded-md mb-2 text-xl">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                                        class="size-6 me-2">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
-                                                    </svg>
-                                                    Attenzione!
-                                                </div>
-                                                <p class="font-semubold text-lg">
-                                                    Sei sicuro di eliminare definitivamente il progetto?
-                                                </p>
+                                        @role('super_admin')
+                                            <x-button flat blue icon="pencil" wire:navigate
+                                                href="/projects/{{ $project->id }}/edit" />
+                                            <x-button flat red icon="trash"
+                                                x-on:click="$openModal('simpleModal-{{ $project->id }}')" />
+                                            <x-modal name="simpleModal-{{ $project->id }}" blur="sm"
+                                                align="center">
+                                                <x-card shadow="xl">
+                                                    <div
+                                                        class="flex items-center justify-center py-2 bg-red-400 text-white rounded-md mb-2 text-xl">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                            class="size-6 me-2">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+                                                        </svg>
+                                                        Attenzione!
+                                                    </div>
+                                                    <p class="font-semubold text-lg">
+                                                        Sei sicuro di eliminare definitivamente il progetto?
+                                                    </p>
 
-                                                <x-slot name="footer" class="flex justify-end gap-x-4">
-                                                    <x-button black label="Annulla" x-on:click="close" />
-                                                    <x-button red label="Elimina"
-                                                        wire:click="deleteProject({{ $project->id }})" />
-                                                </x-slot>
-                                            </x-card>
-                                        </x-modal>
+                                                    <x-slot name="footer" class="flex justify-end gap-x-4">
+                                                        <x-button black label="Annulla" x-on:click="close" />
+                                                        <x-button red label="Elimina"
+                                                            wire:click="deleteProject({{ $project->id }})" />
+                                                    </x-slot>
+                                                </x-card>
+                                            </x-modal>
+                                        @endrole
                                     </div>
                                 </td>
                             </tr>

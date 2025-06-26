@@ -67,5 +67,27 @@ select:focus[data-flux-control] {
     @apply size-4;
 } */
 
- 
- 
+   /* Migliora la visibilità delle colonne sticky */
+   .sticky-col-left {
+    box-shadow: 2px 0 5px -2px #ccc;
+    min-width: 90px;
+    background: white;
+    z-index: 20;
+}
+.sticky-col-right {
+    box-shadow: -2px 0 5px -2px #ccc;
+    min-width: 160px;
+    background: white;
+    z-index: 20;
+}
+/* Evita che le colonne sticky coprano il contenuto quando si scrolla */
+.table-scroll-x {
+    overflow-x: auto;
+    position: relative;
+}
+
+/* Fix WireUI select option hover text color and background - ultra specific */
+.group.hover\:text-white:hover {
+    color: #f3f3f3 !important;
+    background: #272727 !important;
+}

@@ -8,8 +8,13 @@
             <x-input shadow label="Titolo" wire:model="title" id="title" />
             <x-textarea shadow wire:model="description" label="Descrizione" id="description" rows="3" />
             <div class="flex gap-3">
-                <x-select shadow label="Cerca Developer" wire:model="developer_id" id="developer_id" :options="$developers"
-                    option-label="name" option-value="id" />
+                @php $user = Auth::user(); @endphp
+                @if($user && $user->type === 'developer')
+                    <input type="hidden" wire:model="developer_id" value="{{ $user->id }}" />
+                @else
+                    <x-select shadow label="Cerca Developer" wire:model="developer_id" id="developer_id" :options="$developers"
+                        option-label="name" option-value="id" />
+                @endif
 
                 <x-select shadow label="Seleziona Stato" wire:model="state_task" id="state_task" :options="$states"
                     option-label="name" option-value="id" />

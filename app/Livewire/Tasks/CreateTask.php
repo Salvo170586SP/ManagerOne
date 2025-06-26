@@ -5,6 +5,7 @@ namespace App\Livewire\Tasks;
 use App\Models\Task;
 use App\Models\Project;
 use App\Models\User;
+use App\Notifications\TaskAssigned;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
@@ -22,7 +23,7 @@ class CreateTask extends Component
     protected $rules = [
         'title' => 'required|string|max:255',
         'description' => 'nullable|string',
-        'developer_id' => 'required|exists:users,id',
+        'developer_id' => 'nullable|exists:users,id',
         'priority' => 'required|in:low,medium,high',
         'due_date' => 'nullable|date|after:now',
     ];
@@ -34,6 +35,11 @@ class CreateTask extends Component
 
     public function createTask()
     {
+        $user = Auth::user();
+        // Se developer, imposta developer_id ad Auth::id()
+        if ($user && $user->type === 'developer') {
+            $this->developer_id = $user->id;
+        }
         $this->validate();
 
         $task = $this->project->tasks()->create([
@@ -44,6 +50,12 @@ class CreateTask extends Component
             'due_date' => $this->due_date,
             'status' => $this->state_task
         ]);
+
+        // Trova lo sviluppatore e invia la notifica
+        $developer = User::find($this->developer_id);
+        if ($developer) {
+            $developer->notify(new TaskAssigned($task));
+        }
 
         session()->flash('message', 'Task creata con successo!');
 

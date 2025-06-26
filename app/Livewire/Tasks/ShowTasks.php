@@ -5,14 +5,16 @@ namespace App\Livewire\Tasks;
 use App\Models\Note;
 use App\Models\Project;
 use App\Models\Task;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 
 class ShowTasks extends Component
 {
-    use WithFileUploads;
+    use WithFileUploads, WithPagination;
 
     public $project;
     public $selectedTaskNotes = [];
@@ -45,7 +47,7 @@ class ShowTasks extends Component
         $fullPath = Storage::disk('public')->path($filePath);
         return response()->download($fullPath);
     }
-    
+
     public function deleteTask($taskId)
     {
         $task = Task::findOrFail($taskId);
@@ -231,7 +233,7 @@ class ShowTasks extends Component
         $taskData = collect(config('managerOne.priorities_task'))->firstWhere('id', $priority);
         return $taskData['color'] ?? 'bg-gray-300';
     }
-  
+
     public function getStatusName($priority)
     {
         $taskData = collect(config('managerOne.states_task'))->firstWhere('id', $priority);
@@ -246,6 +248,26 @@ class ShowTasks extends Component
 
     public function render()
     {
-        return view('livewire.tasks.show-tasks');
+        $user = Auth::user();
+
+        if ($user instanceof User && $user->hasRole('super_admin')) {
+            $tasks = $this->project->tasks()->latest()->paginate(8);
+        } else if ($user instanceof User && $user->hasRole('developer')) {
+            $tasks = $this->project->tasks()
+                ->where('developer_id', $user->id)
+                ->latest()
+                ->paginate(8);
+        } else if ($user instanceof User && $user->hasRole('project_manager')) {
+            if ($this->project->team && $this->project->team->users->contains($user)) {
+                $tasks = $this->project->tasks()->latest()->paginate(8);
+            } else {
+                $tasks = Task::where('id', '<', 0)->paginate(8);
+            }
+        }
+
+        return view('livewire.tasks.show-tasks', [
+            'tasks' => $tasks,
+            'project' => $this->project,
+        ]);
     }
 }

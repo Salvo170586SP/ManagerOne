@@ -71,7 +71,7 @@
                     </x-card>
                 </x-modal>
             </div>
-            <div class="w-full border bg-black text-white p-3 rounded-xl h-120 overflow-x-auto">
+            <div class="w-full h-120 border border-gray-300 bg-gray-100 text-gray-700 p-3 rounded-lg overflow-x-auto">
                 <ul class="w-full">
                     @if (count($logs) > 0)
                         @foreach ($logs as $log)

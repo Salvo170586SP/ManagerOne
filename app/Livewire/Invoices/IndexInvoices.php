@@ -79,7 +79,7 @@ class IndexInvoices extends Component
             $invoices = $invoices->where('is_available', (int) $this->searchAvailable);
         }
 
-        $invoices = $invoices->latest()->paginate(10);
+        $invoices = $invoices->latest()->paginate(6);
 
         $pollCondition =  Invoce::whereNull('IdInvoice')->exists();
 

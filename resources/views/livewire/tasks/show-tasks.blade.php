@@ -67,8 +67,8 @@
                             wire:navigate href="/tasks" />
                     </div>
 
-                    @if ($project->tasks->count() > 0)
-                        <div class="overflow-x-auto">
+                    @if ($tasks->count() > 0)
+                        <div class="overflow-x-auto py-5">
                             <table class="min-w-full border divide-y divide-gray-200">
                                 <thead>
                                     <tr>
@@ -103,14 +103,16 @@
                                             class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
                                             Progressione
                                         </th>
+                                        @role('super_admin')
                                         <th scope="col"
                                             class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
 
                                         </th>
+                                        @endrole
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y text-sm divide-gray-200">
-                                    @foreach ($project->tasks as $task)
+                                    @foreach ($tasks as $task)
                                         <tr>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="text-sm">{{ \Illuminate\Support\Str::limit($task->title, 10) }}</div>
@@ -172,6 +174,7 @@
                                                     </div>
                                                 </div>
                                             </td>
+                                            @role('super_admin')
                                             <td class="px-6 py-2 whitespace-nowrap">
                                                 <x-button flat blue icon="pencil" wire:navigate
                                                     href="/tasks/{{ $task->id }}/{{ $project->id }}/edit" />
@@ -202,14 +205,18 @@
                                                     </x-card>
                                                 </x-modal>
                                             </td>
+                                            @endrole
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
                         </div>
-                    @else
+                        <div class="py-3">
+                            {{ $tasks->links('vendor.pagination.tailwind') }}
+                        </div>
+                        @else
                         <div class="px-6 py-4 text-center text-gray-500">
-                            Nessuna progetto presente
+                            Nessuna tasks presente
                         </div>
                     @endif
                 </div>

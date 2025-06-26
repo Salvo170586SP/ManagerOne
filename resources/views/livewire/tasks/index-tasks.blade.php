@@ -47,7 +47,7 @@
                     @foreach ($projects as $project)
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap w-[50px]">
-                                @if ($project->tasks->count() > 0)
+                                @if ($project->tasks_count > 0)
                                     <x-button black flat class="w-2" icon="chevron-down" title="vedi tasks"
                                               @click="openRow === {{ $project->id }} ? openRow = null : openRow = {{ $project->id }}" />
                                 @else
@@ -69,7 +69,7 @@
                             <td class="px-6 py-4 flex justify-center">
                                 <div
                                     class="bg-gray-600 text-white font-bold h-6 w-6 flex items-center justify-center rounded-full">
-                                    {{ $project->tasks->count() }}
+                                    {{ $project->tasks_count }}
                                 </div>
                             </td>
                             <td class="px-6 py-4 max-w-[80px] whitespace-nowrap text-center">
@@ -113,7 +113,7 @@
                                         </tr>
                                         </thead>
                                         <tbody class="divide-y text-xs divide-gray-200">
-                                        @foreach ($project->tasks->take(4) as $task)
+                                        @foreach ($tasks->take(4) as $task)
                                             <tr wire:key="proj-task-{{ $project->id }}-{{ $task->id }}">
                                                 <td class="px-6 py-2">{{ \Illuminate\Support\Str::limit($task->title, 10) }}</td>
                                                 <td class="px-6 py-2">{{ $task->developer->name ?? '-' }}</td>
@@ -136,7 +136,7 @@
                 </table>
             </div>
             <div class="py-3">
-                {{ $tasks->links('vendor.pagination.tailwind') }}
+                {{ $projects->links('vendor.pagination.tailwind') }}
             </div>
         @else
             <div class="px-6 py-4 text-center text-gray-500">

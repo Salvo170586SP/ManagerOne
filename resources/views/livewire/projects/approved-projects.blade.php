@@ -59,10 +59,12 @@
                                 class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
                                 Team di sviluppo
                             </th>
-                            <th scope="col"
-                                class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
-                                Note
-                            </th>
+                            @role('super_admin')
+                                <th scope="col"
+                                    class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                    Note
+                                </th>
+                            @endrole
                             <th scope="col"
                                 class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
                                 Cliente
@@ -74,10 +76,12 @@
                                 class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
                                 Approvato
                             </th>
-                            <th scope="col"
-                                class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
-                                Stato Progettazione
-                            </th>
+                            @role('super_admin')
+                                <th scope="col"
+                                    class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                    Stato Progettazione
+                                </th>
+                            @endrole
                             <th scope="col"
                                 class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
                                 Data
@@ -99,21 +103,29 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $project->name }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <x-select shadow placeholder="Seleziona un Team"
-                                        wire:model.live="teamSelections.project-{{ $project->id }}" :options="$teams"
-                                        option-label="name" option-value="id" />
+                                    @role('developer')
+                                        {{ $project->team->name }}
+                                    @endrole
+
+                                    @role('super_admin')
+                                        <x-select red shadow placeholder="Seleziona un Team"
+                                            wire:model.live="teamSelections.project-{{ $project->id }}" :options="$teams"
+                                            option-label="name" option-value="id" />
+                                    @endrole
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $project->client->fullName() }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="relative">
-                                        <x-button flat blue icon="document-text"
-                                            wire:click="openNotesSidebar({{ $project->id }})"
-                                            title="Visualizza Note" />
-                                        <div
-                                            class="absolute right-2 top-0  rounded-full bg-blue-500 h-[15px] w-[15px] text-center text-xs font-bold text-white">
-                                            {{ $project->notes->count() }}</div>
-                                    </div>
-                                </td>
+                                @role('super_admin')
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="relative">
+                                            <x-button flat blue icon="document-text"
+                                                wire:click="openNotesSidebar({{ $project->id }})"
+                                                title="Visualizza Note" />
+                                            <div
+                                                class="absolute right-2 top-0  rounded-full bg-blue-500 h-[15px] w-[15px] text-center text-xs font-bold text-white">
+                                                {{ $project->notes->count() }}</div>
+                                        </div>
+                                    </td>
+                                @endrole
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $project->preventive }} €</td>
                                 <td class="px-6 py-6 flex justify-center items-center">
                                     @if ($project->is_available)
@@ -134,12 +146,14 @@
                                         </div>
                                     @endif
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <x-select shadow placeholder="Seleziona uno Stato"
-                                        wire:model.live="stateSelections.project-{{ $project->id }}" :options="$states_project"
-                                        option-label="name" option-value="id"
-                                        class="{{ $selectColors[$project->id] }} rounded" />
-                                </td>
+                                @role('super_admin')
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <x-select shadow placeholder="Seleziona uno Stato"
+                                            wire:model.live="stateSelections.project-{{ $project->id }}" :options="$states_project"
+                                            option-label="name" option-value="id"
+                                            class="{{ $selectColors[$project->id] }} rounded" />
+                                    </td>
+                                @endrole
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $project->createDate() }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm">
                                     <div class="flex justify-center">
@@ -162,7 +176,7 @@
         </div>
     </div>
 
-     <!-- Componente Sidebar per le Note -->
-     <x-notes-sidebar wire:model="showDrawer2" :notes="$selectedProjectNotes" :project="$selectedProject" :edit-note-id="$editNoteId"
-     onClose="closeNotesSidebar" />
+    <!-- Componente Sidebar per le Note -->
+    <x-notes-sidebar wire:model="showDrawer2" :notes="$selectedProjectNotes" :project="$selectedProject" :edit-note-id="$editNoteId"
+        onClose="closeNotesSidebar" />
 </div>

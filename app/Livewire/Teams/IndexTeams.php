@@ -4,6 +4,7 @@ namespace App\Livewire\Teams;
 
 use App\Models\Team;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -54,7 +55,13 @@ class IndexTeams extends Component
 
     public function render()
     {
-        $teams = Team::query();
+        $user = Auth::user();
+
+        if ($user->hasRole('developer')) {
+            $teams = $user->teams();
+        } else {
+            $teams = Team::query();
+        }
 
         if ($this->search) {
             $teams = $teams->where('name', 'like', '%' . $this->search . '%');

@@ -6,6 +6,7 @@ namespace App\Livewire\Documents;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Auth;
 
 class IndexDocument extends Component
 {
@@ -27,6 +28,8 @@ class IndexDocument extends Component
 
     public function render()
     {
+        $user = Auth::user();
+        
         $clients = User::query();
 
         if ($this->search) {
@@ -43,26 +46,26 @@ class IndexDocument extends Component
 
         $clients = $clients->where('type', 'client')->latest()->paginate(10);
 
-     
-       
-        $developers = User::query();
+        // Se l'utente è un developer, mostra solo il suo archivio
+        if ($user && $user->type === 'developer') {
+            $developers = User::where('id', $user->id)->latest()->paginate(10);
+        } else {
+            $developers = User::query();
 
-        if ($this->search) {
-            $developers = $developers->where('name', 'like', '%' . $this->search . '%');
+            if ($this->search) {
+                $developers = $developers->where('name', 'like', '%' . $this->search . '%');
+            }
+
+            if ($this->searchDate) {
+                $developers = $developers->whereDate('created_at', '=', \Carbon\Carbon::parse($this->searchDate)->toDateString());
+            }
+
+            if ($this->searchType) {
+                $developers = $developers->where('type', 'like', '%' . $this->searchType . '%');
+            }
+
+            $developers = $developers->where('type', 'developer')->latest()->paginate(10);
         }
-
-        if ($this->searchDate) {
-            $developers = $developers->whereDate('created_at', '=', \Carbon\Carbon::parse($this->searchDate)->toDateString());
-        }
-
-        if ($this->searchType) {
-            $developers = $developers->where('type', 'like', '%' . $this->searchType . '%');
-        }
-
-        $developers = $developers->where('type', 'developer')->latest()->paginate(10);
-      
-      
-
 
         $pms = User::query();
 

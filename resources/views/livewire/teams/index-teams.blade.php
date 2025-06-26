@@ -91,31 +91,33 @@
                                 {{ $team->name }}
                             </div>
                             <div class="flex justify-end items-center">
-                                <x-button flat blue icon="pencil" wire:navigate
-                                    href="/teams/{{ $team->id }}/edit" />
-                                <x-button flat red icon="trash" x-on:click="$openModal('team-{{ $team->id }}')" />
-                                <x-modal name="team-{{ $team->id }}" blur="sm" align="center">
-                                    <x-card shadow="xl">
-                                        <div
-                                            class="flex items-center justify-center py-2 bg-red-400 text-white rounded-md mb-2 text-xl">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                stroke-width="1.5" stroke="currentColor" class="size-6 me-2">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
-                                            </svg>
-                                            Attenzione!
-                                        </div>
-                                        <p class="font-semubold text-lg">
-                                            Sei sicuro di eliminare definitivamente il team di sviluppo?
-                                        </p>
+                                @role('super_admin')
+                                    <x-button flat blue icon="pencil" wire:navigate
+                                        href="/teams/{{ $team->id }}/edit" />
+                                    <x-button flat red icon="trash" x-on:click="$openModal('team-{{ $team->id }}')" />
+                                    <x-modal name="team-{{ $team->id }}" blur="sm" align="center">
+                                        <x-card shadow="xl">
+                                            <div
+                                                class="flex items-center justify-center py-2 bg-red-400 text-white rounded-md mb-2 text-xl">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                    stroke-width="1.5" stroke="currentColor" class="size-6 me-2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+                                                </svg>
+                                                Attenzione!
+                                            </div>
+                                            <p class="font-semubold text-lg">
+                                                Sei sicuro di eliminare definitivamente il team di sviluppo?
+                                            </p>
 
-                                        <x-slot name="footer" class="flex justify-end gap-x-4">
-                                            <x-button black label="Annulla" x-on:click="close" />
-                                            <x-button red label="Elimina"
-                                                wire:click="deleteTeam({{ $team->id }})" />
-                                        </x-slot>
-                                    </x-card>
-                                </x-modal>
+                                            <x-slot name="footer" class="flex justify-end gap-x-4">
+                                                <x-button black label="Annulla" x-on:click="close" />
+                                                <x-button red label="Elimina"
+                                                    wire:click="deleteTeam({{ $team->id }})" />
+                                            </x-slot>
+                                        </x-card>
+                                    </x-modal>
+                                @endrole
                             </div>
                         </div>
                         <div class="flex justify-between items-center my-3">
@@ -134,9 +136,9 @@
                             <div
                                 class="text-sm flex justify-center items-center border rounded-lg px-2 py-1 bg-gray-100 mx-2">
                                 @if ($team->is_available)
-                                In progettazione
+                                    In progettazione
                                 @else
-                                Disponibile
+                                    Disponibile
                                 @endif
                             </div>
                         </div>
@@ -155,33 +157,35 @@
                                         <div>
                                             <x-button flat black icon="eye" wire:navigate
                                                 href="/developers/{{ $pm->id }}" />
-                                            <x-button flat red icon="trash"
-                                                x-on:click="$openModal('pmTeam-{{ $pm->id }}')" />
-                                            <x-modal name="pmTeam-{{ $pm->id }}" blur="sm"
-                                                align="center">
-                                                <x-card shadow="xl">
-                                                    <div
-                                                        class="flex items-center justify-center py-2 bg-red-400 text-white rounded-md mb-2 text-xl">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                            viewBox="0 0 24 24" stroke-width="1.5"
-                                                            stroke="currentColor" class="size-6 me-2">
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
-                                                        </svg>
-                                                        Attenzione!
-                                                    </div>
-                                                    <p class="font-semubold text-lg">
-                                                        Sei sicuro di eliminare definitivamente il PM dal team di
-                                                        sviluppo?
-                                                    </p>
+                                            @role('super_admin')
+                                                <x-button flat red icon="trash"
+                                                    x-on:click="$openModal('pmTeam-{{ $pm->id }}')" />
+                                                <x-modal name="pmTeam-{{ $pm->id }}" blur="sm"
+                                                    align="center">
+                                                    <x-card shadow="xl">
+                                                        <div
+                                                            class="flex items-center justify-center py-2 bg-red-400 text-white rounded-md mb-2 text-xl">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                                viewBox="0 0 24 24" stroke-width="1.5"
+                                                                stroke="currentColor" class="size-6 me-2">
+                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                    d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+                                                            </svg>
+                                                            Attenzione!
+                                                        </div>
+                                                        <p class="font-semubold text-lg">
+                                                            Sei sicuro di eliminare definitivamente il PM dal team di
+                                                            sviluppo?
+                                                        </p>
 
-                                                    <x-slot name="footer" class="flex justify-end gap-x-4">
-                                                        <x-button black label="Annulla" x-on:click="close" />
-                                                        <x-button red label="Elimina"
-                                                            wire:click="deleteMember({{ $pm->id }})" />
-                                                    </x-slot>
-                                                </x-card>
-                                            </x-modal>
+                                                        <x-slot name="footer" class="flex justify-end gap-x-4">
+                                                            <x-button black label="Annulla" x-on:click="close" />
+                                                            <x-button red label="Elimina"
+                                                                wire:click="deleteMember({{ $pm->id }})" />
+                                                        </x-slot>
+                                                    </x-card>
+                                                </x-modal>
+                                            @endrole
                                         </div>
                                     </div>
                                 </div>
@@ -199,44 +203,46 @@
                                         <div>
                                             <x-button flat black icon="eye" wire:navigate
                                                 href="/developers/{{ $dev->id }}" />
-                                            <x-button flat red icon="trash"
-                                                x-on:click="$openModal('devTeam-{{ $dev->id }}')" />
-                                            <x-modal name="devTeam-{{ $dev->id }}" blur="sm"
-                                                align="center">
-                                                <x-card shadow="xl">
-                                                    <div
-                                                        class="flex items-center justify-center py-2 bg-red-400 text-white rounded-md mb-2 text-xl">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                            viewBox="0 0 24 24" stroke-width="1.5"
-                                                            stroke="currentColor" class="size-6 me-2">
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
-                                                        </svg>
-                                                        Attenzione!
-                                                    </div>
-                                                    <p class="font-semubold text-lg">
-                                                        Sei sicuro di eliminare definitivamente il dev dal team di
-                                                        sviluppo?
-                                                    </p>
+                                            @role('super_admin')
+                                                <x-button flat red icon="trash"
+                                                    x-on:click="$openModal('devTeam-{{ $dev->id }}')" />
+                                                <x-modal name="devTeam-{{ $dev->id }}" blur="sm"
+                                                    align="center">
+                                                    <x-card shadow="xl">
+                                                        <div
+                                                            class="flex items-center justify-center py-2 bg-red-400 text-white rounded-md mb-2 text-xl">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                                viewBox="0 0 24 24" stroke-width="1.5"
+                                                                stroke="currentColor" class="size-6 me-2">
+                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                    d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+                                                            </svg>
+                                                            Attenzione!
+                                                        </div>
+                                                        <p class="font-semubold text-lg">
+                                                            Sei sicuro di eliminare definitivamente il dev dal team di
+                                                            sviluppo?
+                                                        </p>
 
-                                                    <x-slot name="footer" class="flex justify-end gap-x-4">
-                                                        <x-button black label="Annulla" x-on:click="close" />
-                                                        <x-button red label="Elimina"
-                                                            wire:click="deleteMember({{ $dev->id }})" />
-                                                    </x-slot>
-                                                </x-card>
-                                            </x-modal>
+                                                        <x-slot name="footer" class="flex justify-end gap-x-4">
+                                                            <x-button black label="Annulla" x-on:click="close" />
+                                                            <x-button red label="Elimina"
+                                                                wire:click="deleteMember({{ $dev->id }})" />
+                                                        </x-slot>
+                                                    </x-card>
+                                                </x-modal>
+                                            @endrole
                                         </div>
                                     </div>
                                 @endforeach
                             </div>
                         </div>
                     </x-card>
-                    @endforeach
-                </div>
-                <div class="py-3">
-                    {{ $teams->links('vendor.pagination.tailwind') }}
-                </div>
+                @endforeach
+            </div>
+            <div class="py-3">
+                {{ $teams->links('vendor.pagination.tailwind') }}
+            </div>
         @else
             <div class="text-center font-medium">
                 Non ci sono teams registrati
