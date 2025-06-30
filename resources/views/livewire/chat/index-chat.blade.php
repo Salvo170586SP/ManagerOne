@@ -67,8 +67,8 @@
                 <div class="h-[70px] p-2 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
                     <div class="flex items-center space-x-3">
                         <figure class="w-12 h-12 border rounded-full bg-white">
-                        <img src="{{ $selectedUser->img_url ? asset('storage/' . $selectedUser->img_url) : 'https://static.thenounproject.com/png/261694-200.png' }}"
-                            alt="{{ $selectedUser->fullName() }}" class="object-cover">
+                            <img src="{{ $selectedUser->img_url ? asset('storage/' . $selectedUser->img_url) : 'https://static.thenounproject.com/png/261694-200.png' }}"
+                                alt="{{ $selectedUser->fullName() }}" class="object-cover">
                         </figure>
                         <div>
                             <h3 class="text-sm font-medium text-gray-900">
@@ -80,10 +80,16 @@
                         </div>
                     </div>
 
-                    <x-dropdown>
-                        <x-dropdown.item icon="trash" label="Svuota chat" wire:click="clearChat"
-                            wire:confirm="Sei sicuro di voler svuotare la chat?" />
-                    </x-dropdown>
+                    <div class="me-5">
+                        <x-button flat icon="information-circle" wire:click="openDetailsSidebar"
+                            title="Visualizza Dettagli" class="me-2" />
+
+
+                        <x-dropdown>
+                            <x-dropdown.item icon="trash" label="Svuota chat" wire:click="clearChat"
+                                wire:confirm="Sei sicuro di voler svuotare la chat?" />
+                        </x-dropdown>
+                    </div>
                 </div>
 
                 <!-- Messaggi -->
@@ -143,4 +149,7 @@
             @endif
         </div>
     </div>
+
+    <!-- Componente Sidebar per i dettagli -->
+    <x-details-sidebar wire:model="showDrawer2" :item="$selectedUser" onClose="closeDetailsSidebar" />
 </div>

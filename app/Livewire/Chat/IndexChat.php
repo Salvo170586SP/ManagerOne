@@ -6,7 +6,6 @@ use App\Events\MessageSent;
 use App\Models\Message;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Livewire\Attributes\On;
 
@@ -18,6 +17,7 @@ class IndexChat extends Component
     public $messages = [];
     public $search = '';
     public $unreadCounts = [];
+    public bool $showDrawer2 = false;
 
 
 
@@ -173,6 +173,18 @@ class IndexChat extends Component
 
         // Potresti voler mostrare una notifica di successo
         $this->dispatch('chat-cleared', 'La chat è stata svuotata.');
+    }
+
+
+
+    public function openDetailsSidebar()
+    {
+        $this->showDrawer2 = true;
+    }
+
+    public function closeDetailsSidebar()
+    {
+        $this->showDrawer2 = false;
     }
 
     public function render()
