@@ -3,16 +3,16 @@
         @window.profile-updated.window="if($event.detail.imgUrl) imgUrl = $event.detail.imgUrl"
         @click.away="isOpen = false">
 
-        <div class="m-2 relative">
+        {{-- chat --}}
+        <div class="flex items-center">
             <x-button wire:navigate href="/chat" icon="chat-bubble-bottom-center-text" lg black flat />
             @if ($unreadMessagesCount > 0)
                 <span class="absolute top-2 right-2 block h-3 w-3 rounded-full bg-red-500 border-2 border-white"></span>
             @endif
         </div>
 
-
         {{-- notifiche --}}
-        <div class="me-5 relative flex items-center" x-data="{ isOpen: false }" @click.away="isOpen = false">
+        <div class="relative flex items-center" x-data="{ isOpen: false }" @click.away="isOpen = false">
             <x-button wire:click="markAsRead" @click="isOpen = !isOpen" icon="bell" lg black flat>
                 @if ($unreadCount > 0)
                     <span
@@ -56,6 +56,11 @@
             </div>
         </div>
 
+        {{-- setting --}}
+        <div class="flex items-center">
+            <x-button wire:navigate href="/settings/profile" icon-size="lg" icon="cog-8-tooth" black flat />
+        </div>
+
         {{-- account --}}
         <div class="flex items-center">
             <x-dropdown position="bottom">
@@ -94,10 +99,6 @@
                 </x-slot>
 
                 <div>
-                    <flux:menu.item :href="route('settings.profile')"
-                        class="cursor-pointer hover:bg-gray-100 text-start" icon="cog" wire:navigate>
-                        {{ __('Impostazioni') }}
-                    </flux:menu.item>
                     <form method="POST" action="{{ route('logout') }}" class="w-full">
                         @csrf
                         <flux:menu.item as="button" type="submit" icon="arrow-right-start-on-rectangle"
