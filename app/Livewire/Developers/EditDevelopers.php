@@ -6,9 +6,12 @@ use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class EditDevelopers extends Component
 {
+    use WithFileUploads;
+    
     public ?User $developer;
 
     public $name;

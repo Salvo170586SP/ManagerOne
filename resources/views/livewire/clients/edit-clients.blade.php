@@ -2,22 +2,28 @@
     <h2 class="text-xl font-bold mb-5">Modifica Cliente</h2>
     <div class="bg-white rounded h-[calc(100vh-13rem)] overflow-y-auto p-6">
         <div class="flex justify-end items-center">
-            <x-button icon="arrow-left" black label="Torna ai Clienti" class="font-bold w-[200px] h-[32px]"
-                wire:navigate href="/clients" />
+            <x-button icon="arrow-left" black label="Torna ai Clienti" class="font-bold w-[200px] h-[32px]" wire:navigate
+                href="/clients" />
         </div>
-        <div class="flex justify-end items-center my-4 border-t ">
-
-        </div>
+        <div class="flex justify-end items-center my-4 border-t "></div>
 
         <form wire:submit.prevent="editClient">
             <div x-data="{ imageUrl: '' }" @form-reset.window="imageUrl = ''"
                 class="flex flex-col items-center justify-center mb-10 mt-5">
                 <div class="text-sm text-gray-600">
                     <div class="space-y-2">
-                        <figure class="w-[150px] h-[150px] overflow-hidden border border-2 rounded-full">
-                            <img :src="imageUrl ? imageUrl : '{{ $img_url ?? 'https://static.thenounproject.com/png/261694-200.png' }}'"
-                                class="w-full h-full object-cover object-top bg-gray-100 dark:bg-[#4b4b4b] opacity-50 @if($img_url) opacity-100 @endif rounded-lg"
-                                alt="Anteprima immagine">
+                        <figure
+                            class="w-[130px] h-[130px] overflow-hidden border rounded-full flex items-center justify-center bg-gray-50">
+                            <img x-show="imageUrl" :src="imageUrl"
+                                class="w-full h-full object-cover object-top rounded-full" alt="Anteprima immagine">
+                            <img x-show="!imageUrl && '{{ $img_url }}'" src="{{ $img_url }}"
+                                class="w-full h-full object-cover object-top rounded-full" alt="Anteprima immagine">
+                            <svg x-show="!imageUrl && !'{{ $img_url }}'" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                class="size-10 mx-auto">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                            </svg>
                         </figure>
                     </div>
                 </div>
@@ -38,7 +44,7 @@
                             Seleziona file
                         </div>
                         @error('img_url')
-                        <small class="text-red-500">{{ $message }}</small>
+                            <small class="text-red-500">{{ $message }}</small>
                         @enderror
                     </div>
                 </div>

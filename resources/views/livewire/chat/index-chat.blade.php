@@ -18,10 +18,22 @@
                         class="p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer transition-colors {{ $selectedUser && $selectedUser->id === $user->id ? 'bg-blue-50 border-r-2 border-blue-500' : '' }}">
                         <div class="flex items-center space-x-3">
                             <div class="relative">
-                                <figure class="w-12 h-12 border rounded-full bg-white overflow-hidden">
-                                    <img src="{{ $user->img_url ? asset('storage/' . $user->img_url) : 'https://static.thenounproject.com/png/261694-200.png' }}"
-                                        alt="{{ $user->fullName() }}" class="object-cover object-top w-full h-full ">
-                                </figure>
+                                @isset($user->img_url)
+                                    <figure class="w-12 h-12 border rounded-full bg-white overflow-hidden">
+                                        <img src="{{ asset('storage/' . $user->img_url) }}" alt="{{ $user->fullName() }}"
+                                            class="object-cover object-top w-full h-full ">
+                                    </figure>
+                                @else
+                                    <div
+                                        class="w-12 h-12 border rounded-full bg-white overflow-hidden flex items-center justify-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="1.5" stroke="currentColor" class="size-5">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                                        </svg>
+                                    </div>
+                                @endisset
+
                                 @if ($unreadCounts[$user->id] > 0)
                                     <span
                                         class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
@@ -66,10 +78,21 @@
                 <!-- Header chat -->
                 <div class="h-[70px] p-2 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
                     <div class="flex items-center space-x-3">
-                        <figure class="w-12 h-12 border rounded-full bg-white overflow-hidden">
-                            <img src="{{ $selectedUser->img_url ? asset('storage/' . $selectedUser->img_url) : 'https://static.thenounproject.com/png/261694-200.png' }}"
-                                alt="{{ $selectedUser->fullName() }}" class="w-full h-full object-cover  object-top">
-                        </figure>
+                        @isset($selectedUser->img_url)
+                            <figure class="w-12 h-12 border rounded-full bg-white overflow-hidden">
+                                <img src="{{ asset('storage/' . $selectedUser->img_url) }}"
+                                    alt="{{ $selectedUser->fullName() }}" class="w-full h-full object-cover  object-top">
+                            </figure>
+                        @else
+                            <div
+                                class="w-12 h-12 border rounded-full bg-white overflow-hidden flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="size-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                                </svg>
+                            </div>
+                        @endisset
                         <div>
                             <h3 class="text-sm font-medium text-gray-900">
                                 {{ $selectedUser->fullName() }}

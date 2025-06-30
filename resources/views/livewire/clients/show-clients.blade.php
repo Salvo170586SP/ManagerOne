@@ -3,11 +3,21 @@
     <div class="flex mx-auto text-black h-[calc(100vh-13rem)]">
         <div class="w-[350px] h-auto bg-white p-5 me-5 rounded">
             <div class="flex items-center justify-center">
-                <figure class="w-[150px] h-[150px]">
-                    <img class="w-full h-full rounded-full border dark:border-[#505050] dark:bg-[#505050] object-cover object-top"
-                        src="{{ isset($client->img_url) ? asset('/storage/' . $client->img_url) : 'https://static.thenounproject.com/png/261694-200.png' }}"
-                        alt="{{ $client->fullName() }}">
-                </figure>
+                @isset($client->img_url)
+                    <figure class="w-[100px] h-[100px]">
+                        <img class="w-full h-full rounded-full border dark:border-[#505050] dark:bg-[#505050] object-cover object-top"
+                            src="{{ asset('/storage/' . $client->img_url) }}" alt="{{ $client->fullName() }}">
+                    </figure>
+                @else
+                    <div
+                        class="w-[100px] h-[100px] border rounded-full bg-white overflow-hidden flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-7">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                        </svg>
+                    </div>
+                @endisset
             </div>
             <div class="font-bold text-sm text-center uppercase my-5">
                 {{ $client->fullName() }}
@@ -15,10 +25,10 @@
             <div class="mb-5">
                 <div class="font-medium text-sm">ID:</div>
                 <div class="text-sm">
-                    @if($client->IdClient)
-                    #CL-{{ $client->IdClient}}
+                    @if ($client->IdClient)
+                        #CL-{{ $client->IdClient }}
                     @else
-                    #CL
+                        #CL
                     @endif
                 </div>
             </div>
@@ -167,9 +177,11 @@
                     @forelse ($invoices as $invoice)
                         <x-card class="border w-[300px]">
                             <div class="flex items-center justify-between mb-2">
-                                <div class="font-bold text-sm">{{ $invoice->name ?? 'Fattura #' . $invoice->IdInvoice }}</div>
+                                <div class="font-bold text-sm">
+                                    {{ $invoice->name ?? 'Fattura #' . $invoice->IdInvoice }}</div>
                                 @if ($invoice->pdf_path)
-                                    <a href="{{ asset('storage/' . $invoice->pdf_path) }}" target="_blank" class="text-blue-600 underline text-sm">PDF</a>
+                                    <a href="{{ asset('storage/' . $invoice->pdf_path) }}" target="_blank"
+                                        class="text-blue-600 underline text-sm">PDF</a>
                                 @endif
                             </div>
                             <div class="text-sm mb-1">
@@ -182,7 +194,8 @@
                             </div>
                         </x-card>
                     @empty
-                        <div class="col-span-3 text-center font-medium py-10">Non ci sono fatture per questo cliente</div>
+                        <div class="col-span-3 text-center font-medium py-10">Non ci sono fatture per questo cliente
+                        </div>
                     @endforelse
                 </div>
             </div>

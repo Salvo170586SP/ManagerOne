@@ -27,6 +27,7 @@ class Step1 extends Form
         'phone' => 'required',
         'city' => 'required',
         'email' => 'required|email',
+        'img_url' => 'nullable',
     ];
 
     protected $messages = [

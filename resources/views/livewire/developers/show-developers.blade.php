@@ -3,11 +3,21 @@
     <div class="flex flex-wrap w-full mx-auto text-black h-screen   h-[calc(100vh-13rem)]">
         <div class="w-full max-w-[250px] h-auto bg-white p-5 me-5 rounded break-words">
             <div class="flex items-center justify-center">
-                <figure class="w-[130px] h-[130px]">
-                    <img class="w-full h-full rounded-full border dark:border-[#505050] dark:bg-[#505050] object-cover object-top"
-                        src="{{ isset($developer->img_url) ? asset('/storage/' . $developer->img_url) : 'https://static.thenounproject.com/png/261694-200.png' }}"
-                        alt="{{ $developer->fullName() }}">
-                </figure>
+                @isset($developer->img_url)
+                    <figure class="w-[100px] h-[100px]">
+                        <img class="w-full h-full rounded-full border dark:border-[#505050] dark:bg-[#505050] object-cover object-top"
+                            src="{{ asset('storage/' . $developer->img_url) }}" alt="{{ $developer->fullName() }}">
+                    </figure>
+                @else
+                    <div
+                        class="w-[100px] h-[100px] border rounded-full bg-white overflow-hidden flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-7">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                        </svg>
+                    </div>
+                @endisset
             </div>
             <div class="font-bold text-sm text-center uppercase my-5">
                 {{ $developer->fullName() }}
@@ -166,9 +176,9 @@
                                             -
                                         @endif
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap" >
+                                    <td class="px-6 py-4 whitespace-nowrap">
                                         <x-datetime-picker without-time wire:model.live="taskDates.{{ $task->id }}"
-                                            id="completed_at-{{ $task->id }}" shadow  />
+                                            id="completed_at-{{ $task->id }}" shadow />
                                     </td>
                                     <td class="px-6 py-4 whitespace-normal break-words max-w-[200px] text-center">
                                         <x-button flat gray icon="eye"

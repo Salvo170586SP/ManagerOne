@@ -11,10 +11,12 @@
         <div class="flex items-center justify-between p-6 border-b border-gray-200">
             <div>
                 <h3 class="text-lg font-semibold text-gray-900 flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
-                      </svg>
-                      
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+                    </svg>
+
                     Dettagli
                 </h3>
             </div>
@@ -30,11 +32,21 @@
             @if ($item)
                 <div class="space-y-6">
                     <div class="flex flex-col items-center">
-                        <figure class="w-24 h-24 border border-gray-200 rounded-full bg-white">
-                            <img src="{{ $item->img_url ? asset('storage/' . $item->img_url) : 'https://static.thenounproject.com/png/261694-200.png' }}"
-                                alt="{{ $item->fullName() }}" class="object-cover w-full h-full rounded-full">
-                        </figure>
-
+                        @isset($item->img_url)
+                            <figure class="w-24 h-24 border border-gray-200 rounded-full bg-white">
+                                <img src="{{ asset('storage/' . $item->img_url) }}" alt="{{ $item->fullName() }}"
+                                    class="object-cover w-full h-full rounded-full">
+                            </figure>
+                        @else
+                            <div
+                                class="w-24 h-24 border rounded-full bg-white overflow-hidden flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="size-8">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                                </svg>
+                            </div>
+                        @endisset
                         <div class="text-center mt-4">
                             <h4 class="text-xl font-bold text-gray-800">{{ $item->fullName() }}</h4>
                             <p class="text-sm text-gray-500">{{ $item->email }}</p>
@@ -55,7 +67,8 @@
                             </div>
                             <div class="flex justify-between items-center">
                                 <dt class="text-sm font-medium text-gray-500">Pagina dell'utente</dt>
-                                <x-button wire:navigate href="/developers/{{ $item->id }}" icon="eye" black flat title="Pagina utente" />
+                                <x-button wire:navigate href="/developers/{{ $item->id }}" icon="eye" black flat
+                                    title="Pagina utente" />
                             </div>
                             {{-- Aggiungi qui altri dettagli se necessario --}}
                         </dl>

@@ -88,7 +88,8 @@ new class extends Component {
                 <div class="flex flex-col justify-center items-center mb-10 mt-5">
                     <div class="text-sm text-gray-600">
                         <div class="space-y-2">
-                            <figure class="w-[150px] h-[150px] overflow-hidden border border-2 rounded-full">
+                            <figure
+                                class="w-[150px] h-[150px] flex items-center justify-center overflow-hidden border rounded-full">
                                 @if ($img_url && !is_string($img_url))
                                     {{-- Preview temporanea Livewire --}}
                                     <img src="{{ $img_url->temporaryUrl() }}"
@@ -100,10 +101,11 @@ new class extends Component {
                                         class="w-full h-full object-cover object-top bg-gray-100 dark:bg-[#4b4b4b] opacity-100"
                                         alt="Immagine profilo">
                                 @else
-                                    {{-- Immagine di default --}}
-                                    <img src="https://static.thenounproject.com/png/261694-200.png"
-                                        class="w-full h-full object-cover object-top bg-gray-100 dark:bg-[#4b4b4b] opacity-50"
-                                        alt="Default">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor" class="size-10">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                                    </svg>
                                 @endif
                             </figure>
                         </div>
@@ -135,7 +137,8 @@ new class extends Component {
                     autocomplete="name" />
 
                 <div>
-                    <flux:input wire:model="email" :label="__('Email')" type="email" required autocomplete="email" />
+                    <flux:input wire:model="email" :label="__('Email')" type="email" required
+                        autocomplete="email" />
 
 
                     @if (auth()->user() instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && !auth()->user()->hasVerifiedEmail())
@@ -154,18 +157,19 @@ new class extends Component {
                                     {{ __('A new verification link has been sent to your email address.') }}
                                 </flux:text>
                             @endif
-                        </div> @endif
-                    </div>
-
-                    <div class="flex items-center gap-4">
-                        <div class="flex items-center justify-end">
-                            <flux:button variant="primary" type="submit" class="w-full">{{ __('Salva') }}</flux:button>
                         </div>
+                    @endif
+                </div>
 
-                        <x-action-message class="me-3" on="profile-updated">
-                            {{ __('Saved.') }}
-                        </x-action-message>
+                <div class="flex items-center gap-4">
+                    <div class="flex items-center justify-end">
+                        <flux:button variant="primary" type="submit" class="w-full">{{ __('Salva') }}</flux:button>
                     </div>
+
+                    <x-action-message class="me-3" on="profile-updated">
+                        {{ __('Saved.') }}
+                    </x-action-message>
+                </div>
             </form>
             <livewire:settings.delete-user-form />
         </x-settings.layout>

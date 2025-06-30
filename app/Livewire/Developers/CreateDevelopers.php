@@ -8,9 +8,12 @@ use App\Livewire\Forms\Developers\CreateDevelopers\Step2;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class CreateDevelopers extends Component
 {
+    use WithFileUploads;
+
     public $currentStep = 1;
     public $categories;
     public $workplaces;
@@ -46,7 +49,7 @@ class CreateDevelopers extends Component
         //salvo la foto di profilo
         $url = null;
         if ($this->developerStep1->img_url) {
-            $url = $this->developerStep1->img_url->store('imgsDeveloper');
+            $url = $this->developerStep1->img_url->store('imgsDeveloper', 'public');
         }
 
         $dev = User::create([

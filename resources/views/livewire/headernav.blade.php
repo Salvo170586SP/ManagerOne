@@ -1,11 +1,11 @@
 <div class="mx-8 mt-4 hidden lg:block relative">
-    <div class="bg-white rounded w-full h-[80px] p-3 flex item-center justify-end" x-data="{ isOpen: false, imgUrl: '{{ auth()->user()->img_url ? asset('storage/' . auth()->user()->img_url) : 'https://static.thenounproject.com/png/261694-200.png' }}' }"
+    <div class="bg-white rounded w-full h-[80px] p-3 flex item-center justify-end" x-data="{ isOpen: false }"
         @window.profile-updated.window="if($event.detail.imgUrl) imgUrl = $event.detail.imgUrl"
         @click.away="isOpen = false">
 
         <div class="m-2 relative">
             <x-button wire:navigate href="/chat" icon="chat-bubble-bottom-center-text" lg black flat />
-            @if($unreadMessagesCount > 0)
+            @if ($unreadMessagesCount > 0)
                 <span class="absolute top-2 right-2 block h-3 w-3 rounded-full bg-red-500 border-2 border-white"></span>
             @endif
         </div>
@@ -61,14 +61,25 @@
             <x-dropdown position="bottom">
                 <x-slot name="trigger">
                     <x-button flat slate>
-                        <figure class="w-[40px] h-[40px]">
-                            <img class="w-full h-full rounded-full border bg-white  dark:border-[#505050] dark:bg-[#505050] object-cover object-top"
-                                :src="imgUrl" alt="{{ auth()->user()->fullName() }}">
-                        </figure>
+                        @isset(auth()->user()->img_url)
+                            <figure class="w-[40px] h-[40px]">
+                                <img src="{{ asset('storage/' . auth()->user()->img_url) }}"
+                                    class="w-full h-full rounded-full border bg-white  dark:border-[#505050] dark:bg-[#505050] object-cover object-top"
+                                    alt="{{ auth()->user()->fullName() }}">
+                            </figure>
+                        @else
+                            <div
+                                class="w-[40px] h-[40px] border rounded-full bg-white overflow-hidden flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="size-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                                </svg>
+                            </div>
+                        @endisset
                         <div class="flex flex-col ms-2">
                             <div class="font-bold text-xs uppercase flex flex-col items-start">
                                 <div>
-
                                     {{ Str::limit(auth()->user()->name, 17) }}
                                 </div>
                                 <div>
