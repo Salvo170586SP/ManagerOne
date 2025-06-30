@@ -1,12 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Broadcast;
 use Livewire\Volt\Volt;
 
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
+  
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'role:super_admin|developer|project_manager', 'verified'])
     ->name('dashboard');
@@ -60,6 +62,9 @@ Route::middleware(['auth', 'role:super_admin|developer|project_manager'])->group
 
     //calendar
     Volt::route('/calendar', 'calendar.index-calendar')->name('calendar.index');
+ 
+    //chat
+    Volt::route('/chat', 'chat.index-chat')->name('chat.index');
 
     //settings
     Route::redirect('settings', 'settings/profile');

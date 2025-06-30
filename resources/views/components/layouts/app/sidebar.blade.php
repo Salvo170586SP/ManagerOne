@@ -124,7 +124,6 @@
     <livewire:headernav />
     {{ $slot }}
 
-    <wireui:scripts />
     @fluxScripts
     @stack('scripts')
 </body>

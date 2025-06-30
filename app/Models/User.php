@@ -100,6 +100,52 @@ class User extends Authenticatable
     {
         return $this->hasMany(Event::class, 'user_id');
     }
+
+    /**
+     * Get messages sent by this user.
+     */
+    public function sentMessages()
+    {
+        return $this->hasMany(Message::class, 'sender_id');
+    }
+
+    /**
+     * Get messages received by this user.
+     */
+    public function receivedMessages()
+    {
+        return $this->hasMany(Message::class, 'receiver_id');
+    }
+
+    /**
+     * Get all messages for this user (sent and received).
+     */
+    public function messages()
+    {
+        return Message::where('sender_id', $this->id)
+                     ->orWhere('receiver_id', $this->id);
+    }
+
+    /**
+     * Get unread messages count for this user.
+     */
+    public function unreadMessagesCount()
+    {
+        return $this->receivedMessages()->where('is_read', false)->count();
+    }
+
+    /**
+     * Get users with whom this user has conversations.
+     */
+    public function conversationUsers()
+    {
+        $sentUserIds = $this->sentMessages()->pluck('receiver_id');
+        $receivedUserIds = $this->receivedMessages()->pluck('sender_id');
+        
+        return User::whereIn('id', $sentUserIds->merge($receivedUserIds))
+                  ->where('id', '!=', $this->id)
+                  ->distinct();
+    }
     //
 
 

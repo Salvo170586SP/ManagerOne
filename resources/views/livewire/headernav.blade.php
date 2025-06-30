@@ -3,6 +3,14 @@
         @window.profile-updated.window="if($event.detail.imgUrl) imgUrl = $event.detail.imgUrl"
         @click.away="isOpen = false">
 
+        <div class="m-2 relative">
+            <x-button wire:navigate href="/chat" icon="chat-bubble-bottom-center-text" lg black flat />
+            @if($unreadMessagesCount > 0)
+                <span class="absolute top-2 right-2 block h-3 w-3 rounded-full bg-red-500 border-2 border-white"></span>
+            @endif
+        </div>
+
+
         {{-- notifiche --}}
         <div class="me-5 relative flex items-center" x-data="{ isOpen: false }" @click.away="isOpen = false">
             <x-button wire:click="markAsRead" @click="isOpen = !isOpen" icon="bell" lg black flat>
@@ -11,12 +19,9 @@
                         class="absolute top-3 right-4 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">{{ $unreadCount }}</span>
                 @endif
             </x-button>
-            <div x-show="isOpen" x-cloak
-                x-transition:enter="transition ease-out duration-200"
-                x-transition:enter-start="opacity-0 scale-95"
-                x-transition:enter-end="opacity-100 scale-100"
-                x-transition:leave="transition ease-in duration-150"
-                x-transition:leave-start="opacity-100 scale-100"
+            <div x-show="isOpen" x-cloak x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+                x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100"
                 x-transition:leave-end="opacity-0 scale-95"
                 class="p-3 bg-white w-[300px] rounded-lg z-50 shadow-lg absolute top-18 right-0">
                 @if ($notifications->isNotEmpty())
