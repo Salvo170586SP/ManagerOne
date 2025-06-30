@@ -18,9 +18,9 @@
                         class="p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer transition-colors {{ $selectedUser && $selectedUser->id === $user->id ? 'bg-blue-50 border-r-2 border-blue-500' : '' }}">
                         <div class="flex items-center space-x-3">
                             <div class="relative">
-                                <figure class="w-12 h-12 border rounded-full bg-white">
+                                <figure class="w-12 h-12 border rounded-full bg-white overflow-hidden">
                                     <img src="{{ $user->img_url ? asset('storage/' . $user->img_url) : 'https://static.thenounproject.com/png/261694-200.png' }}"
-                                        alt="{{ $user->fullName() }}" class="object-cover">
+                                        alt="{{ $user->fullName() }}" class="object-cover object-top w-full h-full ">
                                 </figure>
                                 @if ($unreadCounts[$user->id] > 0)
                                     <span
@@ -66,9 +66,9 @@
                 <!-- Header chat -->
                 <div class="h-[70px] p-2 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
                     <div class="flex items-center space-x-3">
-                        <figure class="w-12 h-12 border rounded-full bg-white">
+                        <figure class="w-12 h-12 border rounded-full bg-white overflow-hidden">
                             <img src="{{ $selectedUser->img_url ? asset('storage/' . $selectedUser->img_url) : 'https://static.thenounproject.com/png/261694-200.png' }}"
-                                alt="{{ $selectedUser->fullName() }}" class="object-cover">
+                                alt="{{ $selectedUser->fullName() }}" class="w-full h-full object-cover  object-top">
                         </figure>
                         <div>
                             <h3 class="text-sm font-medium text-gray-900">
