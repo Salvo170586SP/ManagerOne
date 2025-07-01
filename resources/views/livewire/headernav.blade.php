@@ -4,10 +4,10 @@
         @click.away="isOpen = false">
 
         {{-- chat --}}
-        <div class="flex items-center">
+        <div class="relative flex items-center">
             <x-button wire:navigate href="/chat" icon="chat-bubble-bottom-center-text" lg black flat />
             @if ($unreadMessagesCount > 0)
-                <span class="absolute top-2 right-2 block h-3 w-3 rounded-full bg-red-500 border-2 border-white"></span>
+                <span class="absolute top-3 right-3 block h-3 w-3 rounded-full bg-red-500 border-2 border-white"></span>
             @endif
         </div>
 
