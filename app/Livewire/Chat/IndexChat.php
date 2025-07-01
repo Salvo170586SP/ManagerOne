@@ -39,6 +39,52 @@ class IndexChat extends Component
                 ->where('id', '!=', $currentUser->id)
                 ->orderBy('name')
                 ->get();
+        } elseif ($currentUser->hasRole('project_manager')) {
+            // Recupera tutti i team dove è PM (usando la relazione teams come Collection)
+            $pmTeams = $currentUser->teams->filter(function($team) use ($currentUser) {
+                return $team->users->contains(function($user) use ($currentUser) {
+                    return $user->id === $currentUser->id && $user->type === 'project_manager';
+                });
+            });
+
+            // Recupera tutti i collaboratori (developers) dei team
+            $collaboratorIds = collect();
+            foreach ($pmTeams as $team) {
+                $collaboratorIds = $collaboratorIds->merge($team->developers()->pluck('users.id'));
+            }
+            $collaboratorIds = $collaboratorIds->unique()->filter(fn($id) => $id != $currentUser->id);
+
+            // Recupera anche il super admin
+            $superAdminIds = User::role('super_admin')->pluck('id');
+
+            $userIds = $collaboratorIds->merge($superAdminIds)->unique();
+
+            $this->users = User::whereIn('id', $userIds)
+                ->orderBy('name')
+                ->get();
+        } elseif ($currentUser->hasRole('developer')) {
+            // Recupera tutti i team dove è developer
+            $devTeams = $currentUser->teams;
+
+            $collaboratorIds = collect();
+            $pmIds = collect();
+            foreach ($devTeams as $team) {
+                // Altri developers del team
+                $collaboratorIds = $collaboratorIds->merge($team->developers()->pluck('users.id'));
+                // PM del team
+                $pmIds = $pmIds->merge($team->pms()->pluck('users.id'));
+            }
+            $collaboratorIds = $collaboratorIds->unique()->filter(fn($id) => $id != $currentUser->id);
+            $pmIds = $pmIds->unique();
+
+            // Recupera anche il super admin
+            $superAdminIds = User::role('super_admin')->pluck('id');
+
+            $userIds = $collaboratorIds->merge($pmIds)->merge($superAdminIds)->unique();
+
+            $this->users = User::whereIn('id', $userIds)
+                ->orderBy('name')
+                ->get();
         } else {
             // Per altri ruoli, mostra solo super admin e developer
             $this->users = User::whereHas('roles', function ($query) {
