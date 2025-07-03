@@ -1,7 +1,6 @@
-@props(['show' => false, 'item' => null, 'onClose'])
+@props(['show' => false, 'item' => null, 'selectedUserAttachments' => [], 'onClose'])
+
 <div>
-
-
     <div x-data="{ open: @entangle($attributes->wire('model')) }" x-show="open" x-cloak x-transition:enter="transform transition ease-in-out duration-200"
         x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0"
         x-transition:leave="transform transition ease-in-out duration-200" x-transition:leave-start="translate-x-0"
@@ -53,7 +52,7 @@
                         </div>
                     </div>
 
-                    <div class="border-t border-gray-200 pt-6">
+                    <div class="border-t border-gray-200 pt-6 border-b border-gray-200">
                         <dl class="space-y-4">
                             <div class="flex justify-between items-center">
                                 <dt class="text-sm font-medium text-gray-500">Ruolo</dt>
@@ -72,6 +71,30 @@
                             </div>
                             {{-- Aggiungi qui altri dettagli se necessario --}}
                         </dl>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-semibold text-gray-900">Allegati ({{ count($selectedUserAttachments) }})</h4>
+                        <div class="flex flex-col items-start justify-center gap-2 mt-2">
+                            @if (isset($selectedUserAttachments) && count($selectedUserAttachments))
+                                @foreach ($selectedUserAttachments as $attachment)
+                                    <div wire:key="attachment-{{ $attachment->id }}" class="w-full flex items-center  justify-between gap-2 bg-gray-100 rounded-md border border-gray-200 py-2 px-2">
+                                        <a href="{{ asset('storage/' . $attachment->attachment_path) }}" target="_blank"
+                                            class="text-blue-600 text-sm underline flex items-center gap-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke-width="1.5" stroke="currentColor" class="size-4">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="m18.375 12.739-7.693 7.693a4.5 4.5 0 0 1-6.364-6.364l10.94-10.94A3 3 0 1 1 19.5 7.372L8.552 18.32m.009-.01-.01.01m5.699-9.941-7.81 7.81a1.5 1.5 0 0 0 2.112 2.13" />
+                                            </svg>
+                                            Visualizza Allegato
+                                        </a>
+                                        <span
+                                            class="text-xs text-gray-400">({{ $attachment->created_at->format('d/m/Y H:i') }})</span>
+                                    </div>
+                                @endforeach
+                            @else
+                                <span class="text-gray-400 text-sm">Nessun allegato</span>
+                            @endif
+                        </div>
                     </div>
                 </div>
             @else

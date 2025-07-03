@@ -3,14 +3,19 @@
 namespace App\Livewire\Chat;
 
 use App\Events\MessageSent;
+use App\Events\ChatCleared;
 use App\Models\Message;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\Attributes\On;
+use Livewire\WithFileUploads;
 
 class IndexChat extends Component
 {
+    use WithFileUploads;
+
     public $selectedUser = null;
     public $messageContent = '';
     public $users = [];
@@ -18,7 +23,8 @@ class IndexChat extends Component
     public $search = '';
     public $unreadCounts = [];
     public bool $showDrawer2 = false;
-
+    public $attachment = null;
+    public $selectedUserAttachments = [];
 
 
     public function mount()
@@ -38,11 +44,12 @@ class IndexChat extends Component
             })
                 ->where('id', '!=', $currentUser->id)
                 ->orderBy('name')
-                ->get();
+                ->get()
+                ->all();
         } elseif ($currentUser->hasRole('project_manager')) {
             // Recupera tutti i team dove è PM (usando la relazione teams come Collection)
-            $pmTeams = $currentUser->teams->filter(function($team) use ($currentUser) {
-                return $team->users->contains(function($user) use ($currentUser) {
+            $pmTeams = $currentUser->teams->filter(function ($team) use ($currentUser) {
+                return $team->users->contains(function ($user) use ($currentUser) {
                     return $user->id === $currentUser->id && $user->type === 'project_manager';
                 });
             });
@@ -61,7 +68,8 @@ class IndexChat extends Component
 
             $this->users = User::whereIn('id', $userIds)
                 ->orderBy('name')
-                ->get();
+                ->get()
+                ->all();
         } elseif ($currentUser->hasRole('developer')) {
             // Recupera tutti i team dove è developer
             $devTeams = $currentUser->teams;
@@ -84,7 +92,8 @@ class IndexChat extends Component
 
             $this->users = User::whereIn('id', $userIds)
                 ->orderBy('name')
-                ->get();
+                ->get()
+                ->all();
         } else {
             // Per altri ruoli, mostra solo super admin e developer
             $this->users = User::whereHas('roles', function ($query) {
@@ -92,7 +101,8 @@ class IndexChat extends Component
             })
                 ->where('id', '!=', $currentUser->id)
                 ->orderBy('name')
-                ->get();
+                ->get()
+                ->all();
         }
     }
 
@@ -114,6 +124,7 @@ class IndexChat extends Component
         $this->selectedUser = User::find($userId);
         $this->loadMessages();
         $this->markMessagesAsRead();
+        $this->loadSelectedUserAttachments();
     }
 
     public function loadMessages()
@@ -127,7 +138,8 @@ class IndexChat extends Component
         $this->messages = Message::betweenUsers($currentUser->id, $this->selectedUser->id)
             ->with(['sender', 'receiver'])
             ->orderBy('created_at', 'asc')
-            ->get();
+            ->get()
+            ->all();
     }
 
     public function sendMessage()
@@ -191,9 +203,14 @@ class IndexChat extends Component
         if ($this->selectedUser && $selectedUserId === $senderId) {
             $this->loadMessages();
             $this->markMessagesAsRead();
+            $this->loadSelectedUserAttachments();
         }
         // In ogni caso aggiorno i conteggi degli unread
         $this->loadUnreadCounts();
+        // Se la chat attiva non è con chi ha inviato il messaggio, aggiorno comunque gli allegati
+        if ($this->selectedUser && $selectedUserId !== $senderId) {
+            $this->loadSelectedUserAttachments();
+        }
     }
 
     public function getFilteredUsersProperty()
@@ -207,22 +224,6 @@ class IndexChat extends Component
         });
     }
 
-    public function clearChat()
-    {
-        if (!$this->selectedUser) {
-            return;
-        }
-
-        Message::betweenUsers(Auth::id(), $this->selectedUser->id)->delete();
-
-        $this->loadMessages();
-
-        // Potresti voler mostrare una notifica di successo
-        $this->dispatch('chat-cleared', 'La chat è stata svuotata.');
-    }
-
-
-
     public function openDetailsSidebar()
     {
         $this->showDrawer2 = true;
@@ -232,6 +233,62 @@ class IndexChat extends Component
     {
         $this->showDrawer2 = false;
     }
+
+    public function loadSelectedUserAttachments()
+    {
+        if (!$this->selectedUser) {
+            $this->selectedUserAttachments = [];
+            return;
+        }
+        $currentUser = Auth::user();
+        $this->selectedUserAttachments = Message::where(function ($q) use ($currentUser) {
+            $q->where('sender_id', $currentUser->id)
+                ->where('receiver_id', $this->selectedUser->id);
+        })->orWhere(function ($q) use ($currentUser) {
+            $q->where('sender_id', $this->selectedUser->id)
+                ->where('receiver_id', $currentUser->id);
+        })
+            ->whereNotNull('attachment_path')
+            ->orderByDesc('created_at')
+            ->get()
+            ->all();
+    }
+
+
+    public function sendAttachment()
+    {
+        $this->validate([
+            'attachment' => 'required|file',
+        ]);
+
+        if (!$this->attachment || !$this->selectedUser) {
+            return;
+        }
+
+        $attachmentPath = $this->attachment->store('chatAttachments', 'public');
+
+        $message = Message::create([
+            'sender_id' => Auth::id(),
+            'receiver_id' => $this->selectedUser->id,
+            'attachment_path' => $attachmentPath,
+            'content' => null,
+        ]);
+
+        $this->loadMessages();
+
+        MessageSent::dispatch($message);
+
+        $this->dispatch('new-message-sent', [
+            'sender_id' => Auth::id(),
+            'receiver_id' => $this->selectedUser->id,
+            'message_id' => $message->id
+        ]);
+
+        $this->reset('attachment');
+    }
+
+   
+ 
 
     public function render()
     {

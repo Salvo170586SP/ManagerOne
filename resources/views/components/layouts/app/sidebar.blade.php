@@ -126,6 +126,7 @@
 
     @fluxScripts
     @stack('scripts')
+    @livewireScripts
 </body>
 
 </html>
