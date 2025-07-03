@@ -1,11 +1,11 @@
 <div class="-mt-2">
     <h2 class="text-xl font-bold mb-5">Modifica Cliente</h2>
-    <div class="bg-white rounded h-[calc(100vh-13rem)] overflow-y-auto p-6">
+    <div class="bg-white border border-gray-300 rounded-lg h-[calc(100vh-22rem)] overflow-y-auto p-6">
         <div class="flex justify-end items-center">
             <x-button icon="arrow-left" black label="Torna ai Clienti" class="font-bold w-[200px] h-[32px]" wire:navigate
                 href="/clients" />
         </div>
-        <div class="flex justify-end items-center my-4 border-t "></div>
+        <div class="flex justify-end items-center my-4 border-t"></div>
 
         <form wire:submit.prevent="editClient">
             <div x-data="{ imageUrl: '' }" @form-reset.window="imageUrl = ''"
@@ -13,7 +13,7 @@
                 <div class="text-sm text-gray-600">
                     <div class="space-y-2">
                         <figure
-                            class="w-[130px] h-[130px] overflow-hidden border rounded-full flex items-center justify-center bg-gray-50">
+                            class="w-[130px] h-[130px] overflow-hidden border border-gray-300 rounded-full flex items-center justify-center bg-gray-50">
                             <img x-show="imageUrl" :src="imageUrl"
                                 class="w-full h-full object-cover object-top rounded-full" alt="Anteprima immagine">
                             <img x-show="!imageUrl && '{{ $img_url }}'" src="{{ $img_url }}"

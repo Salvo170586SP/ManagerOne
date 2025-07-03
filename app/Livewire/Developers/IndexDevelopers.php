@@ -130,7 +130,7 @@ class IndexDevelopers extends Component
             $developers = $developers->whereDate('created_at', '=', \Carbon\Carbon::parse($this->searchDate)->toDateString());
         }
 
-        $developers = $developers->latest()->paginate(10);
+        $developers = $developers->latest()->paginate(7);
 
         // Controlla se la pagina corrente supera l'ultima pagina disponibile
         if ($developers->lastPage() > 0 && $developers->currentPage() > $developers->lastPage()) {

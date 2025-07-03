@@ -1,5 +1,5 @@
 <div class="mx-8 mt-4 hidden lg:block relative">
-    <div class="bg-white rounded w-full h-[80px] p-3 flex item-center justify-end" x-data="{ isOpen: false }"
+    <div class="bg-white border border-gray-300 rounded-lg w-full h-[80px] p-3 flex item-center justify-end" x-data="{ isOpen: false }"
         @window.profile-updated.window="if($event.detail.imgUrl) imgUrl = $event.detail.imgUrl"
         @click.away="isOpen = false">
 

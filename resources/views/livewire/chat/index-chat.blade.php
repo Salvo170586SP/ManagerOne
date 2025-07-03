@@ -3,7 +3,7 @@
         <h2 class="text-xl font-bold">Chat</h2>
     </div>
 
-    <div class="bg-white border shadow rounded-lg h-full flex overflow-hidden">
+    <div class="bg-white border border-gray-300 rounded-lg h-full flex overflow-hidden">
         <!-- Sidebar con lista utenti -->
         <div class="w-1/3 border-r border-gray-200 flex flex-col">
             <!-- Header sidebar -->

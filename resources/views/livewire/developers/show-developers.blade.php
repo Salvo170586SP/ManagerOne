@@ -1,7 +1,7 @@
 <div class="-mt-2 min-h-screen overflow-x-hidden">
     <h2 class="text-xl font-bold mb-5">Dettagli Developer</h2>
     <div class="flex flex-wrap w-full mx-auto text-black h-screen   h-[calc(100vh-13rem)]">
-        <div class="w-full max-w-[250px] h-auto bg-white p-5 me-5 rounded break-words">
+        <div class="w-full max-w-[250px] h-auto bg-white p-5 me-5 rounded-lg border border-gray-300 break-words">
             <div class="flex items-center justify-center">
                 @isset($developer->img_url)
                     <figure class="w-[100px] h-[100px]">
@@ -19,7 +19,7 @@
                     </div>
                 @endisset
             </div>
-            <div class="font-bold text-sm text-center uppercase my-5">
+            <div class="font-bold text-sm text-center uppercase my-5 border-b pb-3">
                 {{ $developer->fullName() }}
             </div>
             <div class="mb-4">
@@ -95,14 +95,14 @@
             </div>
         </div>
 
-        <div class="flex-1 min-w-0 p-6 bg-white rounded">
-            <div class="w-full flex justify-end mb-5 pb-5">
+        <div class="flex-1 min-w-0 p-6 bg-white rounded-lg border border-gray-300">
+            <div class="w-full flex justify-between items-center mb-5 pb-5">
+                <h3 class="font-bold text-lg uppercase">Tasks</h3>
                 <x-button icon="arrow-left" black label="Torna ai Developers" class="font-bold w-[200px] h-[32px]"
                     wire:navigate href="/developers" />
             </div>
 
-            <h3 class="font-bold text-lg uppercase">Tasks</h3>
-            <x-card shadow="false" class="w-[350px] border my-5">
+            <x-card shadow="false" class="w-[350px] border border-gray-300 my-5">
                 <div class="flex justify-between">
                     <div class="bg-slate-500 w-[50px] h-[50px] flex rounded-full justify-center items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -124,7 +124,7 @@
 
 
             @if ($developer->tasks->count() > 0)
-                <div class="w-full {{-- overflow-x-auto --}}">
+                <div class="w-full overflow-x-auto">
                     <table class="w-full divide-y border divide-gray-200 ">
                         <thead>
                             <tr>
@@ -185,12 +185,12 @@
                                             x-on:click="$openModal('tasks-{{ $task->id }}')" />
                                         <x-modal name="tasks-{{ $task->id }}" blur="sm" align="center">
                                             <x-card shadow="xl" class="max-w-[700px]">
-                                                <div class="p-2 bg-gray-300 text-white rounded-md mb-2 text-xl">
-                                                    Descrizione Task
-                                                </div>
-                                                <p
-                                                    class="text-sm p-2 break-words break-all whitespace-pre-wrap max-w-[400px] mx-auto">
-                                                    {{ $task->description }}
+                                                <p class="text-base break-words">
+                                                    @if ($task->description)
+                                                        {{ $task->description }}
+                                                    @else
+                                                        Nessuna descrizione
+                                                    @endif
                                                 </p>
                                                 <x-slot name="footer" class="flex justify-end gap-x-4">
                                                     <x-button black label="Annulla" x-on:click="close" />

@@ -8,7 +8,7 @@ new class extends Component {
 
 <section class="w-full">
     @include('partials.settings-heading')
-    <div class="bg-white rounded p-5">
+    <div class="bg-white border border-gray-300 rounded-lg p-5">
         <x-settings.layout :heading="__('Stile')">
             <flux:radio.group x-data variant="segmented" x-model="$flux.appearance">
                 <flux:radio value="light" icon="sun">{{ __('Light') }}</flux:radio>

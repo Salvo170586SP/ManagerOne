@@ -3,7 +3,7 @@
         <h2 class="text-xl font-bold mb-5">Archivio Documenti</h2>
     </div>
 
-    <div class="bg-white rounded h-[calc(100vh-13rem)] overflow-y-auto p-6">
+    <div class="bg-white rounded-lg border border-gray-300 h-[calc(100vh-13rem)] overflow-y-auto p-6">
         @role('super_admin')
             <div class="flex justify-between items-center">
                 <div class="w-[350px] h-[32px]">
@@ -28,7 +28,7 @@
                 </div>
             </div>
             <div class="flex gap-3">
-                <x-card shadow="false" class="w-[350px] border my-5">
+                <x-card shadow="false" class="w-[350px] border border-gray-300 my-5">
                     <div class="flex justify-between">
                         <div class="bg-slate-500 w-[50px] h-[50px] rounded-full flex justify-center items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -47,7 +47,7 @@
                         </div>
                     </div>
                 </x-card>
-                <x-card shadow="false" class="w-[350px] border my-5">
+                <x-card shadow="false" class="w-[350px] border border-gray-300 my-5">
                     <div class="flex justify-between">
                         <div class="bg-slate-500 w-[50px] h-[50px] rounded-full flex justify-center items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -66,7 +66,7 @@
                         </div>
                     </div>
                 </x-card>
-                <x-card shadow="false" class="w-[350px] border my-5">
+                <x-card shadow="false" class="w-[350px] rounded-lg border border-gray-300 my-5">
                     <div class="flex justify-between">
                         <div class="bg-slate-500 w-[50px] h-[50px] rounded-full flex justify-center items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -125,7 +125,7 @@
                 <div class="flex flex-wrap gap-3 mt-8 pb-5">
                     @forelse ($clients as $client)
                         <x-card wire:key="docCl-{{ $client->id }}" shadow
-                            class="border w-[300px] bg-blue-50/50 cursor-pointer" wire:navigate
+                            class="rounded-lg border border-gray-300 w-[300px] bg-blue-50/50 cursor-pointer" wire:navigate
                             href="/documents/{{ $client->id }}">
                             <div class="flex items-center justify-center h-[100px] border-b ">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -152,7 +152,7 @@
                 <div class="flex flex-wrap gap-3 mt-8 pb-5">
                     @forelse ($developers as $developer)
                         <x-card wire:key="docDev-{{ $developer->id }}" shadow
-                            class="border w-[300px] bg-blue-50/50 cursor-pointer" wire:navigate
+                            class="rounded-lg border border-gray-300 w-[300px] bg-blue-50/50 cursor-pointer" wire:navigate
                             href="/documents/{{ $developer->id }}">
                             <div class="flex items-center justify-center h-[100px] border-b ">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -179,7 +179,7 @@
                 <div class="flex flex-wrap gap-3 mt-8 pb-5">
                     @forelse ($pms as $pm)
                         <x-card wire:key="docPm-{{ $pm->id }}" shadow
-                            class="border w-[300px] bg-blue-50/50 cursor-pointer" wire:navigate
+                            class="rounded-lg border border-gray-300 w-[300px] bg-blue-50/50 cursor-pointer" wire:navigate
                             href="/documents/{{ $pm->id }}">
                             <div class="flex items-center justify-center h-[100px] border-b ">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"

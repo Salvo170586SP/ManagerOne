@@ -3,7 +3,7 @@
         <h2 class="text-xl font-bold mb-5">Documenti di {{ $user->fullName() }}</h2>
     </div>
 
-    <div class="bg-white rounded h-[calc(100vh-13rem)] overflow-y-auto p-6">
+    <div class="bg-white rounded-lg border border-gray-300 h-[calc(100vh-13rem)] overflow-y-auto p-6">
         <div class="flex justify-between items-center">
             <div class="w-[350px] h-[32px]">
                 <x-input type="search" wire:model.live="search" placeholder="Cerca.." shadow="false" />
@@ -20,7 +20,7 @@
             </div>
         </div>
 
-        <x-card shadow="false" class="w-[350px] border my-5">
+        <x-card shadow="false" class="w-[350px] border border-gray-300 my-5">
             <div class="flex justify-between">
                 <div class="bg-slate-500 w-[50px] h-[50px] rounded-full flex justify-center items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -48,7 +48,7 @@
             <h3 class="text-sm font-bold mb-4">Allegati delle Fatture</h3>
             <div class="flex flex-wrap gap-3">
                 @forelse ($invoices as $invoice)
-                    <x-card shadow class="border w-[300px] bg-blue-50/50">
+                    <x-card shadow class="rounded-lg border border-gray-300 w-[300px] bg-blue-50/50">
                         <div class="text-end -mb-5">
                             <x-dropdown class="w-[150px]">
                                 <x-dropdown.item icon="arrow-down-tray" label="Scarica"
@@ -91,7 +91,7 @@
                 <h3 class="text-sm font-bold mb-4">Allegati delle Note</h3>
                 <div class="flex flex-wrap gap-3">
                     @forelse ($notesWithAttachments as $note)
-                        <x-card shadow class="border w-[300px] bg-blue-50/50">
+                        <x-card shadow class="rounded-lg border border-gray-300 w-[300px] bg-blue-50/50">
                             <div class="text-end -mb-5">
                                 <x-dropdown class="w-[150px]">
                                     <x-dropdown.item icon="arrow-down-tray" label="Scarica" download

@@ -8,7 +8,7 @@
         @endif
     </div>
 
-    <div class="bg-white rounded overflow-y-auto p-6" wire:ignore>
+    <div class="bg-white rounded-lg border border-gray-300 overflow-y-auto p-6" wire:ignore>
         <div class="mb-5">
             <div class="flex gap-3 items-center">
                 <input id="searchInput" type="text" placeholder="Cerca..." class="w-64 border border-gray-300 rounded p-2" />
@@ -40,8 +40,8 @@
             <x-checkbox shadow label="Importante" wire:model="is_available" />
 
             <x-slot:actions>
-                <x-button label="Annulla" red @click="$wire.showCreateModal = false" />
-                <x-button label="Salva" black type="submit" />
+                <x-button class="font-medium" label="Annulla" red @click="$wire.showCreateModal = false" />
+                <x-button class="font-medium" label="Salva" black type="submit" />
             </x-slot:actions>
         </x-form>
     </x-modal>

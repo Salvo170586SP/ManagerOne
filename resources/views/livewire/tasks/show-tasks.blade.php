@@ -47,7 +47,7 @@
                     <x-modal name="simpleModal-{{ $project->id }}" blur="sm" align="center">
                         <x-card shadow="xl" class="max-w-[700px]">
                             <div class="p-4">
-                                <p class="text-base break-all whitespace-pre-wrap">
+                                <p class="text-base break-words">
                                     {{ $project->description ?? 'Nessuna descrizione' }}
                                 </p>
                             </div>
@@ -215,7 +215,7 @@
                                                                 </svg>
                                                                 Attenzione!
                                                             </div>
-                                                            <p class="font-semubold text-base">
+                                                            <p class="text-base">
                                                                 Sei sicuro di eliminare definitivamente la task?
                                                             </p>
 

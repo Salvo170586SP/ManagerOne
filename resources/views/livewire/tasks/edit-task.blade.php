@@ -22,7 +22,7 @@
             </div>
 
             <div class="flex justify-end font-medium">
-                <x-button black type="submit" label="Crea Task" />
+                <x-button black type="submit" label="Modifica Task" />
             </div>
         </form>
     </div>

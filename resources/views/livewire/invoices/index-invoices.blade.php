@@ -8,7 +8,7 @@
         @endif
     </div>
 
-    <div class="bg-white rounded h-[calc(100vh-13rem)] overflow-y-auto p-6">
+    <div class="bg-white rounded-lg border border-gray-300 h-[calc(100vh-13rem)] overflow-y-auto p-6">
         <div class="flex justify-between items-center">
             <div class="w-[350px] h-[32px]">
                 <x-input type="search" wire:model.live="search" placeholder="Cerca.." shadow="false" />
@@ -21,18 +21,15 @@
                         shadow="false" />
                 </div>
 
-                <div class="me-5 h-[32px] flex justify-between items-center">
+                <div class="h-[32px] flex justify-between items-center">
                     <span class="text-sm whitespace-nowrap me-2">Cerca per stato:</span>
                     <x-select shadow="false" placeholder="Seleziona Stato" wire:model.live="searchAvailable"
                         :options="[['label' => 'Pagato', 'value' => 1], ['label' => 'Non Pagato', 'value' => 0]]" option-label="label" option-value="value" />
                 </div>
-
-                <x-button icon="plus" black label="Aggiungi Fattura" class="font-bold w-[200px] h-[32px]"
-                    wire:navigate href="/invoices/create" />
             </div>
         </div>
 
-        <x-card shadow="false" class="w-[350px] border my-5">
+        <x-card shadow="false" class="w-[350px]  border border-gray-300 my-5">
             <div class="flex justify-between">
                 <div class="bg-slate-500 w-[50px] h-[50px] rounded-full flex justify-center items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -151,11 +148,11 @@
                                                     </svg>
                                                     Attenzione!
                                                 </div>
-                                                <p class="font-semubold text-lg">
+                                                <p class="text-base">
                                                     Sei sicuro di eliminare definitivamente la fattura?
                                                 </p>
 
-                                                <x-slot name="footer" class="flex justify-end gap-x-4">
+                                                <x-slot name="footer" class="flex justify-end font-medium gap-x-4">
                                                     <x-button black label="Annulla" x-on:click="close" />
                                                     <x-button red label="Elimina"
                                                         wire:click="deleteInvoice({{ $invoice->id }})" />

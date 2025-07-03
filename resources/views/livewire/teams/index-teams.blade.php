@@ -8,7 +8,7 @@
         @endif
     </div>
 
-    <div class="bg-white rounded p-6">
+    <div class="bg-white rounded-lg border border-gray-300 p-6">
         <div class="flex justify-between items-center">
             <div class="w-[350px] h-[32px]">
                 <x-input type="search" wire:model.live="search" placeholder="Cerca.." shadow="false" />
@@ -20,7 +20,7 @@
         </div>
 
         <div class="flex items-center my-5 gap-3">
-            <x-card shadow="false" class="w-[350px] border">
+            <x-card shadow="false" class="w-[350px] border border-gray-300">
                 <div class="flex justify-between">
                     <div class="bg-slate-500 w-[50px] h-[50px] rounded-full flex justify-center items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -40,7 +40,7 @@
                 </div>
             </x-card>
 
-            <x-card shadow="false" class="w-[350px] border">
+            <x-card shadow="false" class="w-[350px] border border-gray-300">
                 <div class="flex justify-between">
                     <div class="bg-red-500 w-[50px] h-[50px] rounded-full flex justify-center items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -60,7 +60,7 @@
                 </div>
             </x-card>
 
-            <x-card shadow="false" class="w-[350px] border ">
+            <x-card shadow="false" class="w-[350px] border border-gray-300">
                 <div class="flex justify-between ">
                     <div class="bg-green-500 w-[50px] h-[50px] rounded-full flex justify-center items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -85,7 +85,7 @@
         @if ($teams->count() > 0)
             <div class="grid grid-cols-3 gap-5">
                 @foreach ($teams as $team)
-                    <x-card color="blue" shadow="false" class="border">
+                    <x-card color="blue" shadow="false" class="border border-gray-300 rounded-lg bg-gray-50/50">
                         <div class="flex justify-between items-center mb-5">
                             <div class="text-sm font-bold uppercase">
                                 {{ $team->name }}
@@ -106,11 +106,11 @@
                                                 </svg>
                                                 Attenzione!
                                             </div>
-                                            <p class="font-semubold text-lg">
+                                            <p class="text-base">
                                                 Sei sicuro di eliminare definitivamente il team di sviluppo?
                                             </p>
 
-                                            <x-slot name="footer" class="flex justify-end gap-x-4">
+                                            <x-slot name="footer" class="flex justify-end gap-x-4 font-medium">
                                                 <x-button black label="Annulla" x-on:click="close" />
                                                 <x-button red label="Elimina"
                                                     wire:click="deleteTeam({{ $team->id }})" />
@@ -173,12 +173,12 @@
                                                             </svg>
                                                             Attenzione!
                                                         </div>
-                                                        <p class="font-semubold text-lg">
+                                                        <p class="text-base">
                                                             Sei sicuro di eliminare definitivamente il PM dal team di
                                                             sviluppo?
                                                         </p>
 
-                                                        <x-slot name="footer" class="flex justify-end gap-x-4">
+                                                        <x-slot name="footer" class="flex justify-end gap-x-4 font-medium">
                                                             <x-button black label="Annulla" x-on:click="close" />
                                                             <x-button red label="Elimina"
                                                                 wire:click="deleteMember({{ $pm->id }})" />
@@ -219,12 +219,12 @@
                                                             </svg>
                                                             Attenzione!
                                                         </div>
-                                                        <p class="font-semubold text-lg">
+                                                        <p class="text-base">
                                                             Sei sicuro di eliminare definitivamente il dev dal team di
                                                             sviluppo?
                                                         </p>
 
-                                                        <x-slot name="footer" class="flex justify-end gap-x-4">
+                                                        <x-slot name="footer" class="flex justify-end gap-x-4 font-medium">
                                                             <x-button black label="Annulla" x-on:click="close" />
                                                             <x-button red label="Elimina"
                                                                 wire:click="deleteMember({{ $dev->id }})" />

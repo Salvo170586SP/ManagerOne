@@ -1,85 +1,94 @@
 <div class="-mt-2">
-    <h2 class="text-xl font-bold mb-5">Dettagli Progetto</h2>
-    <div class="flex mx-auto text-black h-full w-full">
+    <div class="flex justify-between items-center  mb-5">
+        <h2 class="text-xl font-bold">Dettagli Progetto</h2>
+        <x-button icon="arrow-left" black label="Torna ai Progetti" class="font-bold w-[200px] h-[32px]" wire:navigate
+            href="/projects" />
+    </div>
+    <div class="text-black w-full">
+        <div class="w-full flex gap-3 mb-3">
+            <div class="bg-white rounded-lg border border-gray-300 p-3 w-[350px] flex flex-col justify-center">
+                <div class="mb-3">
+                    <div class="font-medium text-sm">Nome Progetto:</div>
+                    <div class="text-sm mt-1 ">
+                        {{ $project->name }}
+                    </div>
+                </div>
 
-        <div class="w-[450px] h-[400px] bg-white p-5 me-5 rounded">
-            <div class="font-bold text-sm text-center uppercase my-5">
-                {{ $project->name }}
-            </div>
-            <div class="mb-5 flex justify-between items-center">
-                @if ($project->is_available)
-                    <div class="flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="size-5 bg-green-600 rounded-full text-white">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
-                        </svg>
-                        <div class="ms-2 font-medium uppercase">
+                <div class="font-medium text-sm">Stato Approvazione:</div>
+                <div class="font-medium rounded text-sm text-center py-1 mt-1">
+                    @if ($project->is_available)
+                        <div class="bg-green-600 rounded-full text-white">
                             Approvato
                         </div>
-                    </div>
-                @else
-                    <div class="flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="size-5 bg-red-600 rounded-full text-white">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                        </svg>
-                        <div class="ms-2 font-medium uppercase">
-                            In Approvazione
+                    @else
+                        <div class="bg-red-600 rounded-full text-white">
+                            Da Approvare
                         </div>
-                    </div>
-                @endif
-            </div>
-            <div class="mb-5">
-                <div class="font-medium text-sm">Cliente Proprietario:</div>
-                <div class="text-sm">
-                    {{ $project->client->fullName() }}</div>
-            </div>
-            <div class="mb-5">
-                <div class="font-medium text-sm">Preventivo:</div>
-                <div class="text-sm">
-                    {{ $project->preventive . ' €' }}
+                    @endif
                 </div>
             </div>
 
-            <div class="flex  items-center justify-start mb-2">
-                <div class="font-medium text-sm">Descrizione:</div>
-                <x-button class="ms-5" slate flat icon="eye"
-                    x-on:click="$openModal('simpleModal-{{ $project->id }}')" />
-                <x-modal name="simpleModal-{{ $project->id }}" blur="sm" align="center">
-                    <x-card shadow="xl" class="max-w-[700px]">
-                        <div class="p-4">
-                            <p class="text-base break-all whitespace-pre-wrap">
-                                {{ $project->description ?? '-' }}
-                            </p>
-                        </div>
-                        <x-slot name="footer" class="flex justify-end gap-x-4">
-                            <x-button black label="Chiudi" x-on:click="close" />
-                        </x-slot>
-                    </x-card>
-                </x-modal>
+            <div class="bg-white rounded-lg border border-gray-300 p-3 w-[350px] flex flex-col justify-center">
+                <div class="mb-3">
+                    <div class="font-medium text-sm">Cliente Proprietario:</div>
+                    <div class="text-sm uppercase mt-1">
+                        {{ $project->client->fullName() }}</div>
+                </div>
+
+                <div class="font-medium text-sm">Preventivo:</div>
+                <div class="text-sm mt-1">
+                    {{ $project->preventive . ' €' ?? '-' }}
+                </div>
             </div>
-            <div class="flex flex-col items-start mb-5">
-                <div class="font-medium text-sm mb-2">Progetto affidato al Team:</div>
-                <div class="text-sm">
-                  @isset($project->team->name)  {{ $project->team->name }} @else da assegnare @endisset
+
+            <div class="bg-white rounded-lg  border border-gray-300 p-3 w-[350px] flex flex-col justify-center">
+                <div class="mb-3">
+                    <div class="font-medium text-sm">Data Consegna:</div>
+                    <div class="text-sm mt-1">
+                        {{ $project->getEndDate() }}
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <div class="font-medium text-sm me-1">Descrizione:</div>
+                    <x-button flat slate icon="eye" x-on:click="$openModal('simpleModal-{{ $project->id }}')" />
+                    <x-modal name="simpleModal-{{ $project->id }}" blur="sm" align="center">
+                        <x-card shadow="xl" class="max-w-[700px]">
+                            <div class="p-4">
+                                <p class="text-base break-words">
+                                    {{ $project->description ?? 'Nessuna descrizione' }}
+                                </p>
+                            </div>
+                            <x-slot name="footer" class="flex justify-end gap-x-4">
+                                <x-button black label="Chiudi" x-on:click="close" />
+                            </x-slot>
+                        </x-card>
+                    </x-modal>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg border border-gray-300  p-3 w-[350px] flex flex-col justify-center">
+                <div class="font-medium text-sm">Affidato al Team:</div>
+                <div class="text-sm mt-1">
+                    @isset($project->team->name)
+                        {{ $project->team->name }}
+                    @else
+                        -
+                    @endisset
                 </div>
             </div>
         </div>
 
         <div class="w-full">
-            <div class="mb-5 p-6 bg-white rounded pb-5">
+            <div class="mb-5 p-6 bg-white rounded-lg border border-gray-300 pb-5">
                 <div class="flex justify-between">
                     <h3 class="font-bold text-xl">Avanzamento Stato Progettazione</h3>
-                    <x-button icon="arrow-left" black label="Torna ai Progetti" class="font-bold w-[200px] h-[32px]"
-                        wire:navigate href="/projects" />
+
                 </div>
 
                 <div class="mt-5">
                     <div class="flex justify-between items-center mb-2">
                         <div class="text-lg font-medium text-gray-700">
-                         {{ $project->getProgressPercentage() }}%
+                            {{ $project->getProgressPercentage() }}%
                         </div>
                         <div class="text-sm font-medium text-gray-700">
                             Tempo rimanente: {{ $project->getRemainingTime() }}
@@ -87,8 +96,8 @@
                     </div>
                     {{-- barra di progresso --}}
                     <div class="w-full bg-gray-200 rounded-full h-1.5">
-                        <div class="bg-gray-600 h-1.5 rounded-full transition-all duration-500" 
-                             style="width: {{ $project->getProgressPercentage() }}%">
+                        <div class="bg-gray-600 h-1.5 rounded-full transition-all duration-500"
+                            style="width: {{ $project->getProgressPercentage() }}%">
                         </div>
                     </div>
                     <div class="mt-2 text-sm text-gray-600">
@@ -96,44 +105,54 @@
                     </div>
                 </div>
             </div>
-            @role('super_admin')
-            <div class="mb-5 flex items-center p-6 bg-white rounded">
-                <div class="text-sm w-full h-full ">
-                    <h3 class="font-bold text-xl mb-5">Fatturazione</h3>
-                    @foreach ($project->invoices as $invoice)
-                        <div class="flex gap-5">
-                            @isset($invoice->pdf_path)
-                                <iframe
-                                    class="h-[600px] w-[400px]  rounded-lg border dark:border-[#505050] dark:bg-[#505050]"
-                                    src="{{ asset('/storage/' . $invoice->pdf_path) }}" type="application/pdf">
-                                </iframe>
-                            @endisset
-                            <div class="mb-5">
-                                <div>
-                                    <div class="font-semibold text-sm me-2">Fattura:</div>
-                                    <div class="text-lg">
-                                        {{ $invoice->name }}
+
+            <div class="flex gap-3">
+                @role('super_admin')
+                    <div class="  flex items-center p-6 bg-white rounded-lg border border-gray-300">
+                        <div class="text-sm w-full h-full">
+                            <h3 class="font-bold text-xl mb-5">Fatturazione</h3>
+                            @forelse ($project->invoices as $invoice)
+                                <div class="flex gap-5 ">
+                                    <div class="flex flex-col bg-gray-50 border border-gray-300 rounded-lg p-3">
+                                        <div class="mb-3">
+                                            <div class="font-semibold text-sm me-2">Fattura:</div>
+                                            <div class="text-lg">
+                                                {{ $invoice->name }}
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <div class="font-semibold text-sm me-2">Importo:</div>
+                                            <div class="text-lg">
+                                                {{ $invoice->preventive }} €
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <div class="font-semibold text-sm me-2">Data erogazione:</div>
+                                            <div class="text-lg">
+                                                {{ $invoice->createDate() }}
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div>
-                                    <div class="font-semibold text-sm me-2">Importo:</div>
-                                    <div class="text-lg">
-                                        {{ $invoice->preventive }} €
+                                    @isset($invoice->pdf_path)
+                                        <iframe
+                                            class="h-[400px] w-[300px]  rounded-lg border dark:border-[#505050] dark:bg-[#505050]"
+                                            src="{{ asset('/storage/' . $invoice->pdf_path) }}" type="application/pdf">
+                                        </iframe>
+                                    @endisset
+
+                                @empty
+                                    <div class="mb-3">
+                                        <div class="font-medium text-sm">Nessuna fattura disponibile</div>
                                     </div>
-                                </div>
-                                <div>
-                                    <div class="font-semibold text-sm me-2">Data erogazione:</div>
-                                    <div class="text-lg">
-                                        {{ $invoice->createDate() }}
-                                    </div>
-                                </div>
-                            </div>
+                            @endforelse
                         </div>
-                    @endforeach
-                </div>
+                    </div>
+                @endrole
+
+
             </div>
-            @endrole
         </div>
+
 
     </div>
 

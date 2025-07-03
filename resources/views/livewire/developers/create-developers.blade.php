@@ -1,6 +1,6 @@
 <div class="-mt-2">
     <h2 class="text-xl font-bold mb-5">Aggiungi Developer</h2>
-    <div class="bg-white rounded h-[calc(100vh-13rem)] overflow-y-auto p-6">
+    <div class="bg-white rounded-lg border border-gray-300 h-[calc(100vh-20rem)] overflow-y-auto p-6">
 
         <div class="flex justify-end items-center">
             <x-button icon="arrow-left" black label="Torna ai Developers" class="font-bold w-[200px] h-[32px]"
@@ -31,14 +31,14 @@
                     <div class="text-sm text-gray-600">
                         <div class="space-y-2">
                             @if ($developerStep1->img_url)
-                                <figure class="w-[130px] h-[130px] overflow-hidden border border-2 rounded-full">
+                                <figure class="w-[130px] h-[130px] overflow-hidden  border border-gray-300 border-2 rounded-full">
                                     <img src="{{ $developerStep1->img_url->temporaryUrl() }}"
                                         class="w-full h-full object-cover object-top bg-gray-100 dark:bg-[#4b4b4b] opacity-100"
                                         alt="Anteprima immagine">
                                 </figure>
                             @else
                                 <div
-                                    class="w-[130px] h-[130px] border rounded-full bg-white overflow-hidden flex items-center justify-center">
+                                    class="w-[130px] h-[130px] border border-gray-300 rounded-full bg-white overflow-hidden flex items-center justify-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke-width="1.5" stroke="currentColor" class="size-10">
                                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -102,7 +102,7 @@
                         wire:model.live="developerStep2.level" placeholder="Seleziona una posizione" :options="$levels"
                         option-label="name" option-value="id" />
                 </div>
-                <div class="flex justify-end gap-2 mt-5">
+                <div class="flex justify-end items-end h-full  gap-2 mt-5">
                     <x-button type="button" wire:click="backStep" gray label="Indietro"
                         class="font-bold w-[200px] h-[32px]" />
                     <x-button type="button" wire:click="createDeveloper" black label="Aggiungi"

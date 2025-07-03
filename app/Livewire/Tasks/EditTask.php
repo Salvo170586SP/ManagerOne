@@ -84,7 +84,7 @@ class EditTask extends Component
             ];
         }) ?? collect();
 
-        $states =  config('managerOne.states_task');
+        $states =  array_slice(config('managerOne.states_task'), 0, 2);
         $priorities =  config('managerOne.priorities_task');
 
         return view('livewire.tasks.edit-task', compact('developers', 'states', 'priorities'));

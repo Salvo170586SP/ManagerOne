@@ -81,7 +81,7 @@ new class extends Component {
 <section class="w-full">
     @include('partials.settings-heading')
 
-    <div class="bg-white rounded p-5">
+    <div class="bg-white border border-gray-300 rounded-lg p-5">
         <x-settings.layout :heading="__('Profilo')" :subheading="__('Aggiorna i tuoi dati e la mail')">
             <form wire:submit="updateProfileInformation" class="my-6 w-full space-y-6">
 

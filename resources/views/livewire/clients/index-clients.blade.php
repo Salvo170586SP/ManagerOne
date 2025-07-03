@@ -8,7 +8,7 @@
         @endif
     </div>
 
-    <div class="bg-white rounded h-[calc(100vh-13rem)] overflow-y-auto p-6">
+    <div class="bg-white border border-gray-300 rounded-lg h-[calc(100vh-13rem)] overflow-y-auto p-6">
 
         <div class="flex justify-between items-center">
 
@@ -33,7 +33,7 @@
             </div>
         </div>
 
-        <x-card shadow="false" class="w-[350px]  border  my-5">
+        <x-card shadow="false" class="w-[350px] border border-gray-300 rounded-lg my-5">
             <div class="flex justify-between">
                 <div class="bg-slate-500 w-[50px] h-[50px] rounded-full flex justify-center items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -134,11 +134,11 @@
                                                     </svg>
                                                     Attenzione!
                                                 </div>
-                                                <p class="font-semubold text-lg">
+                                                <p class="text-base">
                                                     Sei sicuro di eliminare definitivamente il cliente?
                                                 </p>
 
-                                                <x-slot name="footer" class="flex justify-end gap-x-4">
+                                                <x-slot name="footer" class="flex justify-end gap-x-4 font-medium">
                                                     <x-button black label="Annulla" x-on:click="close" />
                                                     <x-button red label="Elimina"
                                                         wire:click="deleteClient({{ $client->id }})" />

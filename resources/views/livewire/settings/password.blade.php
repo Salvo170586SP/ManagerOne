@@ -39,7 +39,7 @@ new class extends Component {
 
 <section class="w-full">
     @include('partials.settings-heading')
-    <div class="bg-white rounded p-5">
+    <div class="bg-white border border-gray-300 rounded-lg p-5">
         <x-settings.layout :heading="__('Aggiorna password')">
             <form wire:submit="updatePassword" class="mt-6 space-y-6">
                 <flux:input wire:model="current_password" :label="__('Password corrente')" type="password" required

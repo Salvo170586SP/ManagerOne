@@ -1,7 +1,6 @@
 @props(['show' => false, 'notes' => [], 'item' => null, 'onClose', 'editNoteId' => null])
 <div>
 
-
     <div x-data="{ open: @entangle($attributes->wire('model')) }" x-show="open" x-cloak x-transition:enter="transform transition ease-in-out duration-200"
         x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0"
         x-transition:leave="transform transition ease-in-out duration-200" x-transition:leave-start="translate-x-0"

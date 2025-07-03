@@ -13,7 +13,7 @@ class ShowProjects extends Component
     {
         $this->project = $project;
     }
-   
+
     public function render()
     {
         return view('livewire.projects.show-projects');

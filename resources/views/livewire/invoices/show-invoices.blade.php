@@ -1,7 +1,7 @@
 <div class="-mt-2">
     <h2 class="text-xl font-bold mb-5">Dettagli Fattura</h2>
     <div class="flex gap-3 mx-auto text-black h-[calc(100vh-13rem)]">
-        <div class="w-[800px] h-auto bg-white p-5 rounded">
+        <div class="w-[800px] h-auto bg-white p-5 rounded-lg border border-gray-300">
             <div class="h-full w-full flex items-center justify-center">
                 @isset($invoice->pdf_path)
                 <iframe class="w-full h-full rounded-lg border dark:border-[#505050] dark:bg-[#505050]"
@@ -11,8 +11,8 @@
             </div>
         </div>
 
-        <div class="w-full  p-6 bg-white rounded">
-            <div class="w-full flex justify-between mb-5 pb-5">
+        <div class="w-full  p-6 bg-white rounded-lg border border-gray-300">
+            <div class="w-full flex justify-between mb-5 pb-5  border-b border-gray-300">
                 @if($invoice->is_available)
                 <div class="flex items-center bg-green-600 text-white rounded px-5 py-1">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -74,11 +74,11 @@
                 </div>
                 <div class="flex  items-center justify-start mb-5">
                     <div class="font-medium text-sm">Note Fattura:</div>
-                    <x-button class="ms-5" slate icon="eye" x-on:click="$openModal('simpleModal-{{$invoice->id}}')" />
+                    <x-button class="ms-5" gray flat icon="eye" x-on:click="$openModal('simpleModal-{{$invoice->id}}')" />
                     <x-modal name="simpleModal-{{$invoice->id}}" blur="sm" align="center">
                         <x-card shadow="xl" class="max-w-[700px]">
                             <p class="text-base break-words">
-                                {{$invoice->description ?? '-'}}
+                                {{$invoice->description ?? 'Nessuna descrizione'}}
                             </p>
                             <x-slot name="footer" class="flex justify-end gap-x-4">
                                 <x-button black label="Chiudi" x-on:click="close" />
