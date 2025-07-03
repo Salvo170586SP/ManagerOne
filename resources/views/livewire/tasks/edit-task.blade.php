@@ -4,7 +4,7 @@
         <x-button icon="arrow-left" black label="Torna ai Tasks" wire:navigat href="/tasks/{{ $project->id }}/show"
             class="font-bold h-[32px]" />
     </div>
-    <div class="bg-white p-6 rounded">
+    <div class="bg-white p-6 border border-gray-300 rounded-lg">
         <form wire:submit.prevent="createTask" class="space-y-4">
             <x-input shadow label="Titolo" wire:model="title" id="title" />
             <x-textarea shadow wire:model="description" label="Descrizione" id="description" rows="3" />
@@ -21,7 +21,7 @@
                 <x-datetime-picker label="Scadenza" without-time wire:model="due_date" id="due_date" shadow />
             </div>
 
-            <div class="flex justify-end">
+            <div class="flex justify-end font-medium">
                 <x-button black type="submit" label="Crea Task" />
             </div>
         </form>

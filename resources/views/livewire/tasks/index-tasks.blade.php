@@ -8,7 +8,7 @@
         @endif
     </div>
 
-    <div class="bg-white rounded h-full p-6">
+    <div class="bg-white h-full p-6 border border-gray-300 rounded-lg">
         <div class="flex justify-between items-center mb-10">
             <div class="w-[350px] h-[32px]">
                 <x-input type="search" wire:model.live="search" placeholder="Cerca.." shadow="false" />
@@ -17,7 +17,7 @@
 
         @if ($projects->count() > 0)
             <div class="overflow-x-auto">
-                <table class="min-w-full border divide-y divide-gray-200">
+                <table class="min-w-full border rounded-lg divide-y divide-gray-200">
                     <thead>
                     <tr>
                         <th scope="col"
@@ -68,7 +68,7 @@
                             </td>
                             <td class="px-6 py-4 flex justify-center">
                                 <div
-                                    class="bg-gray-600 text-white font-bold h-6 w-6 flex items-center justify-center rounded-full">
+                                    class="bg-gray-200 border border-gray-300 font-bold h-7 w-7 flex items-center justify-center rounded-full">
                                     {{ $project->tasks_count }}
                                 </div>
                             </td>
