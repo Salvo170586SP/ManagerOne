@@ -23,11 +23,16 @@
 
         <flux:navlist variant="outline">
             <flux:navlist.group class="grid">
+                 @php $clients = \App\Models\User::where('type', 'client')->get(); @endphp
+                 @php $developers = \App\Models\User::whereIn('type', ['developer', 'project_manager'])->get(); @endphp
+                
                 @role('super_admin')
                  <flux:navlist.item icon="users" :href="route('clients.index')"
                     :current="request()->routeIs('clients.index')" wire:navigate>Anagrafica Clienti</flux:navlist.item>
                     <hr class="my-3">
-                    @endrole
+                @endrole
+                 
+                @if($clients->count() > 0)
                  <flux:navlist.item icon="presentation-chart-line" :href="route('projects.index')"
                     :current="request()->routeIs('projects.index')" wire:navigate>Progetti
                 </flux:navlist.item>
@@ -39,6 +44,7 @@
                     :current="request()->routeIs('delivered-projects.index')" wire:navigate>Progetti Consegnati
                 </flux:navlist.item>
                 @endrole
+                @endif
                 <hr class="my-3">
                 <flux:navlist.item icon="puzzle-piece" :href="route('tasks.index-tasks')"
                 :current="request()->routeIs('tasks.index-tasks')" wire:navigate>Gestione Tasks
@@ -61,9 +67,11 @@
                 :current="request()->routeIs('developers.index')" wire:navigate>Developers
                 </flux:navlist.item>
                 @endrole
+                @if($developers->count() > 0)
                 <flux:navlist.item icon="user-group" :href="route('teams.index')"
                 :current="request()->routeIs('teams.index')" wire:navigate>Gestione Teams
                 </flux:navlist.item>
+                @endif
                 @role('super_admin')
                 <flux:navlist.item icon="exclamation-triangle" :href="route('logs.index')"
                 :current="request()->routeIs('logs.index')" wire:navigate>Logs

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('invoces', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('IdInvoice')->nullable();
-            $table->foreignId('admin_id')->constrained('users');
+            $table->foreignId('admin_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('client_id')->constrained('users');
             $table->foreignId('project_id')->constrained('projects');
             $table->string('name');

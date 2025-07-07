@@ -30,6 +30,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
         $validated['password'] = Hash::make($validated['password']);
 
         event(new Registered(($user = User::create($validated))));
+        $user->assignRole('super_admin');
 
         Auth::login($user);
 
@@ -50,7 +51,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
             :placeholder="__('Nome')" />
 
         <!-- surname -->
-        <flux:input wire:model="name" :label="__('Cognome')" type="text" required autofocus autocomplete="surname"
+        <flux:input wire:model="surname" :label="__('Cognome')" type="text" required autofocus autocomplete="surname"
             :placeholder="__('Cognome')" />
 
         <!-- Email Address -->
