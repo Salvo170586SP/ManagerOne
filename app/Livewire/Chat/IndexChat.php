@@ -240,13 +240,17 @@ class IndexChat extends Component
             $this->selectedUserAttachments = [];
             return;
         }
+
+
         $currentUser = Auth::user();
         $this->selectedUserAttachments = Message::where(function ($q) use ($currentUser) {
-            $q->where('sender_id', $currentUser->id)
-                ->where('receiver_id', $this->selectedUser->id);
-        })->orWhere(function ($q) use ($currentUser) {
-            $q->where('sender_id', $this->selectedUser->id)
-                ->where('receiver_id', $currentUser->id);
+            $q->where(function ($q2) use ($currentUser) {
+                $q2->where('sender_id', $currentUser->id)
+                    ->where('receiver_id', $this->selectedUser->id);
+            })->orWhere(function ($q2) use ($currentUser) {
+                $q2->where('sender_id', $this->selectedUser->id)
+                    ->where('receiver_id', $currentUser->id);
+            });
         })
             ->whereNotNull('attachment_path')
             ->orderByDesc('created_at')
@@ -287,8 +291,8 @@ class IndexChat extends Component
         $this->reset('attachment');
     }
 
-   
- 
+
+
 
     public function render()
     {
