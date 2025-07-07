@@ -111,35 +111,35 @@
                             title="Visualizza Dettagli" class="me-2" />
 
 
-                       {{--  <x-dropdown>
-                            <x-dropdown.item icon="trash" label="Svuota chat" wire:click="clearChat"
+                        <x-dropdown>
+                            <x-dropdown.item icon="trash" label="Svuota chat" wire:click="clearConversation"
                                 wire:confirm="Sei sicuro di voler svuotare la chat?" />
-                        </x-dropdown> --}}
+                        </x-dropdown>
                     </div>
                 </div>
 
                 <!-- Messaggi -->
                 <div class="flex-1 overflow-y-auto p-4 space-y-4" id="messages-container">
                     @forelse($messages as $message)
-                        @if(isset($message['id'], $message['sender_id'], $message['content']))
-                        <div class="flex {{ isset($message['sender_id']) && $message['sender_id'] === auth()->id() ? 'justify-end' : 'justify-start' }}"
-                            wire:key="message-{{ $message['id'] ?? '' }}">
+                        @if(isset($message->id, $message->sender_id) && (!empty($message->content) || !empty($message->attachment_path)))
+                        <div class="flex {{ isset($message->sender_id) && $message->sender_id === auth()->id() ? 'justify-end' : 'justify-start' }}"
+                            wire:key="message-{{ $message->id ?? '' }}">
                             <div class="max-w-xs lg:max-w-md">
                                 <div class="flex flex-col items-end">
                                     <div
-                                        class="bg-{{ isset($message['sender_id']) && $message['sender_id'] === auth()->id() ? 'gray-700' : 'gray-400 ' }} text-white px-4 py-2 rounded-lg {{ isset($message['sender_id']) && $message['sender_id'] === auth()->id() ? 'rounded-br-md' : 'rounded-bl-md' }}">
-                                        <p class="text-sm font-medium">{{ $message['content'] ?? '' }}</p>
-                                        @if (!empty($message['attachment_path']))
-                                            <a href="{{ asset('storage/' . $message['attachment_path']) }}"
+                                        class="bg-{{ isset($message->sender_id) && $message->sender_id === auth()->id() ? 'gray-50' : 'gray-200 ' }} border border-gray-300 px-4 py-2 rounded-lg {{ isset($message->sender_id) && $message->sender_id === auth()->id() ? 'rounded-br-md' : 'rounded-bl-md' }}">
+                                        <p class="text-sm font-medium">{{ $message->content ?? '' }}</p>
+                                        @if (!empty($message->attachment_path))
+                                            <a href="{{ asset('storage/' . $message->attachment_path) }}"
                                                 target="_blank"
-                                                class="block mt-2 text-sm font-medium underline text-white">
+                                                class="block mt-2 text-sm font-medium underline text-black ">
                                                 📎 Visualizza allegato
                                             </a>
                                         @endif
                                     </div>
                                     <small class="text-xs opacity-50 mt-1">
-                                        @if(!empty($message['created_at']))
-                                            {{ \Carbon\Carbon::parse($message['created_at'])->format('H:i') }}
+                                        @if(!empty($message->created_at))
+                                            {{ \Carbon\Carbon::parse($message->created_at)->format('H:i') }}
                                         @endif
                                     </small>
                                 </div>

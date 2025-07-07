@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('attachment_path')->nullable();
             $table->boolean('is_read')->default(false);
             $table->timestamp('read_at')->nullable();
+            $table->boolean('deleted_by_sender')->default(false);
+            $table->boolean('deleted_by_receiver')->default(false);
             $table->timestamps();
             
             // Indici per migliorare le performance delle query

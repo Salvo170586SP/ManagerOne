@@ -31,6 +31,7 @@ class IndexChat extends Component
     {
         $this->loadUsers();
         $this->loadUnreadCounts();
+ 
     }
 
     public function loadUsers()
@@ -136,6 +137,15 @@ class IndexChat extends Component
 
         $currentUser = Auth::user();
         $this->messages = Message::betweenUsers($currentUser->id, $this->selectedUser->id)
+            ->where(function ($query) use ($currentUser) {
+                $query->where(function ($q) use ($currentUser) {
+                    $q->where('sender_id', $currentUser->id)
+                      ->where('deleted_by_sender', false);
+                })->orWhere(function ($q) use ($currentUser) {
+                    $q->where('receiver_id', $currentUser->id)
+                      ->where('deleted_by_receiver', false);
+                });
+            })
             ->with(['sender', 'receiver'])
             ->orderBy('created_at', 'asc')
             ->get()
@@ -288,11 +298,31 @@ class IndexChat extends Component
             'message_id' => $message->id
         ]);
 
+ 
         $this->reset('attachment');
     }
 
+    public function clearConversation()
+    {
+        if (!$this->selectedUser) {
+            return;
+        }
 
+        $currentUser = Auth::user();
 
+        // Segna come eliminati i messaggi inviati dall'utente corrente
+        Message::where('sender_id', $currentUser->id)
+            ->where('receiver_id', $this->selectedUser->id)
+            ->update(['deleted_by_sender' => true]);
+
+        // Segna come eliminati i messaggi ricevuti dall'utente corrente
+        Message::where('sender_id', $this->selectedUser->id)
+            ->where('receiver_id', $currentUser->id)
+            ->update(['deleted_by_receiver' => true]);
+
+        $this->loadMessages();
+        $this->loadSelectedUserAttachments();
+    }
 
     public function render()
     {
