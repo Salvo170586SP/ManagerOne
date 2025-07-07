@@ -10,6 +10,7 @@ use Livewire\WithFileUploads;
 new class extends Component {
     use WithFileUploads;
     public string $name = '';
+    public string $surname = '';
     public string $email = '';
     public $img_url = null;
 
@@ -19,6 +20,7 @@ new class extends Component {
     public function mount(): void
     {
         $this->name = Auth::user()->name;
+        $this->surname = Auth::user()->surname;
         $this->email = Auth::user()->email;
         $this->img_url = Auth::user()->img_url;
     }
@@ -29,18 +31,26 @@ new class extends Component {
     public function updateProfileInformation(): void
     {
         $user = Auth::user();
-
-        $validated = $this->validate([
+ 
+        $rules = [
             'name' => ['required', 'string', 'max:255'],
-            'img_url' => ['nullable', 'image', 'max:2048'],
+            'surname' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($user->id)],
-        ]);
+        ];
 
-        if ($this->img_url) {
+        if (is_object($this->img_url)) {
+            $rules['img_url'] = ['nullable', 'image', 'max:2048'];
+        }
+
+        $validated = $this->validate($rules);
+
+        if (is_object($this->img_url)) {
+            // Se è un file appena caricato, salvalo e aggiorna il path
             $url = $this->img_url->store('imgsClient', 'public');
             $validated['img_url'] = $url;
         } else {
-            unset($validated['img_url']);
+            // Se è una stringa (già salvata), mantieni il valore attuale
+            $validated['img_url'] = $this->img_url;
         }
 
         $user->fill($validated);
@@ -136,6 +146,9 @@ new class extends Component {
                 <flux:input wire:model="name" :label="__('Nome')" type="text" required autofocus
                     autocomplete="name" />
 
+                <flux:input wire:model="surname" :label="__('Cognome')" type="text" required autofocus
+                    autocomplete="surname" />
+
                 <div>
                     <flux:input wire:model="email" :label="__('Email')" type="email" required
                         autocomplete="email" />
@@ -163,11 +176,11 @@ new class extends Component {
 
                 <div class="flex items-center gap-4">
                     <div class="flex items-center justify-end">
-                        <flux:button variant="primary" type="submit" class="w-full">{{ __('Salva') }}</flux:button>
+                        <flux:button variant="primary" type="submit" class="w-full cursor-pointer">{{ __('Salva') }}</flux:button>
                     </div>
 
                     <x-action-message class="me-3" on="profile-updated">
-                        {{ __('Saved.') }}
+                        {{ __('Salvato Correttamente') }}
                     </x-action-message>
                 </div>
             </form>
