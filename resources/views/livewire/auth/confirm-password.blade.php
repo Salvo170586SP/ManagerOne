@@ -32,9 +32,9 @@ new #[Layout('components.layouts.auth')] class extends Component {
     }
 }; ?>
 
-<div class="flex flex-col gap-6">
+<div class="flex flex-col gap-6 shadow-2xl ">
     <x-auth-header
-        :title="__('Confirm password')"
+        :title="__('Conferma password')"
         :description="__('This is a secure area of the application. Please confirm your password before continuing.')"
     />
 
