@@ -8,7 +8,7 @@
 <body class="min-h-screen bg-gray-100">
     <flux:sidebar sticky stashable class="bg-white border border-gray-300">
         <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
-        <div class="flex items-center mt-5">
+        <div class="flex items-center mt-2">
             <div class="bg-gradient-to-tr from-black to-gray p-2 rounded-full shadow-lg mb-4">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32" stroke-width="1.5"
                     stroke="currentColor" class="w-5 h-5 text-white">
