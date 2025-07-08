@@ -99,7 +99,7 @@ new class extends Component {
                     <div class="text-sm text-gray-600">
                         <div class="space-y-2">
                             <figure
-                                class="w-[150px] h-[150px] flex items-center justify-center overflow-hidden border rounded-full">
+                                class="w-[150px] h-[150px] flex items-center justify-center overflow-hidden border border-gray-300 bg-gray-50 rounded-full">
                                 @if ($img_url && !is_string($img_url))
                                     {{-- Preview temporanea Livewire --}}
                                     <img src="{{ $img_url->temporaryUrl() }}"
@@ -184,7 +184,9 @@ new class extends Component {
                     </x-action-message>
                 </div>
             </form>
+            @role('super_admin')
             <livewire:settings.delete-user-form />
+            @endrole
         </x-settings.layout>
     </div>
 </section>

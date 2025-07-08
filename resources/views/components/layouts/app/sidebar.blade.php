@@ -67,7 +67,7 @@
                 :current="request()->routeIs('developers.index')" wire:navigate>Developers
                 </flux:navlist.item>
                 @endrole
-                @if($developers->count() > 0)
+                @if($developers->count() > 1)
                 <flux:navlist.item icon="user-group" :href="route('teams.index')"
                 :current="request()->routeIs('teams.index')" wire:navigate>Gestione Teams
                 </flux:navlist.item>

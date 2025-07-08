@@ -67,14 +67,14 @@
                 <x-slot name="trigger">
                     <x-button flat slate>
                         @isset(auth()->user()->img_url)
-                            <figure class="w-[40px] h-[40px]">
+                            <figure class="w-[40px] h-[40px] border">
                                 <img src="{{ asset('storage/' . auth()->user()->img_url) }}"
-                                    class="w-full h-full rounded-full border bg-white  dark:border-[#505050] dark:bg-[#505050] object-cover object-top"
+                                    class="w-full h-full rounded-full border bg-white  object-cover object-top"
                                     alt="{{ auth()->user()->fullName() }}">
                             </figure>
                         @else
                             <div
-                                class="w-[40px] h-[40px] border rounded-full bg-white overflow-hidden flex items-center justify-center">
+                                class="w-[40px] h-[40px] rounded-full bg-gray-50 border border-gray-300 overflow-hidden flex items-center justify-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="size-5">
                                     <path stroke-linecap="round" stroke-linejoin="round"

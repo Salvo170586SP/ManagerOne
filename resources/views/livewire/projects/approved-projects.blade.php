@@ -44,7 +44,7 @@
         </x-card>
 
 
-        <div class="overflow-x-auto">
+        <div {{-- class="overflow-x-auto" --}}>
             @if ($projects->count() > 0)
                 <table class="min-w-full divide-y border divide-gray-200">
                     <thead>
@@ -63,7 +63,7 @@
                                 class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
                                 Cliente
                             </th>
-                            @role('super_admin')
+                            @role(['super_admin' , 'project_manager'])
                                 <th scope="col"
                                     class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
                                     Note
@@ -72,7 +72,7 @@
                             <th scope="col"
                                 class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
                                 Preventivo</th>
-                            @role('super_admin')
+                            @role(['super_admin' , 'project_manager'])
                                 <th scope="col"
                                     class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
                                     Stato Progettazione
@@ -98,19 +98,27 @@
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $project->name }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">
+                                <td class="px-6 py-4 whitespace-nowrap text-center">
                                     @role('developer')
-                                        {{ $project->team->name }}
+                                    @if($project->team)
+                                    {{ $project->team->name }}
+                                    @else
+                                    -
+                                    @endif
                                     @endrole
 
-                                    @role('super_admin')
-                                        <x-select red shadow placeholder="Seleziona un Team"
-                                            wire:model.live="teamSelections.project-{{ $project->id }}" :options="$teams"
-                                            option-label="name" option-value="id" />
+                                    @role(['super_admin' , 'project_manager'])
+                                        @if(count($teams) > 0)
+                                            <x-select red shadow placeholder="Seleziona un Team"
+                                                wire:model.live="teamSelections.project-{{ $project->id }}" :options="$teams"
+                                                option-label="name" option-value="id" />
+                                        @else
+                                            <span class="text-gray-500 italic">Nessun team selezionabile</span>
+                                        @endif
                                     @endrole
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $project->client->fullName() }}</td>
-                                @role('super_admin')
+                                @role(['super_admin' , 'project_manager'])
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="relative">
                                             <x-button flat blue icon="document-text"
@@ -123,7 +131,7 @@
                                     </td>
                                 @endrole
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $project->preventive }} €</td>
-                                @role('super_admin')
+                                @role(['super_admin' , 'project_manager'])
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <x-select shadow placeholder="Seleziona uno Stato"
                                             wire:model.live="stateSelections.project-{{ $project->id }}" :options="$states_project"
