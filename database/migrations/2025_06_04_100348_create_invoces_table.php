@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedInteger('IdInvoice')->nullable();
             $table->foreignId('admin_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('client_id')->constrained('users');
+            $table->foreignId('client_id')->constrained('users')->onDelete('set null');
             $table->foreignId('project_id')->constrained('projects');
             $table->string('name');
             $table->string('client_name');

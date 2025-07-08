@@ -35,7 +35,7 @@ Route::middleware(['auth', 'role:super_admin|developer|project_manager'])->group
     Volt::route('/projects/{project}', 'projects.show-projects')->name('projects.show');
     Volt::route('/projects/{project}/edit', 'projects.edit-projects')->name('projects.edit');
     Volt::route('/approved-projects', 'projects.approved-projects')->name('approved-projects.index');
-    Volt::route('/delivered-projects', 'projects.approved-projects')->name('delivered-projects.index');
+    Volt::route('/delivered-projects', 'projects.delivered-projects')->name('delivered-projects.index');
 
     //documents
     Volt::route('/documents', 'documents.index-document')->name('documents.index');

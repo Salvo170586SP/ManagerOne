@@ -139,8 +139,8 @@
                 {{ $projects->links('vendor.pagination.tailwind') }}
             </div>
         @else
-            <div class="px-6 py-4 text-center text-gray-500">
-                Nessuna progetto presente
+            <div class="px-6 py-4 text-center text-gray-500 italic text-gray-400">
+                Nessun progetto presente
             </div>
         @endif
 

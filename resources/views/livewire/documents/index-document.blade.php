@@ -116,7 +116,7 @@
                         </div>
                     </x-card>
                 @empty
-                    <div class="col-span-3 text-center font-medium py-10">Non ci sono documenti</div>
+                    <div class="col-span-3 text-center font-medium py-10 italic text-gray-400">Non ci sono documenti</div>
                 @endforelse
             </div>
         @else
@@ -143,7 +143,7 @@
                             </div>
                         </x-card>
                     @empty
-                        <div class="col-span-3 text-center font-medium py-10">Non ci sono documenti</div>
+                        <div class="col-span-3 text-center font-medium py-10 italic text-gray-400">Non ci sono documenti</div>
                     @endforelse
                 </div>
             @endif
@@ -170,7 +170,7 @@
                             </div>
                         </x-card>
                     @empty
-                        <div class="col-span-3 text-center font-medium py-10">Non ci sono documenti</div>
+                        <div class="col-span-3 text-center font-medium py-10 italic text-gray-400">Non ci sono documenti</div>
                     @endforelse
                 </div>
             @endif
@@ -197,7 +197,7 @@
                             </div>
                         </x-card>
                     @empty
-                        <div class="col-span-3 text-center font-medium py-10">Non ci sono documenti</div>
+                        <div class="col-span-3 text-center font-medium py-10 italic text-gray-400">Non ci sono documenti</div>
                     @endforelse
                 </div>
             @endif

@@ -8,7 +8,7 @@
         @endif
     </div>
 
-    <div class="bg-white rounded-lg border border-gray-300 h-full h-[calc(100vh-13rem)] overflow-y-auto p-6">
+    <div class="bg-white rounded-lg border border-gray-300 {{-- h-full --}} h-[calc(100vh-13rem)] overflow-y-auto p-6">
 
         <div class="flex justify-between items-center">
             <div class="w-[350px] h-[32px]">
@@ -198,7 +198,7 @@
                 {{ $developers->links('vendor.pagination.tailwind') }}
             </div>
         @else
-            <div class="text-center font-medium">
+            <div class="text-center font-medium italic text-gray-400">
                 Non ci sono developers registrati
             </div>
         @endif

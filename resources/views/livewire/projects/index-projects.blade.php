@@ -110,14 +110,12 @@
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $project->client->fullName() }}</td>
                                 @role('super_admin')
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="relative">
-                                            <x-button flat blue icon="document-text"
-                                                wire:click="openNotesSidebar({{ $project->id }})"
-                                                title="Visualizza Note" />
+                                        <x-button flat blue icon="document-text" class="relative"
+                                            wire:click="openNotesSidebar({{ $project->id }})" title="Visualizza Note">
                                             <div
                                                 class="absolute right-2 top-0  rounded-full bg-blue-500 h-[15px] w-[15px] text-center text-xs font-bold text-white">
                                                 {{ $project->notes->count() }}</div>
-                                        </div>
+                                        </x-button>
                                     </td>
                                 @endrole
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $project->preventive }} €</td>
@@ -186,8 +184,8 @@
                     {{ $projects->links('vendor.pagination.tailwind') }}
                 </div>
             @else
-                <div class="text-center font-medium">
-                    Non ci sono Progetti registrati
+                <div class="text-center font-medium italic text-gray-400">
+                    Non ci sono progetti registrati
                 </div>
             @endif
         </div>
