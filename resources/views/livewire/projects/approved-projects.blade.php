@@ -160,6 +160,6 @@
     </div>
 
     <!-- Componente Sidebar per le Note -->
-    <x-notes-sidebar wire:model="showDrawer2" :notes="$selectedProjectNotes" :project="$selectedProject" :edit-note-id="$editNoteId"
+    <x-notes-sidebar wire:model="showDrawer2" :notes="$selectedProjectNotes" :item="$selectedProject" :edit-note-id="$editNoteId"
         onClose="closeNotesSidebar" />
 </div>

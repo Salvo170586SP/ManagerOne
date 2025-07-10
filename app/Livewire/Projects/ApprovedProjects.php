@@ -32,6 +32,12 @@ class ApprovedProjects extends Component
     public $editNoteDescription = '';
     public $url_file = null;
 
+    protected $rules = [
+        'newNoteTitle' => 'required|string|max:255',
+        'newNoteDescription' => 'required|string|max:500',
+    ];
+
+
     public function downloadFile($note_id)
     {
         $note = Note::findOrFail($note_id);
@@ -56,16 +62,17 @@ class ApprovedProjects extends Component
             $note->url_file = $url;
             $note->save();
         }
+        // Aggiorna la lista delle note per il frontend
+        if ($this->selectedProjectId) {
+            $project = Project::findOrFail($this->selectedProjectId);
+            $this->selectedProjectNotes = $project->fresh()->notes;
+        }
     }
+
     public function addNote($project_id)
     {
         // Validazione
-        $this->validate([
-            'newNoteTitle' => 'required|string|max:255',
-            'newNoteDescription' => 'required|string|max:500',
-        ]);
-
-
+        $this->validate();
 
         // Trova il progetto
         $project = Project::findOrFail($project_id);
@@ -89,7 +96,10 @@ class ApprovedProjects extends Component
         // Aggiorna la lista delle note
         $this->selectedProjectNotes = $project->fresh()->notes;
 
-        $this->reset(['newNoteTitle', 'newNoteDescription']);
+        $this->reset(['newNoteTitle', 'newNoteDescription', 'url_file']);
+
+        // Emitti l'evento solo se tutto è andato bene
+        $this->dispatch('noteAdded');
     }
 
     public function deleteNote($project_id, $note_id)

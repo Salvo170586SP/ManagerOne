@@ -13,11 +13,7 @@
                 <x-input label="Nome" shadow wire:model="name" />
                 <x-input right-icon="currency-euro" label="Preventivo" shadow id="preventive" max="999999.99"
                     wire:model="preventive" />
-            </div>
-            <div class="flex gap-2 mt-5">
-                <x-select label="Cerca un Cliente" shadow placeholder="Seleziona un Cliente" wire:model="client_id"
-                    :options="$clients" option-label="name" option-value="id" />
-                <x-datetime-picker label="Data Consegna" without-time wire:model="end_date" id="end_date" shadow />
+                    <x-datetime-picker label="Data Consegna" without-time wire:model="end_date" id="end_date" shadow />
             </div>
             <div class="mt-5">
                 <x-textarea label="Descrizione" wire:model="description" shadow />

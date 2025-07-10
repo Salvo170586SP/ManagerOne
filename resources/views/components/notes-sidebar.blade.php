@@ -25,7 +25,7 @@
         </div>
 
         <div class="p-6">
-            <div x-data="{ openForm: false }">
+            <div x-data="{ openForm: false }" x-on:note-added.window="openForm = false">
                 <div class="flex justify-center">
                     <x-button @click="openForm = !openForm" x-show="openForm == false" icon="plus" blue
                         class="font-bold w-[200px] h-[32px]" />
@@ -43,7 +43,7 @@
                         <x-input type="file" shadow wire:model="url_file" label="Allega" class="font-bold w-[100px] mt-2" />
                     </div>
                     @if ($item)
-                        <x-button @click="openForm = false" wire:click="addNote({{ $item->id }})" gray
+                        <x-button wire:click="addNote({{ $item->id }})" gray
                             label="Aggiungi" class="font-bold w-[100px] h-[32px] mt-3" />
                     @endif
                 </div>
@@ -52,7 +52,7 @@
             @if ($notes && count($notes) > 0)
                 <div class="space-y-4 mt-10">
                     @foreach ($notes as $note)
-                        <div wire:key="note-item-{{ $item->id }}-{{ $note->id }}"
+                        <div wire:key="note-item-{{ $item->id }}-{{ $note->id }}{{-- -{{  str()->random(10) }} --}}"
                             class="@if ($note->is_true) bg-blue-50 @else bg-gray-50 @endif rounded-lg p-3 border border-gray-200">
 
                             <div @if ($editNoteId !== $note->id) @else style="display:none" @endif>
@@ -81,7 +81,6 @@
                                     </button>
                                 </div>
                             </div>
-
 
                             <div @if ($editNoteId === $note->id) @else style="display:none" @endif>
                                 <h3 class="font-semibold text-sm mb-2">Modifica Nota</h3>

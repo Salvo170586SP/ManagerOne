@@ -23,7 +23,6 @@ class EditProjects extends Component
     public $is_available = false;
 
     protected $rules = [
-        'client_id' => 'required',
         'name' => 'required',
         'description' => 'nullable',
         'end_date' => 'required|date|after:now',
@@ -46,7 +45,6 @@ class EditProjects extends Component
         $this->validate();
 
         $this->project->update([
-            'client_id' => $this->client_id,
             'name' => $this->name,
             'description' => $this->description,
             'end_date' => $this->end_date,
@@ -73,7 +71,6 @@ class EditProjects extends Component
                 'project_id' => $this->project->id,
                 'project_name' => $this->project->name,
             ]);
-    
         }
 
         session()->flash('message', 'Progetto modificato con successo');
@@ -133,13 +130,6 @@ class EditProjects extends Component
 
     public function render()
     {
-        $clients = User::where('type', 'client')->get()->map(function ($client) {
-            return [
-                'id' => $client->id,
-                'name' => $client->fullname(),
-            ];
-        });
-
-        return view('livewire.projects.edit-projects', compact('clients'));
+        return view('livewire.projects.edit-projects');
     }
 }

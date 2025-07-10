@@ -32,6 +32,11 @@ class IndexProjects extends Component
     public $url_file = null;
 
 
+    protected $rules = [
+        'newNoteTitle' => 'required|string|max:255',
+        'newNoteDescription' => 'required|string|max:500',
+    ];
+
 
     public function updatedSearch()
     {
@@ -51,11 +56,11 @@ class IndexProjects extends Component
     public function deleteProject($project_id)
     {
         $project = Project::findOrFail($project_id);
-       
-        
+
+
         if ($project) {
             $project->delete();
-       
+
             Log::info('Progetto eliminato', [
                 'user_id' => Auth::id(),
                 'project_id' => $project->id,
@@ -87,13 +92,7 @@ class IndexProjects extends Component
 
     public function addNote($project_id)
     {
-        // Validazione
-        $this->validate([
-            'newNoteTitle' => 'required|string|max:255',
-            'newNoteDescription' => 'required|string|max:500',
-        ]);
-
-
+        $this->validate();
 
         // Trova il progetto
         $project = Project::findOrFail($project_id);
@@ -117,7 +116,10 @@ class IndexProjects extends Component
         // Aggiorna la lista delle note
         $this->selectedProjectNotes = $project->fresh()->notes;
 
-        $this->reset(['newNoteTitle', 'newNoteDescription']);
+        $this->reset(['newNoteTitle', 'newNoteDescription', 'url_file']);
+
+        // Emitti l'evento solo se tutto è andato bene
+        $this->dispatch('noteAdded');
     }
 
 
@@ -210,12 +212,17 @@ class IndexProjects extends Component
     public function deleteFile($note_id)
     {
         $note = Note::findOrFail($note_id);
-        $url = $note->url_file;   
+        $url = $note->url_file;
         if ($url) {
             Storage::disk('public')->delete($note->url_file);
             $url = null;
             $note->url_file = $url;
             $note->save();
+        }
+        // Aggiorna la lista delle note per il frontend
+        if ($this->selectedProjectId) {
+            $project = Project::findOrFail($this->selectedProjectId);
+            $this->selectedProjectNotes = $project->fresh()->notes;
         }
     }
 
