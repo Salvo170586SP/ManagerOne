@@ -85,7 +85,7 @@
                 </thead>
                 <tbody class="bg-white divide-y text-sm divide-gray-200">
                     @foreach ($projects as $project)
-                        <tr wire:key="project-{{ $project->id }}">
+                        <tr wire:key="projectDelivered-{{ $project->id }}-{{  str()->random(10) }}">
                             <td class="px-6 py-4  whitespace-nowrap">
                                 @if ($project->IdProject)
                                     #PR-{{ $project->IdProject }}

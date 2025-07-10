@@ -97,7 +97,7 @@
             <h2 class="font-bold text-lg mt-5">I Miei Documenti</h2>
             <div class="flex flex-wrap gap-3 mt-8 pb-5">
                 @forelse ($developers as $developer)
-                    <x-card wire:key="docDevAuth-{{ $developer->id }}" shadow
+                    <x-card wire:key="docDevAuth-{{ $developer->id }}-{{  str()->random(10) }}" shadow
                         class="border w-[300px] bg-blue-50/50 cursor-pointer" wire:navigate
                         href="/documents/{{ $developer->id }}">
                         <div class="flex items-center justify-center h-[100px] border-b ">
@@ -124,7 +124,7 @@
                 <h2 class="font-bold text-lg mt-5">Archivio Clienti</h2>
                 <div class="flex flex-wrap gap-3 mt-8 pb-5">
                     @forelse ($clients as $client)
-                        <x-card wire:key="docCl-{{ $client->id }}" shadow
+                        <x-card wire:key="docCl-{{ $client->id }}-{{  str()->random(10) }}" shadow
                             class="rounded-lg border border-gray-300 w-[300px] bg-blue-50/50 cursor-pointer" wire:navigate
                             href="/documents/{{ $client->id }}">
                             <div class="flex items-center justify-center h-[100px] border-b ">
@@ -151,7 +151,7 @@
                 <h2 class="font-bold text-lg mt-5">Archivio Developers</h2>
                 <div class="flex flex-wrap gap-3 mt-8 pb-5">
                     @forelse ($developers as $developer)
-                        <x-card wire:key="docDev-{{ $developer->id }}" shadow
+                        <x-card wire:key="docDev-{{ $developer->id }}-{{  str()->random(10) }}" shadow
                             class="rounded-lg border border-gray-300 w-[300px] bg-blue-50/50 cursor-pointer" wire:navigate
                             href="/documents/{{ $developer->id }}">
                             <div class="flex items-center justify-center h-[100px] border-b ">
@@ -178,7 +178,7 @@
                 <h2 class="font-bold text-lg mt-5">Archivio Project Managers</h2>
                 <div class="flex flex-wrap gap-3 mt-8 pb-5">
                     @forelse ($pms as $pm)
-                        <x-card wire:key="docPm-{{ $pm->id }}" shadow
+                        <x-card wire:key="docPm-{{ $pm->id }}-{{  str()->random(10) }}" shadow
                             class="rounded-lg border border-gray-300 w-[300px] bg-blue-50/50 cursor-pointer" wire:navigate
                             href="/documents/{{ $pm->id }}">
                             <div class="flex items-center justify-center h-[100px] border-b ">

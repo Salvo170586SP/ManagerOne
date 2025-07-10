@@ -153,7 +153,7 @@
                         </thead>
                         <tbody class="bg-white divide-y text-sm divide-gray-200">
                             @foreach ($developer->tasks as $task)
-                                <tr wire:key="task-{{ $task->id }}">
+                                <tr wire:key="task-{{ $task->id }}-{{  str()->random(10) }}">
                                     <td class="px-6 py-4 whitespace-normal break-words max-w-[200px]">
                                         {{ \Illuminate\Support\Str::limit($task->title, 10) }}
                                     </td>

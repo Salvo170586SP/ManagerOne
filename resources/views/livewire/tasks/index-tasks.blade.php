@@ -45,7 +45,7 @@
                     </thead>
                     <tbody class="bg-white divide-y text-sm divide-gray-200" x-data="{ openRow: null }">
                     @foreach ($projects as $project)
-                        <tr>
+                        <tr wire:key="projTask{{ $project->id }}-{{  str()->random(10) }}">
                             <td class="px-6 py-4 whitespace-nowrap w-[50px]">
                                 @if ($project->tasks_count > 0)
                                     <x-button black flat class="w-2" icon="chevron-down" title="vedi tasks"
@@ -114,7 +114,7 @@
                                         </thead>
                                         <tbody class="divide-y text-xs divide-gray-200">
                                         @foreach ($tasks->take(4) as $task)
-                                            <tr wire:key="proj-task-{{ $project->id }}-{{ $task->id }}">
+                                            <tr wire:key="proj-task-{{ $project->id }}-{{ $task->id }}-{{  str()->random(10) }}">
                                                 <td class="px-6 py-2">{{ \Illuminate\Support\Str::limit($task->title, 10) }}</td>
                                                 <td class="px-6 py-2">{{ $task->developer->name ?? '-' }}</td>
                                                 <td class="px-6 py-2">{{ $task->getDate($task->due_date) }} </td>

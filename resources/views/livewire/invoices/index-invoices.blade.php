@@ -88,7 +88,7 @@
                     </thead>
                     <tbody class="bg-white divide-y text-sm divide-gray-200">
                         @foreach ($invoices as $invoice)
-                            <tr wire:key="invoice-{{ $invoice->id }}">
+                            <tr wire:key="invoice-{{ $invoice->id }}-{{  str()->random(10) }}">
                                 <td class="sticky left-0 sticky-col-left px-6 py-4 whitespace-nowrap">
                                     @if ($invoice->IdInvoice)
                                         #IN-{{ $invoice->IdInvoice }}

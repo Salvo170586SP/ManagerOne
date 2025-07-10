@@ -116,7 +116,7 @@
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200 text-sm">
                                 @foreach ($client->projects as $project)
-                                    <tr wire:key="clientproject-{{ $project->id }}">
+                                    <tr wire:key="clientproject-{{ $project->id }}-{{  str()->random(10) }}">
                                         <td class="px-6 py-4 whitespace-nowrap">id</td>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $project->name }} </td>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $project->preventive }} €</td>
@@ -175,7 +175,7 @@
                 <h3 class="text-lg font-semibold mb-5">Fatture</h3>
                 <div class="flex flex-wrap gap-6">
                     @forelse ($invoices as $invoice)
-                        <x-card class="border border-gray-300 w-[300px]" shadow>
+                        <x-card wire:key="invoice-{{ $invoice->id }}-{{  str()->random(10) }}" class="border border-gray-300 w-[300px]" shadow>
                             <div class="flex items-center justify-between mb-2">
                                 <div class="font-bold text-sm">
                                     {{ $invoice->name ?? 'Fattura #' . $invoice->IdInvoice }}</div>

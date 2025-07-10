@@ -48,7 +48,7 @@
             <h3 class="text-sm font-bold mb-4">Allegati delle Fatture</h3>
             <div class="flex flex-wrap gap-3">
                 @forelse ($invoices as $invoice)
-                    <x-card shadow class="rounded-lg border border-gray-300 w-[300px] bg-blue-50/50">
+                    <x-card wire::key="{{ $invoice->id }}-{{  str()->random(10) }}" shadow class="rounded-lg border border-gray-300 w-[300px] bg-blue-50/50">
                         <div class="text-end -mb-5">
                             <x-dropdown class="w-[150px]">
                                 <x-dropdown.item icon="arrow-down-tray" label="Scarica"
@@ -91,7 +91,7 @@
                 <h3 class="text-sm font-bold mb-4">Allegati delle Note</h3>
                 <div class="flex flex-wrap gap-3">
                     @forelse ($notesWithAttachments as $note)
-                        <x-card shadow class="rounded-lg border border-gray-300 w-[300px] bg-blue-50/50">
+                        <x-card wire::key="{{ $note->id }}-{{  str()->random(10) }}" shadow class="rounded-lg border border-gray-300 w-[300px] bg-blue-50/50">
                             <div class="text-end -mb-5">
                                 <x-dropdown class="w-[150px]">
                                     <x-dropdown.item icon="arrow-down-tray" label="Scarica" download

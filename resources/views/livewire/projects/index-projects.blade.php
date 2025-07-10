@@ -67,7 +67,7 @@
                                 class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
                                 Nome</th>
                             <th scope="col"
-                                class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
                                 Cliente
                             </th>
                             @role('super_admin')
@@ -98,7 +98,7 @@
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200 text-sm">
                         @foreach ($projects as $project)
-                            <tr wire:key="project-{{ $project->id }}">
+                            <tr wire:key="project-{{ $project->id }}-{{  str()->random(10) }}">
                                 <td class="px-6 py-4  whitespace-nowrap">
                                     @if ($project->IdProject)
                                         #PR-{{ $project->IdProject }}
@@ -107,17 +107,18 @@
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $project->name }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $project->client->fullName() }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <x-button wire:navigate href="/clients/{{ $project->client->id }}"
+                                        label="{{ $project->client->fullname() }}" class="border" black flat />
+                                </td>
                                 @role('super_admin')
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="relative">
-                                            <x-button flat blue icon="document-text"
-                                                wire:click="openNotesSidebar({{ $project->id }})"
-                                                title="Visualizza Note" />
+                                        <x-button flat blue icon="document-text" class="relative"
+                                            wire:click="openNotesSidebar({{ $project->id }})" title="Visualizza Note">
                                             <div
                                                 class="absolute right-2 top-0  rounded-full bg-blue-500 h-[15px] w-[15px] text-center text-xs font-bold text-white">
                                                 {{ $project->notes->count() }}</div>
-                                        </div>
+                                        </x-button>
                                     </td>
                                 @endrole
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $project->preventive }} €</td>

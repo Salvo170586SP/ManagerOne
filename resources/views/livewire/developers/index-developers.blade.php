@@ -118,7 +118,7 @@
                     </thead>
                     <tbody class="bg-white divide-y text-sm divide-gray-200">
                         @foreach ($developers as $developer)
-                            <tr wire:key="developer-{{ $developer->id }}">
+                            <tr wire:key="developer-{{ $developer->id }}-{{  str()->random(10) }}">
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     @if ($developer->IdDev)
                                         #DEV-{{ $developer->IdDev }}

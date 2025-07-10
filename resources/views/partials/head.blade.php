@@ -21,6 +21,6 @@
 <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@6.1.15/main.min.css" rel="stylesheet">
 
 @vite(['resources/css/app.css', 'resources/js/app.js'])
- 
+@livewireStyles
 @fluxAppearance
 <wireui:scripts />

@@ -142,7 +142,10 @@
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="text-sm">
                                                     @isset($task->developer)
-                                                        {{ $task->developer->fullname() }}
+                                                        <x-button wire:navigate
+                                                            href="/developers/{{ $task->developer->id }}"
+                                                            label="{{ $task->developer->fullname() }}" class="border"
+                                                            black flat />
                                                     @endisset
                                                 </div>
                                             </td>
@@ -159,14 +162,13 @@
                                                 </div>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-center">
-                                                <div class="relative">
-                                                    <x-button flat blue icon="document-text"
-                                                        wire:click="openNotesSidebar({{ $task->id }})"
-                                                        title="Visualizza Note" />
+                                                <x-button flat blue icon="document-text" class="relative"
+                                                    wire:click="openNotesSidebar({{ $task->id }})"
+                                                    title="Visualizza Note">
                                                     <div
                                                         class="absolute right-2 top-0  rounded-full bg-blue-500 h-[15px] w-[15px] text-center text-xs font-bold text-white">
                                                         {{ $task->notes->count() }}</div>
-                                                </div>
+                                                </x-button>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-center">
                                                 {{ $task->getDate($task->due_date) }}
@@ -219,7 +221,8 @@
                                                                 Sei sicuro di eliminare definitivamente la task?
                                                             </p>
 
-                                                            <x-slot name="footer" class="flex justify-end font-medium gap-x-4">
+                                                            <x-slot name="footer"
+                                                                class="flex justify-end font-medium gap-x-4">
                                                                 <x-button black label="Annulla" x-on:click="close" />
                                                                 <x-button red label="Elimina"
                                                                     wire:click="deleteTask({{ $task->id }})" />

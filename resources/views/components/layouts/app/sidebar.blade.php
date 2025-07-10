@@ -46,9 +46,6 @@
                 @endrole
                 @endif
                 <hr class="my-3">
-                <flux:navlist.item icon="puzzle-piece" :href="route('tasks.index-tasks')"
-                :current="request()->routeIs('tasks.index-tasks')" wire:navigate>Gestione Tasks
-                </flux:navlist.item>
                 @role('super_admin')
                 <flux:navlist.item icon="document-currency-euro" :href="route('invoices.index')"
                 :current="request()->routeIs('invoices.index')" wire:navigate>Fatture
@@ -72,13 +69,16 @@
                 :current="request()->routeIs('teams.index')" wire:navigate>Gestione Teams
                 </flux:navlist.item>
                 @endif
+                <flux:navlist.item icon="puzzle-piece" :href="route('tasks.index-tasks')"
+                :current="request()->routeIs('tasks.index-tasks')" wire:navigate>Gestione Tasks
+                </flux:navlist.item>
+                <hr class="my-3">
                 @role('super_admin')
                 <flux:navlist.item icon="exclamation-triangle" :href="route('logs.index')"
                 :current="request()->routeIs('logs.index')" wire:navigate>Logs
                 </flux:navlist.item>
                 @endrole
-                <hr class="my-3">
-                <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')"
+                <flux:navlist.item icon="home" :href="route('dashboard.index')" :current="request()->routeIs('dashboard.index')"
                     wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
             </flux:navlist.group>
         </flux:navlist>
@@ -137,8 +137,6 @@
     {{ $slot }}
 
     @fluxScripts
-    @stack('scripts')
-    @livewireScripts
 </body>
 
 </html>

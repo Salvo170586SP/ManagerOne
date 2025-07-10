@@ -112,7 +112,7 @@
                         <div class="text-sm w-full h-full">
                             <h3 class="font-bold text-xl mb-5">Fatturazione</h3>
                             @forelse ($project->invoices as $invoice)
-                                <div class="flex gap-5 ">
+                                <div wire:key="inv-{{ $invoice->id }}" class="flex gap-5 ">
                                     <div class="flex flex-col bg-gray-50 border border-gray-300 rounded-lg p-3">
                                         <div class="mb-3">
                                             <div class="font-semibold text-sm me-2">Fattura:</div>

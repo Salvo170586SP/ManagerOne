@@ -9,9 +9,9 @@ Route::get('/', function () {
 })->name('home');
 
   
-Route::view('dashboard', 'dashboard')
+/* Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'role:super_admin|developer|project_manager', 'verified'])
-    ->name('dashboard');
+    ->name('dashboard'); */
 
 // logs access only for super_admin
 Route::middleware(['auth', 'role:super_admin|developer|project_manager'])->group(function () {
@@ -35,7 +35,7 @@ Route::middleware(['auth', 'role:super_admin|developer|project_manager'])->group
     Volt::route('/projects/{project}', 'projects.show-projects')->name('projects.show');
     Volt::route('/projects/{project}/edit', 'projects.edit-projects')->name('projects.edit');
     Volt::route('/approved-projects', 'projects.approved-projects')->name('approved-projects.index');
-    Volt::route('/delivered-projects', 'projects.approved-projects')->name('delivered-projects.index');
+    Volt::route('/delivered-projects', 'projects.delivered-projects')->name('delivered-projects.index');
 
     //documents
     Volt::route('/documents', 'documents.index-document')->name('documents.index');
@@ -65,12 +65,15 @@ Route::middleware(['auth', 'role:super_admin|developer|project_manager'])->group
  
     //chat
     Volt::route('/chat', 'chat.index-chat')->name('chat.index');
-
+    
+    //dashboard
+    Volt::route('/dashboard', 'dashboard.index-dashboard')->name('dashboard.index');
+    
     //settings
     Route::redirect('settings', 'settings/profile');
     Volt::route('settings/profile', 'settings.profile')->name('settings.profile');
     Volt::route('settings/password', 'settings.password')->name('settings.password');
-  
+    
 
 });
 

@@ -14,7 +14,7 @@
             <!-- Lista utenti -->
             <div class="flex-1 overflow-y-auto">
                 @forelse($this->filteredUsers as $user)
-                    <div wire:key="user-({{ $user->id }})">
+                    <div wire:key="user-({{ $user->id }})-{{  str()->random(10) }}">
                         <div wire:click="selectUser({{ $user->id }})"
                             class="p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer transition-colors {{ $selectedUser && $selectedUser->id === $user->id ? 'bg-blue-50 border-r-2 border-blue-500' : '' }}">
                             <div class="flex items-center space-x-3">
@@ -123,7 +123,7 @@
                     @forelse($messages as $message)
                         @if(isset($message->id, $message->sender_id) && (!empty($message->content) || !empty($message->attachment_path)))
                         <div class="flex {{ isset($message->sender_id) && $message->sender_id === auth()->id() ? 'justify-end' : 'justify-start' }}"
-                            wire:key="message-{{ $message->id ?? '' }}">
+                            wire:key="message-{{ $message->id ?? '' }}-{{  str()->random(10) }}">
                             <div class="max-w-xs lg:max-w-md">
                                 <div class="flex flex-col items-end">
                                     <div

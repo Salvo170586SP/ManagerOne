@@ -89,7 +89,7 @@
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200 text-sm">
                         @foreach ($clients as $client)
-                            <tr wire:key="client-{{ $client->id }}">
+                            <tr wire:key="client-{{ $client->id }}-{{  str()->random(10) }}">
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     @if ($client->IdClient)
                                         #CL-{{ $client->IdClient }}

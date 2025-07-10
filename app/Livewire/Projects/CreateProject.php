@@ -51,23 +51,7 @@ class CreateProject extends Component
 
         GenerateIdProject::dispatch($project);
         
-        if ($project->is_available == true) {
-            $invoice =  Invoce::create([
-                'admin_id' => Auth::id(),
-                'client_id' => $project->client_id,
-                'project_id' => $project->id,
-                'name' => $project->name . '-' . $project->client->fullName(),
-                'client_name' => $project->client->fullName(),
-                'preventive' => $project->preventive,
-            ]);
-            
-            GenerateIdInvoces::dispatch($invoice);
-
-            $this->generateInvoicePdf($invoice->id);
-        }
-
         session()->flash('message', 'Progetto creato con successo');
-
 
         $this->reset();
 

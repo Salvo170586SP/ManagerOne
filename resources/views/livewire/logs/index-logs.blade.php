@@ -75,7 +75,7 @@
                 <ul class="w-full">
                     @if (count($logs) > 0)
                         @foreach ($logs as $log)
-                            <li class="w-full">
+                            <li wire:key="log-{{ $log }}-{{  str()->random(10) }}" class="w-full">
                                 <div class="flex items-center gap-2 mb-2">
                                     -
                                     <div class="w-full rounded py-3 px-2 font-mono text-xs break-all">

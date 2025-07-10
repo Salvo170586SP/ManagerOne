@@ -85,7 +85,7 @@
         @if ($teams->count() > 0)
             <div class="grid grid-cols-3 gap-5">
                 @foreach ($teams as $team)
-                    <x-card color="blue" shadow="false" class="border border-gray-300 rounded-lg bg-gray-50/50">
+                    <x-card wire::key="team-{{ $team->id }}-{{  str()->random(10) }}" color="blue" shadow="false" class="border border-gray-300 rounded-lg bg-gray-50/50">
                         <div class="flex justify-between items-center mb-5">
                             <div class="text-sm font-bold uppercase">
                                 {{ $team->name }}
@@ -146,7 +146,7 @@
                         <hr>
                         <div>
                             @foreach ($team->pms as $pm)
-                                <div class="my-5 ">
+                                <div wire::key="pmTeam-{{ $pm->id }}-{{  str()->random(10) }}" class="my-5">
                                     <div class="text-sm font-bold">
                                         Project Manager
                                     </div>
@@ -196,7 +196,7 @@
                                     Sviluppatori
                                 </div>
                                 @foreach ($team->developers->where('category', '!=', 'project manager') as $dev)
-                                    <div class="flex justify-between items-center my-2">
+                                    <div wire::key="devTeam-{{ $dev->id }}-{{  str()->random(10) }}" class="flex justify-between items-center my-2">
                                         <div class="text-sm">
                                             {{ $dev->fullName() }}
                                         </div>
