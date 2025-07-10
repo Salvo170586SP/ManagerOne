@@ -140,7 +140,7 @@ class IndexDevelopers extends Component
         // Calcola i conteggi dalla query originale (senza paginazione)
         $numberDevs = User::where('type', 'developer')->count();
         $numberPms = User::where('type', 'project_manager')->count();
-        $pollCondition = User::whereNull('IdDev')->exists();
+        $pollCondition = User::where('type', ['developer','project_manager'])->whereNull('IdDev')->exists();
 
         // Ottieni la lista delle città disponibili per il filtro
         $cities = User::where(function($query) {

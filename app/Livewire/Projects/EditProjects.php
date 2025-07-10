@@ -82,13 +82,13 @@ class EditProjects extends Component
 
     public function generateInvoicePdf($invoiceId)
     {
-        $invoice = Invoce::with(['client', 'project', 'admin'])->findOrFail($invoiceId);
+        $invoice = Invoce::with(['client', 'project'/* , 'admin' */])->findOrFail($invoiceId);
 
         $data = [
             'invoice' => $invoice,
             'client' => $invoice->client,
             'project' => $invoice->project,
-            'admin' => $invoice->admin,
+             'admin' => $invoice->admin,
             'date' => now()->format('d/m/Y'),
             'invoice_number' => 'INV-' . str_pad($invoice->id, 6, '0', STR_PAD_LEFT)
         ];

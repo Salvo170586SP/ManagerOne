@@ -33,7 +33,13 @@ class IndexClients extends Component
     public function deleteClient($client_id)
     {
         $client = User::findOrFail($client_id);
+        // Check if client is referenced in projects
+        $hasProjects = \App\Models\Project::where('client_id', $client_id)->exists();
 
+        if ($hasProjects) {
+            session()->flash('error', 'Non puoi eliminare il cliente finchè avrà un progetto associato. Elimina il progetto associato');
+            return;
+        }
         if ($client) {
 
             if (!empty($client->img_url)) {
@@ -65,7 +71,7 @@ class IndexClients extends Component
         }
 
         $clients = $clients->where('type', 'client')->latest()->paginate(10);
-        $pollCondition = User::whereNull('IdClient')->exists();
+        $pollCondition = User::where('type', 'client')->whereNull('IdClient')->exists();
 
         // Ottieni la lista delle città disponibili per il filtro
         $cities = User::where(function ($query) {

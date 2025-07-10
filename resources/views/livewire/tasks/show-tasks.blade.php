@@ -25,7 +25,12 @@
                 <div class="mb-3">
                     <div class="font-medium text-sm">Cliente Proprietario:</div>
                     <div class="text-sm uppercase mt-1">
-                        {{ $project->client->fullName() }}</div>
+                        @if($project->client)
+                        {{ $project->client->fullName() }}
+                        @else
+                        -
+                        @endif
+                    </div>
                 </div>
 
                 <div class="font-medium text-sm">Preventivo:</div>

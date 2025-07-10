@@ -44,8 +44,8 @@
                     :current="request()->routeIs('delivered-projects.index')" wire:navigate>Progetti Consegnati
                 </flux:navlist.item>
                 @endrole
-                @endif
                 <hr class="my-3">
+                @endif
                 @role('super_admin')
                 <flux:navlist.item icon="document-currency-euro" :href="route('invoices.index')"
                 :current="request()->routeIs('invoices.index')" wire:navigate>Fatture

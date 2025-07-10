@@ -1,11 +1,18 @@
 <div class="-mt-2">
     <div class="flex justify-between items-center">
         <h2 class="text-xl font-bold mb-5">Anagrafica Clienti</h2>
+
         @if (session('message'))
-            <div class="bg-gray-200 border dark:bg-[#474747] dark:border-0 mx-8 rounded relative mb-4">
+            <div class="bg-gray-200 border mx-8 rounded relative mb-4">
                 <span class="block p-5">{{ session('message') }}</span>
             </div>
         @endif
+        @if (session('error'))
+            <div class="bg-red-100 border border-red-500 mx-8 rounded relative mb-4">
+                <span class="block p-5 text-red-600 font-medium text-sm">{{ session('error') }}</span>
+            </div>
+        @endif
+
     </div>
 
     <div class="bg-white border border-gray-300 rounded-lg h-[calc(100vh-13rem)] overflow-y-auto p-6">
@@ -89,7 +96,7 @@
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200 text-sm">
                         @foreach ($clients as $client)
-                            <tr wire:key="client-{{ $client->id }}-{{  str()->random(10) }}">
+                            <tr wire:key="client-{{ $client->id }}-{{ str()->random(10) }}">
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     @if ($client->IdClient)
                                         #CL-{{ $client->IdClient }}
@@ -122,7 +129,8 @@
                                             href="/clients/{{ $client->id }}/edit" />
                                         <x-button flat red icon="trash"
                                             x-on:click="$openModal('simpleModalClient-{{ $client->id }}')" />
-                                        <x-modal name="simpleModalClient-{{ $client->id }}" blur="sm" align="center">
+                                        <x-modal name="simpleModalClient-{{ $client->id }}" blur="sm"
+                                            align="center">
                                             <x-card shadow="xl">
                                                 <div
                                                     class="flex items-center justify-center py-2 bg-red-400 text-white rounded-md mb-2 text-xl">
