@@ -7,5 +7,6 @@
         <livewire:dashboard.chart-total-projects />
         <livewire:dashboard.chart-total-clients />
         <livewire:dashboard.chart-total-tasks />
+        <livewire:dashboard.chart-invoices />
     </div>
 </div>

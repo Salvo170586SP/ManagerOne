@@ -1,32 +1,32 @@
 <div class="w-full flex items-center">
-    <div class="w-full flex flex-col items-start justify-center bg-white rounded-lg border border-gray-300 p-4">
-        <h3 class="mb-2 font-medium ">Progetti  <span class="inline-flex items-center justify-center ms-2 w-6 h-6 text-center text-white p-1 rounded-full bg-gray-400">{{ $totalProjects }}</span></h3>
+    <div class="w-full h-[350px] flex flex-col items-start justify-center bg-white rounded-lg border border-gray-300 p-4">
+        <h3 class="mb-2 font-medium">Fatture <span class="inline-flex items-center justify-center ms-2 w-6 h-6 text-center text-white p-1 rounded-full bg-gray-400">{{ $totalInvoices }}</span></h3>
         <div class="w-full flex justify-center">
-            <canvas id="projectsPieChart" width="350" height="250" ></canvas>
+            <canvas id="inoicesChart" width="350" height="250" ></canvas>
         </div>
     </div>
 </div>
 
 @script
     <script>
-        let ctx = document.getElementById('projectsPieChart').getContext('2d');
-        let hasProjects = @js($hasProjects);
+        let ctx = document.getElementById('inoicesChart').getContext('2d');
+        let hasInvoices = @js($hasInvoices);
         let data, backgroundColor, labels;
         let isEmptyChart = false;
 
-        if (hasProjects) {
-            data = [@js($approved), @js($delivered), @js($notApproved)];
-            backgroundColor = ['#22c55e', '#ef4484', '#FF0000'];
-            labels = ['Approvati', 'Consegnati', 'Non approvati'];
+        if (hasInvoices) {
+            data = [@js($InvoicesPay), @js($InvoicesNotPay)];
+            backgroundColor = ['#22c55e', '#FF0000'];
+            labels = ['Pagate', 'Non pagate'];
         } else {
             data = [1];
             backgroundColor = ['#e5e7eb'];
-            labels = ['Nessun progetto'];
+            labels = ['Nessuna fattura'];
             isEmptyChart = true;
         }
 
         const chart = new Chart(ctx, {
-            type: 'pie',
+            type: 'doughnut',
             data: {
                 labels: labels,
                 datasets: [{
@@ -38,7 +38,7 @@
                 responsive: false,
                 plugins: {
                     legend: {
-                        display: hasProjects,
+                        display: hasInvoices,
                         position: 'bottom',
                         labels: {
                             font: {
@@ -71,7 +71,7 @@
                         var fontSize = Math.min(width, height) / 14;
                         ctx.font = fontSize + "px sans-serif";
                         ctx.textBaseline = "middle";
-                        ctx.fillStyle = "#9ca3af"; // grigio testo
+                        ctx.fillStyle = "#9ca3af"; 
                         var text = "Non ci sono progetti";
                         var textX = Math.round((width - ctx.measureText(text).width) / 2);
                         var textY = height / 2;
