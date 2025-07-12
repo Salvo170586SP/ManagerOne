@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -58,10 +59,10 @@ class Message extends Model
     {
         return $query->where(function ($q) use ($user1Id, $user2Id) {
             $q->where('sender_id', $user1Id)
-              ->where('receiver_id', $user2Id);
+                ->where('receiver_id', $user2Id);
         })->orWhere(function ($q) use ($user1Id, $user2Id) {
             $q->where('sender_id', $user2Id)
-              ->where('receiver_id', $user1Id);
+                ->where('receiver_id', $user1Id);
         });
     }
 
@@ -71,6 +72,18 @@ class Message extends Model
     public function scopeUnreadForUser($query, $userId)
     {
         return $query->where('receiver_id', $userId)
-                    ->where('is_read', false);
+            ->where('is_read', false);
+    }
+
+
+    public function getDate($date)
+    {
+        return mb_convert_case(
+            Carbon::parse($date)
+                ->locale('it')
+                ->translatedFormat('d F Y'),
+            MB_CASE_TITLE,
+            'UTF-8'
+        );
     }
 }
