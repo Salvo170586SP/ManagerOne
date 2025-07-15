@@ -7,9 +7,8 @@
 
     <title>ManagerOne CRM</title>
 
-    <link rel="icon" href="/favicon.ico" sizes="any">
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="icon" href="/manager-one.ico" sizes="any">
+
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -53,25 +52,25 @@
             <p class="text-center text-lg text-[#444] mb-6">La soluzione completa per gestire clienti, progetti e team
                 in modo semplice, veloce e sicuro.</p>
             @if (Route::has('login'))
-                <nav class="flex flex-col sm:flex-row items-center justify-center gap-4 w-full mt-4">
-                    @auth
-                        <a href="{{ url('/dashboard') }}"
-                            class="w-full sm:w-auto px-6 py-2 bg-gradient-to-r from-[#6366f1] to-[#38bdf8] text-white font-semibold rounded-lg shadow hover:scale-105 transition-transform text-center">
-                            Vai alla Dashboard
-                        </a>
-                    @else
-                        <a href="{{ route('login') }}"
-                            class="w-full sm:w-auto px-6 py-2 bg-[#f1f5f9] text-[#1b1b18] border border-[#6366f1]/30 font-semibold rounded-lg shadow hover:bg-[#e0e7ef] transition-colors text-center">
-                            Accedi
-                        </a>
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}"
-                                class="w-full sm:w-auto px-6 py-2 bg-black text-white font-semibold rounded-lg shadow hover:scale-105 transition-transform text-center">
-                                Registrati
-                            </a>
-                        @endif
-                    @endauth
-                </nav>
+            <nav class="flex flex-col sm:flex-row items-center justify-center gap-4 w-full mt-4">
+                @auth
+                <a href="{{ url('/dashboard') }}"
+                    class="w-full sm:w-auto px-6 py-2 bg-gradient-to-r from-[#6366f1] to-[#38bdf8] text-white font-semibold rounded-lg shadow hover:scale-105 transition-transform text-center">
+                    Vai alla Dashboard
+                </a>
+                @else
+                <a href="{{ route('login') }}"
+                    class="w-full sm:w-auto px-6 py-2 bg-[#f1f5f9] text-[#1b1b18] border border-[#6366f1]/30 font-semibold rounded-lg shadow hover:bg-[#e0e7ef] transition-colors text-center">
+                    Accedi
+                </a>
+                @if (Route::has('register'))
+                <a href="{{ route('register') }}"
+                    class="w-full sm:w-auto px-6 py-2 bg-black text-white font-semibold rounded-lg shadow hover:scale-105 transition-transform text-center">
+                    Registrati
+                </a>
+                @endif
+                @endauth
+            </nav>
             @endif
         </div>
         <div class="text-center text-xs text-[#888] mt-8">
