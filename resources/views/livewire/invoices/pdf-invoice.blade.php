@@ -103,7 +103,9 @@
 
 <body>
     <div class="header">
-        <div class="company-name">La Tua Azienda</div>
+        <div class="flex items-center mt-2">
+            <h1 class="text-xl font-extrabold tracking-tight text-[#1b1b18] ms-2 mb-2">ManagerOne</h1>
+        </div>
         <div>Via Example, 123 - 90100 Palermo (PA)</div>
         <div>P.IVA: 12345678901 - Tel: +39 091 1234567</div>
     </div>

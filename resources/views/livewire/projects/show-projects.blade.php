@@ -17,13 +17,13 @@
                 <div class="font-medium text-sm">Stato Approvazione:</div>
                 <div class="font-medium rounded text-sm text-center py-1 mt-1">
                     @if ($project->is_available)
-                        <div class="bg-green-600 rounded-full text-white">
-                            Approvato
-                        </div>
+                    <div class="bg-green-600 rounded-full text-white">
+                        Approvato
+                    </div>
                     @else
-                        <div class="bg-red-600 rounded-full text-white">
-                            Da Approvare
-                        </div>
+                    <div class="bg-red-600 rounded-full text-white">
+                        Da Approvare
+                    </div>
                     @endif
                 </div>
             </div>
@@ -70,9 +70,9 @@
                 <div class="font-medium text-sm">Affidato al Team:</div>
                 <div class="text-sm mt-1">
                     @isset($project->team->name)
-                        {{ $project->team->name }}
+                    {{ $project->team->name }}
                     @else
-                        -
+                    -
                     @endisset
                 </div>
             </div>
@@ -106,54 +106,80 @@
                 </div>
             </div>
 
+            @role('super_admin')
             <div class="flex gap-3">
-                @role('super_admin')
-                    <div class="  flex items-center p-6 bg-white rounded-lg border border-gray-300">
-                        <div class="text-sm w-full h-full">
-                            <h3 class="font-bold text-xl mb-5">Fatturazione</h3>
-                            @forelse ($project->invoices as $invoice)
-                                <div wire:key="inv-{{ $invoice->id }}" class="flex gap-5 ">
-                                    <div class="flex flex-col bg-gray-50 border border-gray-300 rounded-lg p-3">
-                                        <div class="mb-3">
-                                            <div class="font-semibold text-sm me-2">Fattura:</div>
-                                            <div class="text-lg">
-                                                {{ $invoice->name }}
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <div class="font-semibold text-sm me-2">Importo:</div>
-                                            <div class="text-lg">
-                                                {{ $invoice->preventive }} €
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <div class="font-semibold text-sm me-2">Data erogazione:</div>
-                                            <div class="text-lg">
-                                                {{ $invoice->createDate() }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    @isset($invoice->pdf_path)
-                                        <iframe
-                                            class="h-[400px] w-[300px]  rounded-lg border dark:border-[#505050] dark:bg-[#505050]"
-                                            src="{{ asset('/storage/' . $invoice->pdf_path) }}" type="application/pdf">
-                                        </iframe>
-                                    @endisset
+                <div class="w-full flex items-center p-6 bg-white rounded-lg border border-gray-300">
+                    <div class="text-sm w-full h-full">
+                        <h3 class="font-bold text-xl mb-5">Fatturazione</h3>
 
+                        <table class="min-w-full divide-y border divide-gray-200">
+                            <thead>
+                                <tr>
+                                    <th scope="col"
+                                        class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                        Fattura</th>
+                                    <th scope="col"
+                                        class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                        Progetto
+                                    </th>
+                                    <th scope="col"
+                                        class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                        Preventivo
+                                    </th>
+                                    <th scope="col"
+                                        class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                        Pagato
+                                    </th>
+                                    <th scope="col"
+                                        class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                        Data
+                                        Creazione</th>
+                                    <th scope="col"
+                                        class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200 text-sm">
+                                @forelse ($project->invoices as $invoice)
+                                <tr wire:key="invoice-{{ $invoice->id }}-{{  str()->random(10) }}">
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $invoice->name }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $invoice->project->name }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $invoice->preventive }} €</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex justify-center items-center">
+                                            @if ($invoice->is_available)
+                                            <div class="bg-green-500 rounded-full text-white px-3">
+                                                Pagato
+                                            </div>
+                                            @else
+                                            <div class="bg-red-600 rounded-full text-white px-3">
+                                                Non pagato
+                                            </div>
+                                            @endif
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $invoice->createDate() }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                        <div class="flex justify-center">
+                                            <x-button gray flat icon="arrow-down-tray" label="Scarica" download
+                                                href="{{ asset('storage/' . $invoice->pdf_path) }}" />
+                                            <x-button gray flat icon="eye" label="Visualizza"
+                                                href="{{ asset('storage/' . $invoice->pdf_path) }}" target="_blank" />
+                                        </div>
+                                    </td>
+                                </tr>
                                 @empty
-                                    <div class="mb-3">
-                                        <div class="text-sm text-center font-medium italic text-gray-400">Nessuna fattura disponibile</div>
-                                    </div>
-                            @endforelse
-                        </div>
+                                <tr class="mb-3">
+                                    <td class="text-sm text-center font-medium italic text-gray-400">Nessuna fattura
+                                        disponibile</td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
                     </div>
-                @endrole
-
-
+                </div>
             </div>
+            @endrole
         </div>
-
-
     </div>
-
 </div>

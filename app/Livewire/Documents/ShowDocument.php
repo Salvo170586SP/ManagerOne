@@ -33,52 +33,6 @@ class ShowDocument extends Component
         $this->resetPage();
     }
 
-    public function downloadInvoicePdf($invoiceId)
-    {
-        try {
-            $invoice = Invoce::findOrFail($invoiceId);
-            $filePath = $invoice->pdf_path;
-
-            // Verifica se il file esiste
-            if (!Storage::disk('public')->exists($filePath)) {
-                session()->flash('error', 'File non trovato.');
-                return;
-            }
-
-            // Ottieni il path completo del file
-            $fullPath = Storage::disk('public')->path($filePath);
-
-            // Restituisci il file come download
-            return response()->download($fullPath);
-        } catch (\Exception $e) {
-            session()->flash('error', 'Errore durante il download: ' . $e->getMessage());
-            return;
-        }
-    }
-
-    public function downloadChatAttachment($messageId)
-    {
-        try {
-            $message = Message::findOrFail($messageId);
-            $filePath = $message->attachment_path;
-
-            // Verifica se il file esiste
-            if (!Storage::disk('public')->exists($filePath)) {
-                session()->flash('error', 'File non trovato.');
-                return;
-            }
-
-            // Ottieni il path completo del file
-            $fullPath = Storage::disk('public')->path($filePath);
-
-            // Restituisci il file come download
-            return response()->download($fullPath);
-        } catch (\Exception $e) {
-            session()->flash('error', 'Errore durante il download: ' . $e->getMessage());
-            return;
-        }
-    }
-
     public function render()
     {
         $invoicesQuery = $this->user->invoices();

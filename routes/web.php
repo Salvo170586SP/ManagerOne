@@ -28,7 +28,7 @@ Route::middleware(['auth', 'role:super_admin|developer|project_manager'])->group
     Volt::route('/invoices', 'invoices.index-invoices')->name('invoices.index');
     Volt::route('/invoices/{invoice}', 'invoices.show-invoices')->name('invoices.show');
     Volt::route('/invoices/{invoice}/edit', 'invoices.edit-invoices')->name('invoices.edit');
-
+ 
     //projects
     Volt::route('/projects', 'projects.index-projects')->name('projects.index');
     Volt::route('/projects/create', 'projects.create-project')->name('projects.create');

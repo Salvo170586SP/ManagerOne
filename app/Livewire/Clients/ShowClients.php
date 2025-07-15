@@ -4,16 +4,17 @@ namespace App\Livewire\Clients;
 
 use App\Models\User;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class ShowClients extends Component
 {
+    use WithPagination;
+
     public $client;
-    public $invoices;
 
     public function mount(User $client)
     {
         $this->client = $client;
-        $this->invoices = $client->invoices;
     }
 
     public function getStateName($state)
@@ -30,6 +31,9 @@ class ShowClients extends Component
 
     public function render()
     {
-        return view('livewire.clients.show-clients');
+        $projectClient = $this->client->projects()->paginate(3);
+        $invoicesClient = $this->client->invoices()->paginate(3);
+
+        return view('livewire.clients.show-clients', compact('projectClient', 'invoicesClient'));
     }
 }
