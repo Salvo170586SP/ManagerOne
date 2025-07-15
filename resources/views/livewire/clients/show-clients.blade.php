@@ -164,7 +164,7 @@
                             </tbody>
                         </table>
                     @else
-                        <div class="text-center font-medium">
+                        <div class="text-sm text-center font-medium italic text-gray-400 py-10">
                             Non ci sono progetti associati a questo cliente
                         </div>
                     @endif
@@ -194,7 +194,7 @@
                             </div>
                         </x-card>
                     @empty
-                        <div class="col-span-3 text-center font-medium py-10">Non ci sono fatture per questo cliente
+                        <div class="w-full text-sm text-center font-medium italic text-gray-400">Non ci sono fatture per questo cliente
                         </div>
                     @endforelse
                 </div>

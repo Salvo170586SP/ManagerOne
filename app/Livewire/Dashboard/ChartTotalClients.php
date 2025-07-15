@@ -8,12 +8,13 @@ use Carbon\Carbon;
 
 class ChartTotalClients extends Component
 {
+    public $totalClients;
     public $clients;
     public $hasClients;
     public $clientsThisYear;
     public $labels;
     public $data;
- 
+
     public function mount()
     {
         $start = Carbon::create(2025, 1, 1);
@@ -30,17 +31,24 @@ class ChartTotalClients extends Component
             $current->addMonth();
         }
 
+        // Ottieni i clienti e raggruppali per mese
         $clients = User::where('type', 'client')
             ->whereBetween('created_at', [$start, $end])
-            ->get()
-            ->groupBy(function($item) {
-                return Carbon::parse($item->created_at)->format('M Y');
-            });
+            ->get();
+            
+        $groupedClients = [];
+        foreach ($clients as $client) {
+            $monthKey = Carbon::parse($client->created_at)->format('M Y');
+            if (!isset($groupedClients[$monthKey])) {
+                $groupedClients[$monthKey] = 0;
+            }
+            $groupedClients[$monthKey]++;
+        }
 
         $total = 0;
         foreach ($labels as $month) {
-            if (isset($clients[$month])) {
-                $total += $clients[$month]->count();
+            if (isset($groupedClients[$month])) {
+                $total += $groupedClients[$month];
             }
             $months[$month] = $total;
         }
@@ -51,6 +59,7 @@ class ChartTotalClients extends Component
 
     public function render()
     {
+        $this->totalClients = (int) User::where('type', 'client')->count();
         return view('livewire.dashboard.chart-total-clients', [
             'labels' => $this->labels,
             'data' => $this->data,

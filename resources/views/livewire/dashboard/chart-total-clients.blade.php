@@ -1,6 +1,6 @@
 <div class="w-full flex items-center">
     <div class="w-full flex flex-col items-start justify-center bg-white rounded-lg border border-gray-300 p-4">
-        <h3 class="mb-2 font-medium">Clienti</h3>
+        <h3 class="mb-2 font-medium">Clienti <span class="inline-flex items-center justify-center ms-2 w-6 h-6 text-center text-white p-1 rounded-full bg-gray-400">{{ $totalClients }}</span></h3>
         <div class="w-full flex justify-center">
             <div class="h-[250px] w-[550px]">
                 <canvas id="clientsLineChart" class="h-full w-full"></canvas>

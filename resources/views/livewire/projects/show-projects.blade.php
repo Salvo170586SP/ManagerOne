@@ -142,7 +142,7 @@
 
                                 @empty
                                     <div class="mb-3">
-                                        <div class="font-medium text-sm">Nessuna fattura disponibile</div>
+                                        <div class="text-sm text-center font-medium italic text-gray-400">Nessuna fattura disponibile</div>
                                     </div>
                             @endforelse
                         </div>

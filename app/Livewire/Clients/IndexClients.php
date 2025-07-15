@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Clients;
 
+use App\Models\Project;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
@@ -34,14 +35,14 @@ class IndexClients extends Component
     {
         $client = User::findOrFail($client_id);
         // Check if client is referenced in projects
-        $hasProjects = \App\Models\Project::where('client_id', $client_id)->exists();
+        $hasProjects = Project::where('client_id', $client_id)->exists();
 
         if ($hasProjects) {
             session()->flash('error', 'Non puoi eliminare il cliente finchè avrà un progetto associato. Elimina il progetto associato');
             return;
         }
-        if ($client) {
 
+        if ($client) {
             if (!empty($client->img_url)) {
                 if (Storage::disk('public')->exists($client->img_url)) {
                     Storage::disk('public')->delete($client->img_url);
