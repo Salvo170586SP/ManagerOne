@@ -85,7 +85,7 @@
                             </li>
                         @endforeach
                     @else
-                        <div class="text-center font-medium">
+                        <div class="text-sm text-center font-medium italic text-gray-400">
                             Non ci sono logs registrati
                         </div>
                     @endif

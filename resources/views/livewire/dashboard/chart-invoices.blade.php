@@ -68,11 +68,11 @@
                             height = chart.height,
                             ctx = chart.ctx;
                         ctx.restore();
-                        var fontSize = Math.min(width, height) / 14;
+                        var fontSize = Math.min(width, height) / 19;
                         ctx.font = fontSize + "px sans-serif";
                         ctx.textBaseline = "middle";
                         ctx.fillStyle = "#9ca3af"; 
-                        var text = "Non ci sono progetti";
+                        var text = "Non ci sono fatture";
                         var textX = Math.round((width - ctx.measureText(text).width) / 2);
                         var textY = height / 2;
                         ctx.fillText(text, textX, textY);

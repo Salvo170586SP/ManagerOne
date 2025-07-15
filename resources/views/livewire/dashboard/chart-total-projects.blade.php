@@ -68,7 +68,7 @@
                             height = chart.height,
                             ctx = chart.ctx;
                         ctx.restore();
-                        var fontSize = Math.min(width, height) / 14;
+                        var fontSize = Math.min(width, height) / 19;
                         ctx.font = fontSize + "px sans-serif";
                         ctx.textBaseline = "middle";
                         ctx.fillStyle = "#9ca3af"; // grigio testo

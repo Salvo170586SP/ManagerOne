@@ -155,7 +155,7 @@
                         @empty
                             <tr>
                                 <td>
-                                    <div class="text-sm italic text-gray-500 p-2">
+                                    <div class="text-sm text-center font-medium italic text-gray-400 p-2">
                                         Cartella vuota, non ci sono documenti
                                     </div>
                                 </td>
@@ -239,7 +239,7 @@
                             @empty
                                 <tr>
                                     <td>
-                                        <div class="text-sm italic text-gray-500 p-2">
+                                        <div class="text-sm text-center font-medium italic text-gray-400 p-2">
                                             Cartella vuota, non ci sono documenti
                                         </div>
                                     </td>

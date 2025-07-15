@@ -245,7 +245,7 @@
                             {{ $tasks->links('vendor.pagination.tailwind') }}
                         </div>
                     @else
-                        <div class="px-6 py-4 text-center text-gray-500">
+                        <div class="px-6 py-4 text-sm text-center font-medium italic text-gray-400">
                             Nessuna tasks presente
                         </div>
                     @endif
