@@ -224,12 +224,16 @@ class ApprovedProjects extends Component
         $projectId = explode('-', $project_id)[1];
 
         $project = Project::findOrFail($projectId);
-        $project->team_id = $team_id;
+        // Se il valore è vuoto o nullo, rimuovi il team
+        $project->team_id = $team_id ?: null;
         $project->save();
 
-        $team = Team::findOrFail($team_id);
-        $team->is_available = true;
-        $team->save();
+        // Aggiorna la disponibilità del team solo se esiste un team selezionato
+        if ($team_id) {
+            $team = Team::findOrFail($team_id);
+            $team->is_available = true;
+            $team->save();
+        }
 
         session()->flash('message', "Assegnazione del progetto $project->name aggiornata con successo");
     }
