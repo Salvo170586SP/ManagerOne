@@ -1,14 +1,15 @@
 <div class="-mt-2">
-    <div class="flex justify-between items-center">
-        <h2 class="text-xl font-bold mb-5">Developers</h2>
-        @if (session('message'))
-            <div class="bg-gray-200 border dark:bg-[#474747] dark:border-0 mx-8 rounded relative mb-4">
-                <span class="block p-5">{{ session('message') }}</span>
-            </div>
-        @endif
+    <div class="flex justify-between items-center h-20 -mt-7">
+        <h2 class="text-xl font-bold">Developers</h2>
+        <div x-data="{ showMessage: true }">
+            @if (session('message'))
+                <x-alert title="{{ session('message') }}" positive class="bg-green-600 text-white" x-init="setTimeout(() => showMessage = false, 5000)"
+                    x-show="showMessage" />
+            @endif
+        </div>
     </div>
 
-    <div class="bg-white rounded-lg border border-gray-300 h-full h-[calc(100vh-13rem)] overflow-y-auto p-6">
+    <div class="bg-white rounded-lg border border-gray-300 h-full {{--  h-[calc(100vh-13rem)] --}} overflow-y-auto p-6">
 
         <div class="flex justify-between items-center">
             <div class="w-[350px] h-[32px]">
@@ -101,6 +102,10 @@
                             </th>
                             <th scope="col"
                                 class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                Tipo
+                            </th>
+                            <th scope="col"
+                                class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
                                 Grado in azienda
                             </th>
                             <th scope="col"
@@ -118,8 +123,8 @@
                     </thead>
                     <tbody class="bg-white divide-y text-sm divide-gray-200">
                         @foreach ($developers as $developer)
-                            <tr wire:key="developer-{{ $developer->id }}-{{  str()->random(10) }}">
-                                <td class="px-6 py-4 whitespace-nowrap">
+                            <tr wire:key="developer-{{ $developer->id }}-{{ str()->random(10) }}">
+                                <td class="px-6 py-4 font-bold whitespace-nowrap">
                                     @if ($developer->IdDev)
                                         #DEV-{{ $developer->IdDev }}
                                     @else
@@ -133,6 +138,14 @@
                                         <div
                                             class="rounded-full font-medium text-sm px-4 py-1 {{ $this->getColorWorkplace($developer->workplace) }}">
                                             {{ $this->getNameWorkplace($developer->workplace) }}
+                                        </div>
+                                    @endif
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-center">
+                                    @if ($developer->type)
+                                        <div
+                                            class="rounded-full font-medium text-sm px-4 py-1 {{ $this->getColorType($developer->type) }}">
+                                            {{ $this->getNameType($developer->type) }}
                                         </div>
                                     @endif
                                 </td>
@@ -163,7 +176,8 @@
                                                 href="/developers/{{ $developer->id }}/edit" />
                                             <x-button flat red icon="trash"
                                                 x-on:click="$openModal('developers-{{ $developer->id }}')" />
-                                            <x-modal name="developers-{{ $developer->id }}" blur="sm" align="center">
+                                            <x-modal name="developers-{{ $developer->id }}" blur="sm"
+                                                align="center">
                                                 <x-card shadow="xl">
                                                     <div
                                                         class="flex items-center justify-center py-2 bg-red-400 text-white rounded-md mb-2 text-xl">

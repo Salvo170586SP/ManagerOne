@@ -30,6 +30,18 @@ class CreateProject extends Component
         'end_date' => 'required|date|after:now',
     ];
 
+    protected $messages = [
+        'client_id.required' => 'Il campo è obbligatorio',
+        'name.required' => 'Il campo è obbligatorio',
+        'preventive.required' => 'Il campo è obbligatorio',
+        'preventive.numeric' => 'Il campo accetta solo numeri',
+        'preventive.min' => 'Il campo deve avere almeno un numero',
+        'preventive.max' => 'Il campo deve avere massimo 999999.99',
+        'end_date.required' => 'Il campo è obbligatorio',
+        'end_date.date' => 'Il campo deve essere una data',
+        'end_date.after' => 'Il campo deve avere minimo la data odierna',
+    ];
+
     public function submit()
     {
         $this->validate();
@@ -50,12 +62,12 @@ class CreateProject extends Component
         ]);
 
         GenerateIdProject::dispatch($project);
-        
-        session()->flash('message', 'Progetto creato con successo');
 
         $this->reset();
 
-        $this->redirect('/projects', navigate: true);
+        session()->flash('message', 'Progetto creato con successo');
+        
+        return  $this->redirect('/projects', navigate: true);
     }
 
     public function generateInvoicePdf($invoiceId)

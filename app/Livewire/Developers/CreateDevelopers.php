@@ -23,6 +23,8 @@ class CreateDevelopers extends Component
     public Step1 $developerStep1;
     public Step2 $developerStep2;
 
+    
+
     public function mount()
     {
         $this->categories = config('managerOne.categories');
@@ -33,7 +35,7 @@ class CreateDevelopers extends Component
 
     public function addStep()
     {
-        /* $this->developerStep1->validate(); */
+        $this->developerStep1->validate();
         $this->currentStep++;
     }
 

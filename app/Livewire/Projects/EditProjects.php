@@ -29,6 +29,17 @@ class EditProjects extends Component
         'preventive' => 'required|numeric|min:0|max:999999.99',
     ];
 
+    protected $messages = [
+        'name.required' => 'Il campo è obbligatorio',
+        'preventive.required' => 'Il campo è obbligatorio',
+        'preventive.numeric' => 'Il campo accetta solo numeri',
+        'preventive.min' => 'Il campo deve avere almeno un numero',
+        'preventive.max' => 'Il campo deve avere massimo 999999.99',
+        'end_date.required' => 'Il campo è obbligatorio',
+        'end_date.date' => 'Il campo deve essere una data',
+        'end_date.after' => 'Il campo deve avere minimo la data odierna',
+    ];
+
     public function mount(Project $project)
     {
         $this->project = $project;
@@ -88,7 +99,7 @@ class EditProjects extends Component
             'invoice' => $invoice,
             'client' => $invoice->client,
             'project' => $invoice->project,
-             'admin' => $invoice->admin,
+            'admin' => $invoice->admin,
             'date' => now()->format('d/m/Y'),
             'invoice_number' => 'INV-' . str_pad($invoice->id, 6, '0', STR_PAD_LEFT)
         ];

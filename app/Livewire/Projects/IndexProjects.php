@@ -57,7 +57,6 @@ class IndexProjects extends Component
     {
         $project = Project::findOrFail($project_id);
 
-
         if ($project) {
             $project->delete();
 
@@ -67,7 +66,8 @@ class IndexProjects extends Component
                 'project_name' => $project->name,
             ]);
         }
-
+        
+        session()->flash('message', 'Progetto eliminato con successo');
 
         return $this->redirect('/projects', navigate: true);
     }
@@ -219,6 +219,7 @@ class IndexProjects extends Component
             $note->url_file = $url;
             $note->save();
         }
+    
         // Aggiorna la lista delle note per il frontend
         if ($this->selectedProjectId) {
             $project = Project::findOrFail($this->selectedProjectId);
@@ -266,7 +267,7 @@ class IndexProjects extends Component
             $projects = $projects->where('is_available', (int) $this->searchAvailable);
         }
 
-        $projects = $projects->latest()->paginate(10);
+        $projects = $projects->latest()->paginate(8);
 
         $pollCondition = Project::whereNull('IdProject')->exists();
 

@@ -12,7 +12,7 @@ class EditDevelopers extends Component
 {
     use WithFileUploads;
     
-    public ?User $developer;
+    public $developer;
 
     public $name;
     public $surname;
@@ -27,8 +27,9 @@ class EditDevelopers extends Component
     public $workplaces;
     public $levels;
 
-    public function mount()
+    public function mount(?User $developer)
     {
+        $this->developer = $developer;
         $this->categories = config('managerOne.categories');
         $this->workplaces = config('managerOne.workplaces');
         $this->levels = config('managerOne.levels');
@@ -49,7 +50,7 @@ class EditDevelopers extends Component
     protected $rules = [
         'name' => 'required',
         'surname' => 'required',
-        'phone' => 'required',
+        'phone' => 'required|numeric',
         'city' => 'required',
         'category' => 'required',
         'workplace' =>  'required',
@@ -61,6 +62,7 @@ class EditDevelopers extends Component
         'name.required' => 'Il campo è obbligatorio',
         'surname.required' => 'Il campo è obbligatorio',
         'phone.required' => 'Il campo è obbligatorio',
+        'phone.numeric' => 'Il campo deve contenere solo numeri',
         'city.required' => 'Il campo è obbligatorio',
         'category.required' => 'Il campo è obbligatorio',
         'workplace.required' => 'Il campo è obbligatorio',

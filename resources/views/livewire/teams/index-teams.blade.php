@@ -1,11 +1,12 @@
 <div class="-mt-2">
-    <div class="flex justify-between items-center">
-        <h2 class="text-xl font-bold mb-5">Gestione dei Teams</h2>
-        @if (session('message'))
-            <div class="bg-gray-200 border dark:bg-[#474747] dark:border-0 mx-8 rounded relative mb-4">
-                <span class="block p-5">{{ session('message') }}</span>
-            </div>
-        @endif
+    <div class="flex justify-between items-center h-20 -mt-7">
+        <h2 class="text-xl font-bold">Gestione dei Teams</h2>
+        <div x-data="{ showMessage: true }">
+            @if (session('message'))
+                <x-alert title="{{ session('message') }}" positive class="bg-green-600 text-white" x-init="setTimeout(() => showMessage = false, 5000)"
+                    x-show="showMessage" />
+            @endif
+        </div>
     </div>
 
     <div class="bg-white rounded-lg border border-gray-300 p-6">

@@ -11,10 +11,8 @@ class IndexLogs extends Component
     public $search = '';
     public $searchDate;
 
-    public function mount()
-    {
-    }
-  
+    public function mount() {}
+
     public function deleteLog()
     {
         $logPath = storage_path('logs/laravel.log');
@@ -31,6 +29,8 @@ class IndexLogs extends Component
             $this->logs = [];
         }
 
+        session()->flash('message', "Logs eliminati con successo");
+
         return $this->redirect('/logs', navigate: true);
     }
 
@@ -46,7 +46,7 @@ class IndexLogs extends Component
                 return str_contains($line, 'Progetto ') || str_contains($line, 'Task ') || str_contains($line, 'Developer ') || str_contains($line, 'Team ') || str_contains($line, 'Evento ');
             });
         }
-        
+
         $filteredLogs = array_reverse($customLogs);
 
         if ($this->search) {
@@ -54,7 +54,7 @@ class IndexLogs extends Component
                 return stripos($log, $this->search) !== false;
             });
         }
-    
+
         if ($this->searchDate) {
             $filteredLogs = array_filter($filteredLogs, function ($log) {
                 preg_match('/^\[(.*?)\]/', $log, $matches);

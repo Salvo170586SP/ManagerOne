@@ -1,6 +1,6 @@
 <div class="-mt-2">
     <h2 class="text-xl font-bold mb-5">Modifica Fattura</h2>
-    <div class="bg-white rounded-lg border border-gray-300 h-[calc(100vh-33rem)] overflow-y-auto p-6">
+    <div class="bg-white rounded-lg border border-gray-300 overflow-y-auto p-6">
         <div class="flex justify-end items-center">
             <x-button icon="arrow-left" black label="Torna alle Fatture" class="font-bold w-[200px] h-[32px]"
                 wire:navigate href="/invoices" />

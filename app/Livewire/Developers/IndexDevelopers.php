@@ -73,6 +73,20 @@ class IndexDevelopers extends Component
         $name = $workplaceData['name'] ?? '-';
         return $name;
     }
+   
+    public function getColorType($type)
+    {
+        $workplaceData = collect(config('managerOne.types'))->firstWhere('id', $type);
+        $color = $workplaceData['color'] ?? 'bg-gray-300';
+        return $color;
+    }
+   
+    public function getNameType($type)
+    {
+        $workplaceData = collect(config('managerOne.types'))->firstWhere('id', $type);
+        $name = $workplaceData['name'] ?? '-';
+        return $name;
+    }
     
     public function deleteDev($devId)
     {
@@ -102,9 +116,9 @@ class IndexDevelopers extends Component
                 'level' => $dev->level,
             ]);
         }
+        session()->flash('message', "Developer eliminato con successo");
 
         return $this->redirect('/developers', navigate: true);
-
     }
 
     public function render()

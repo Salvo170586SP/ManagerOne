@@ -1,6 +1,6 @@
 <div class="-mt-2">
     <h2 class="text-xl font-bold mb-5">Aggiungi Cliente</h2>
-    <div class="bg-white border border-gray-300 rounded-lg h-[calc(100vh-22rem)] overflow-y-auto p-6">
+    <div class="bg-white border border-gray-300 rounded-lg h-[calc(100vh-20rem)] overflow-y-auto p-6">
 
         <div class="flex justify-end items-center">
             <x-button icon="arrow-left" black label="Torna ai Clienti" class="font-bold w-[200px] h-[32px]" wire:navigate

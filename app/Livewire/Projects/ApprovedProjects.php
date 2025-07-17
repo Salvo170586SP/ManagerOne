@@ -231,11 +231,7 @@ class ApprovedProjects extends Component
         $team->is_available = true;
         $team->save();
 
-        if ($team_id) {
-            session()->flash('message', "Team assegnato al progetto $project->name");
-        } else {
-            session()->flash('message', "Team rimosso dal progetto $project->name");
-        }
+        session()->flash('message', "Assegnazione del progetto $project->name aggiornata con successo");
     }
 
     public function updatedStateSelections($state, $project_id)

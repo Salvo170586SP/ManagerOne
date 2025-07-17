@@ -15,7 +15,12 @@ class EditInvoices extends Component
 
     protected $rules = [
         'name' => 'required',
-        'description' => 'nullable',
+        'description' => 'nullable|max:255',
+    ];
+
+    protected $messages = [
+        'name.required' => 'Il campo è obbligatorio',
+        'description.max' => 'Il campo può avere massimo 255 caratteri',
     ];
 
     public function mount(Invoce $invoice)

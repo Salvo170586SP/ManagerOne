@@ -35,13 +35,26 @@ class EditTask extends Component
 
     protected $rules = [
         'title' => 'required|string|max:255',
-        'description' => 'nullable|string',
+        'description' => 'nullable|string|max:255',
         'developer_id' => 'required|exists:users,id',
         'priority' => 'required|in:low,medium,high',
-        'due_date' => 'nullable|date|after:now',
+        'state_task' => 'required',
+        'due_date' => 'required|date|after:now',
     ];
 
-    public function createTask()
+    protected $messages = [
+        'title.required' => 'Il campo è obbligatorio',
+        'title.max' => 'Il campo può contenere massimo 255 caratteri',
+        'description.max' => 'Il campo può contenere massimo 255 caratteri',
+        'developer_id.required' => 'Il campo è obbligatorio',
+        'priority.required' => 'Il campo è obbligatorio',
+        'state_task.required' => 'Il campo è obbligatorio',
+        'due_date.required' => 'Il campo è obbligatorio',
+        'due_date.date' => 'Il campo deve essere una data',
+        'due_date.after' => 'Il campo deve avere minimo la data odierna',
+    ];
+
+    public function updateTask()
     {
         $this->validate();
 
@@ -54,8 +67,7 @@ class EditTask extends Component
             'status' => $this->state_task
         ]);
 
-        session()->flash('message', 'Task creata con successo!');
-
+        
         Log::info('Task modificata', [
             'id' =>  $this->task->id,
             'title' => $this->task->title,
@@ -67,12 +79,14 @@ class EditTask extends Component
             'created_by' => Auth::id(),
             'project_id' => $this->project->id,
         ]);
-
+        
         $projectId = $this->project->id;
-
-        $this->redirect("/tasks/$projectId/show", navigate: true);
-
+        
         $this->reset();
+
+        session()->flash('message', 'Task modificata con successo!');
+        
+        $this->redirect("/tasks/$projectId/show", navigate: true);
     }
 
     public function render()

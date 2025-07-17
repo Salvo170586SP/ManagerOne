@@ -5,7 +5,7 @@
             class="font-bold h-[32px]" />
     </div>
     <div class="bg-white p-6 border border-gray-300 rounded-lg">
-        <form wire:submit.prevent="createTask" class="space-y-4">
+        <form wire:submit.prevent="updateTask" class="space-y-4">
             <x-input shadow label="Titolo" wire:model="title" id="title" />
             <x-textarea shadow wire:model="description" label="Descrizione" id="description" rows="3" />
             <div class="flex gap-3">

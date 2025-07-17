@@ -102,15 +102,27 @@ class IndexCalendar extends Component
         $this->showCreateModal = true;
     }
 
+    protected $rules = [
+        'title' => 'required|string|max:255',
+        'start_date' => 'required|date',
+        'end_date' => 'nullable|date|after_or_equal:start_date',
+        'description' => 'nullable|string|max:255',
+        'selectedParticipants' => 'nullable'
+    ];
+
+    protected $messages = [
+        'title.required' => 'Il campo è obbligatorio',
+        'title.max' => 'Il campo può avere massimo 255 caratteri',
+        'start_date.required' => 'Il campo è obbligatorio',
+        'start_date.date' => 'Il campo deve essere una data',
+        'end_date.required' => 'Il campo è obbligatorio',
+        'end_date.date' => 'Il campo deve essere una data',
+        'description.max' => 'Il campo può avere massimo 255 caratteri',
+    ];
+
     public function saveEvent()
     {
-        $this->validate([
-            'title' => 'required|string|max:255',
-            'start_date' => 'required|date',
-            'end_date' => 'nullable|date|after_or_equal:start_date',
-            'description' => 'nullable|string',
-            'selectedParticipants' => 'nullable'
-        ]);
+        $this->validate();
 
         if ($this->eventId) {
             $event = Event::findOrFail($this->eventId);
@@ -146,6 +158,8 @@ class IndexCalendar extends Component
                 'end' => $event->end,
                 'is_available' => $event->is_available,
             ]);
+
+            session()->flash('message', "Evento modificato con successo");
         } else {
             $event = Event::create([
                 'user_id' => Auth::id(),
@@ -181,8 +195,10 @@ class IndexCalendar extends Component
                 'end' => $event->end,
                 'is_available' => $event->is_available,
             ]);
-        }
 
+            session()->flash('message', "Evento creato con successo");
+
+        }
 
         $this->resetForm();
     }
@@ -222,6 +238,8 @@ class IndexCalendar extends Component
                 'is_available' => $event->is_available,
             ]);
         }
+
+        session()->flash('message', "Data dell evento modificata con successo");
     }
     
     #[On('delete-event')]
@@ -245,6 +263,8 @@ class IndexCalendar extends Component
             ]);
             $this->dispatch('event-deleted', $eventId);
         }
+
+        session()->flash('message', "Evento eliminato con successo");
     }
 
     #[On('edit-event')]

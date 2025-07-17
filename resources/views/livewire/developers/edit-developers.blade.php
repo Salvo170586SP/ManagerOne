@@ -61,11 +61,11 @@
 
             <div class="flex gap-2 mt-5">
                 <x-select label="Cerca una categoria" id="category" shadow wire:model.live="category"
-                    placeholder="Seleziona una categoria" :options="$categories" option-label="name" option-value="name" />
+                    placeholder="Seleziona una categoria" :options="$categories" option-label="name" option-value="id" />
                 <x-select label="Cerca una sede" id="workplace" shadow wire:model.live="workplace"
-                    placeholder="Seleziona una sede" :options="$workplaces" option-label="name" option-value="name" />
+                    placeholder="Seleziona una sede" :options="$workplaces" option-label="name" option-value="id" />
                 <x-select label="Cerca una posizione" id="level" shadow wire:model.live="level"
-                    placeholder="Seleziona una posizione" :options="$levels" option-label="name" option-value="name" />
+                    placeholder="Seleziona una posizione" :options="$levels" option-label="name" option-value="id" />
             </div>
             <div class="flex justify-end gap-2 mt-5">
                 <x-button type="button" wire:click="editDeveloper" black label="Modifica"

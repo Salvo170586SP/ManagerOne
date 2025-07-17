@@ -24,7 +24,7 @@ class Step1 extends Form
     protected $rules = [
         'name' => 'required',
         'surname' => 'required',
-        'phone' => 'required',
+        'phone' => 'required|numeric',
         'city' => 'required',
         'email' => 'required|email',
         'img_url' => 'nullable',
@@ -34,6 +34,7 @@ class Step1 extends Form
         'name.required' => 'Il campo è obbligatorio',
         'surname.required' => 'Il campo è obbligatorio',
         'phone.required' => 'Il campo è obbligatorio',
+        'phone.numeric' => 'Il campo deve contenere solo numeri',
         'city.required' => 'Il campo è obbligatorio',
         'email.required' => 'Il campo è obbligatorio',
     ];

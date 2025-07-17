@@ -1,9 +1,16 @@
 <div class="-mt-2">
-    <h2 class="text-xl font-bold mb-5">Dettagli Tasks</h2>
+    <div class="flex justify-between items-center h-20 -mt-7">
+        <h2 class="text-xl font-bold">Dettagli Tasks</h2>
+        <div x-data="{ showMessage: true }">
+            @if (session('message'))
+                <x-alert title="{{ session('message') }}" positive class="bg-green-600 text-white" x-init="setTimeout(() => showMessage = false, 5000)"
+                    x-show="showMessage" />
+            @endif
+        </div>
+    </div>
+
     <div class="text-black w-full">
-
         <div class="w-full flex gap-3 mb-3">
-
             <div class="bg-white rounded-lg border border-gray-300 p-3 w-[350px] flex flex-col justify-center">
                 <div class="mb-3">
                     <div class="font-medium text-sm">Nome Progetto:</div>
@@ -25,10 +32,10 @@
                 <div class="mb-3">
                     <div class="font-medium text-sm">Cliente Proprietario:</div>
                     <div class="text-sm uppercase mt-1">
-                        @if($project->client)
-                        {{ $project->client->fullName() }}
+                        @if ($project->client)
+                            {{ $project->client->fullName() }}
                         @else
-                        -
+                            -
                         @endif
                     </div>
                 </div>
@@ -149,8 +156,8 @@
                                                     @isset($task->developer)
                                                         <x-button wire:navigate
                                                             href="/developers/{{ $task->developer->id }}"
-                                                            label="{{ $task->developer->fullname() }}" class="border"
-                                                            black flat />
+                                                            label="{{ $task->developer->fullname() }}" class="border" black
+                                                            flat />
                                                     @endisset
                                                 </div>
                                             </td>

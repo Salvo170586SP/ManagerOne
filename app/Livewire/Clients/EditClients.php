@@ -17,7 +17,22 @@ class EditClients extends Component
     public $img_url;
     public $phone;
     public $city;
-    public $password = "password";
+
+    protected $rules = [
+        'name' => 'required',
+        'surname' => 'required',
+        'img_url' => 'nullable',
+        'phone' => 'required|numeric',
+        'city' => 'required',
+    ];
+
+    protected $messages = [
+        'name.required' => 'Il campo è obbligatorio',
+        'surname.required' => 'Il campo è obbligatorio',
+        'phone.required' => 'Il campo è obbligatorio',
+        'phone.numeric' => 'Il campo accetta solo mnumeri',
+        'city.required' => 'Il campo è obbligatorio',
+    ];
 
     public function mount(User $client)
     {
@@ -32,14 +47,6 @@ class EditClients extends Component
         }
     }
 
-    protected $rules = [
-        'name' => 'required',
-        'surname' => 'required',
-        'img_url' => 'nullable',
-        'phone' => 'required',
-        'city' => 'required',
-        'password' => 'nullable',
-    ];
 
     public function editClient()
     {
@@ -64,7 +71,6 @@ class EditClients extends Component
             'img_url' => $url,
             'phone' => $this->phone,
             'city' => $this->city,
-            'password' => $this->password,
         ]);
 
         $this->redirect('/clients', navigate: true);

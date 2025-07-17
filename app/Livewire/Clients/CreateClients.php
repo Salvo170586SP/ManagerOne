@@ -24,11 +24,20 @@ class CreateClients extends Component
         'name' => 'required',
         'surname' => 'required',
         'img_url' => 'nullable',
-        'phone' => 'required',
+        'phone' => 'required|numeric',
         'city' => 'required',
         'type' => 'required',
         'email' => 'required',
-        'password' => 'required',
+    ];
+
+    protected $messages = [
+        'name.required' => 'Il campo è obbligatorio',
+        'surname.required' => 'Il campo è obbligatorio',
+        'phone.required' => 'Il campo è obbligatorio',
+        'phone.numeric' => 'Il campo accetta solo mnumeri',
+        'city.required' => 'Il campo è obbligatorio',
+        'type.required' => 'Il campo è obbligatorio',
+        'email.required' => 'Il campo è obbligatorio',
     ];
 
     public function submit()

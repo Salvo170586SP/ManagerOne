@@ -1,11 +1,6 @@
 <div class="-mt-2">
     <div class="flex justify-between items-center">
         <h2 class="text-xl font-bold mb-5">Gestione Tasks</h2>
-        @if (session('message'))
-            <div class="bg-gray-200 border dark:bg-[#474747] dark:border-0 mx-8 rounded relative mb-4">
-                <span class="block p-5">{{ session('message') }}</span>
-            </div>
-        @endif
     </div>
 
     <div class="bg-white h-full p-6 border border-gray-300 rounded-lg">

@@ -34,6 +34,8 @@ class IndexTeams extends Component
             ]);
         }
 
+        session()->flash('message', "Team eliminato con successo");
+
         return $this->redirect('/teams', navigate: true);
     }
 
@@ -49,6 +51,8 @@ class IndexTeams extends Component
                 'member_name' => $member->name,
             ]);
         }
+
+        session()->flash('message', "Membro eliminato con successo");
 
         return $this->redirect('/teams', navigate: true);
     }

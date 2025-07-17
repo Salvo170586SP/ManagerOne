@@ -45,16 +45,17 @@ class CreateTeam extends Component
         $team->pms()->attach($this->pm_id);
         $team->developers()->attach($this->developer_ids);
 
-        session()->flash('message', 'Team creato con successo');
-
+        
         Log::info('Team creato', [
             'id' => $team->id,
             'name' => $team->name,
             'is_available' => $team->is_available,
         ]);
-
+        
         $this->reset();
-
+        
+        session()->flash('message', 'Team creato con successo');
+        
         $this->redirect('/teams', navigate: true);
     }
 

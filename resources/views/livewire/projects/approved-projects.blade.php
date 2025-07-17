@@ -1,14 +1,15 @@
 <div class="-mt-2">
-    <div class="flex justify-between items-center">
-        <h2 class="text-xl font-bold mb-5">Progetti Approvati</h2>
-        @if (session('message'))
-            <div class="bg-gray-200 border dark:bg-[#474747] dark:border-0 mx-8 rounded relative mb-4">
-                <span class="block p-5">{{ session('message') }}</span>
-            </div>
-        @endif
+    <div class="flex justify-between items-center h-20 -mt-7">
+        <h2 class="text-xl font-bold">Progetti Approvati</h2>
+        <div x-data="{ showMessage: true }">
+            @if (session('message'))
+                <x-alert title="{{ session('message') }}" positive class="bg-green-600 text-white" x-init="setTimeout(() => showMessage = false, 5000)"
+                    x-show="showMessage" />
+            @endif
+        </div>
     </div>
 
-    <div class="bg-white rounded-lg border border-gray-300 h-[calc(100vh-13rem)] overflow-y-auto p-6">
+    <div class="bg-white rounded-lg border border-gray-300 {{-- h-[calc(100vh-13rem)] --}} overflow-y-auto p-6">
         <div class="flex justify-between items-center">
             <div class="w-[350px] h-[32px]">
                 <x-input type="search" wire:model.live="search" placeholder="Cerca.." shadow="false" />
@@ -89,8 +90,8 @@
                     </thead>
                     <tbody class="bg-white divide-y text-sm divide-gray-200">
                         @foreach ($projects as $project)
-                            <tr wire:key="projectApproved-{{ $project->id }}-{{  str()->random(10) }}">
-                                <td class="px-6 py-4 whitespace-nowrap">
+                            <tr wire:key="projectApproved-{{ $project->id }}-{{ str()->random(10) }}">
+                                <td class="px-6 py-4 font-bold whitespace-nowrap">
                                     @if ($project->IdProject)
                                         #PR-{{ $project->IdProject }}
                                     @else
