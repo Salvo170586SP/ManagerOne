@@ -91,3 +91,28 @@ select:focus[data-flux-control] {
     color: #f3f3f3 !important;
     background: #272727 !important;
 }
+ 
+/* Forza il colore delle label degli input e delle checkbox di Flux a nero, anche in dark mode */
+[data-flux-label], [data-flux-checkbox-label] {
+    color: #000 !important;
+ }
+
+/* Forza i bordi degli input a grigio chiaro anche in dark mode */
+[data-flux-input] input {
+    border-color: #d1d5db !important; /* Tailwind gray-300 */
+    background-color: #fff !important;
+    color: #000 !important;
+}
+
+/* Forza il background e i bordi del bottone di login a colori chiari anche in dark mode */
+[data-flux-button] {
+    background-color: #000000 !important; /* Tailwind blue-600 */
+    border-color: #181818 !important;
+    color: #fff !important;
+}
+[data-flux-button]:hover {
+    background-color: #181818 !important; /* Tailwind blue-700 */
+    border-color: #1d1d1d !important;
+    cursor: pointer;
+}
+ 

@@ -38,6 +38,6 @@ new #[Layout('components.layouts.auth')] class extends Component {
 
     <div class="space-x-1 rtl:space-x-reverse text-center text-sm text-zinc-400">
         {{ __('O ritorna al ') }}
-        <flux:link :href="route('login')" wire:navigate>{{ __('log in') }}</flux:link>
+        <flux:link :href="route('login')" class="text-black" wire:navigate>{{ __('log in') }}</flux:link>
     </div>
 </div>

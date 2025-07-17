@@ -77,18 +77,18 @@ new #[Layout('components.layouts.auth')] class extends Component {
     <!-- Session Status -->
     <x-auth-session-status class="text-center" :status="session('status')" />
 
-    <form wire:submit="login" class="flex flex-col gap-6">
+    <form wire:submit="login" class="flex flex-col gap-6 login-form">
         <!-- Email Address -->
         <flux:input wire:model="email" :label="__('Email')" type="email" required autofocus autocomplete="email"
-            placeholder="email@example.com" />
+            placeholder="email@example.com"  />
 
         <!-- Password -->
         <div class="relative">
-            <flux:input wire:model="password" :label="__('Password')" type="password" required
+            <flux:input wire:model="password" :label="__('Password')" type="password" required 
                 autocomplete="current-password" :placeholder="__('Password')" viewable />
 
             @if (Route::has('password.request'))
-                <flux:link class="absolute end-0 top-0 text-sm" :href="route('password.request')" wire:navigate>
+                <flux:link class="absolute end-0 top-0 text-sm text-black" :href="route('password.request')" wire:navigate>
                     {{ __('Hai dimenticato la password?') }}
                 </flux:link>
             @endif
@@ -103,9 +103,9 @@ new #[Layout('components.layouts.auth')] class extends Component {
     </form>
 
     @if (Route::has('register'))
-        <div class="space-x-1 rtl:space-x-reverse text-center text-sm text-zinc-600 dark:text-zinc-400">
+        <div class="space-x-1 rtl:space-x-reverse text-center text-sm text-zinc-600">
             {{ __('Non hai un account?') }}
-            <flux:link :href="route('register')" class="ms-1" wire:navigate>{{ __('Registrati') }}</flux:link>
+            <flux:link :href="route('register')" class="ms-1 text-black" wire:navigate>{{ __('Registrati') }}</flux:link>
         </div>
     @endif
 </div>
