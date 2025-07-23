@@ -13,7 +13,7 @@ class Project extends Model
         'name',
         'description',
         'preventive',
-        'is_available',
+        'is_approved',
         'team_id',
         'state',
         'end_date',

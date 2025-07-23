@@ -20,7 +20,7 @@ class EditProjects extends Component
     public $description;
     public $preventive;
     public $end_date;
-    public $is_available = false;
+    public $is_approved;
 
     protected $rules = [
         'name' => 'required',
@@ -48,7 +48,7 @@ class EditProjects extends Component
         $this->description = $project->description;
         $this->preventive = $project->preventive;
         $this->end_date = $project->end_date;
-        $this->is_available = (bool) $project->is_available;
+        $this->is_approved =  $project->is_approved;
     }
 
     public function editProject()
@@ -60,10 +60,10 @@ class EditProjects extends Component
             'description' => $this->description,
             'end_date' => $this->end_date,
             'preventive' => $this->preventive ?? 0.00,
-            'is_available' => $this->is_available,
+            'is_approved' => $this->is_approved,
         ]);
 
-        if ($this->project->is_available == true) {
+        if ($this->project->is_approved == 'approved') {
             $invoice =  Invoce::create([
                 'admin_id' => Auth::id(),
                 'client_id' => $this->project->client_id,
@@ -141,6 +141,7 @@ class EditProjects extends Component
 
     public function render()
     {
-        return view('livewire.projects.edit-projects');
+        $typesApproved = config('managerOne.approved_types_project');
+        return view('livewire.projects.edit-projects', compact('typesApproved'));
     }
 }

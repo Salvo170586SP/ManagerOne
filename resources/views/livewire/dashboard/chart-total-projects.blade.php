@@ -15,9 +15,9 @@
         let isEmptyChart = false;
 
         if (hasProjects) {
-            data = [@js($approved), @js($delivered), @js($notApproved)];
-            backgroundColor = ['#22c55e', '#ef4484', '#FF0000'];
-            labels = ['Approvati', 'Consegnati', 'Non approvati'];
+            data = [@js($approved), @js($delivered), @js($notApproved),@js($pendingApproval)];
+            backgroundColor = ['#22c55e', '#ef4484', '#FF0000','#FFFF00'];
+            labels = ['Approvati', 'Consegnati', 'Non approvati','In approvazione'];
         } else {
             data = [1];
             backgroundColor = ['#e5e7eb'];

@@ -1,15 +1,7 @@
 <div class="-mt-2 relative" x-data="{ isOpen: true }">
     <div class="flex justify-between items-center h-20 -mt-7">
-        <h2 class="text-xl font-bold">Progetti</h2>
-        <div x-data="{ show: true }">
-            @if (session('message'))
-            <x-alert title="{{ session('message') }}" positive class="bg-green-600 text-white"
-                x-init="setTimeout(() => show = false, 5000)" x-show="show" />
-            @endif
-        </div>
+        <h2 class="text-xl font-bold">Progetti Non Approvati</h2>
     </div>
-
-
     <div class="bg-white rounded-lg border border-gray-300 overflow-y-auto p-6">
         <div class="flex justify-between items-center">
             <div class="w-[350px] h-[32px]">
@@ -17,21 +9,11 @@
             </div>
 
             <div class="flex justify-between items-center">
-                <div class="me-5 h-[32px] flex justify-between items-center">
+                <div class="h-[32px] flex justify-between items-center">
                     <span class="text-sm whitespace-nowrap me-2">Data creazione:</span>
                     <x-datetime-picker without-time wire:model.live="searchDate" placeholder="Cerca per data"
                         shadow="false" />
                 </div>
-
-                <div class="me-5 h-[32px] flex justify-between items-center">
-                    <span class="text-sm whitespace-nowrap me-2">Cerca per stato:</span>
-                    <x-select shadow="false" placeholder="Seleziona Stato" wire:model.live="searchAvailable"
-                        :options="[['label' => 'Approvato', 'value' => 1], ['label' => 'Da Approvare', 'value' => 0]]"
-                        option-label="label" option-value="value" />
-                </div>
-
-                <x-button icon="plus" black label="Aggiungi Progetto" class="font-bold w-[200px] h-[32px]" wire:navigate
-                    href="/projects/create" />
             </div>
         </div>
 
@@ -39,17 +21,18 @@
             <div class="flex justify-between">
                 <div class="bg-slate-500 w-[50px] h-[50px] rounded-full flex justify-center items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="white" class="size-7">
+                        stroke="currentColor" class="size-7 text-white">
                         <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5m.75-9 3-3 2.148 2.148A12.061 12.061 0 0 1 16.5 7.605" />
+                            d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                     </svg>
+
                 </div>
                 <div>
                     <div class="text-xl text-end font-bold">
-                        {{ $projects->count() }}
+                        {{ $projectsNotApproved->count() }}
                     </div>
                     <div class="text-sm">
-                        Numero Progetti
+                        Numero Progetti Non Approvati
                     </div>
                 </div>
             </div>
@@ -58,8 +41,8 @@
 
         <div {{-- class="overflow-x-auto" --}}>
 
-            @if ($projects->count() > 0)
-            <table @if ($pollCondition) wire:poll.2s @endif class="min-w-full divide-y border divide-gray-200">
+            @if ($projectsNotApproved->count() > 0)
+            <table class="min-w-full divide-y border divide-gray-200">
                 <thead>
                     <tr>
                         <th scope="col"
@@ -72,12 +55,6 @@
                             class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
                             Cliente
                         </th>
-                        @role('super_admin')
-                        <th scope="col"
-                            class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
-                            Note
-                        </th>
-                        @endrole
                         <th scope="col"
                             class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
                             Preventivo</th>
@@ -99,8 +76,8 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200 text-sm">
-                    @foreach ($projects as $project)
-                    <tr wire:key="project-{{ $project->id }}-{{ str()->random(10) }}">
+                    @foreach ($projectsNotApproved as $project)
+                    <tr wire:key="projectsNotApproved-{{ $project->id }}-{{ str()->random(10) }}">
                         <td class="px-6 py-4 font-bold whitespace-nowrap">
                             @if ($project->IdProject)
                             #PR-{{ $project->IdProject }}
@@ -113,16 +90,6 @@
                             <x-button wire:navigate href="/clients/{{ $project->client->id }}"
                                 label="{{ $project->client->fullname() }}" class="border" black flat />
                         </td>
-                        @role('super_admin')
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <x-button flat blue icon="document-text" class="relative"
-                                wire:click="openNotesSidebar({{ $project->id }})" title="Visualizza Note">
-                                <div
-                                    class="absolute right-2 top-0  rounded-full bg-blue-500 h-[15px] w-[15px] text-center text-xs font-bold text-white">
-                                    {{ $project->notes->count() }}</div>
-                            </x-button>
-                        </td>
-                        @endrole
                         <td class="px-6 py-4 whitespace-nowrap">{{ $project->preventive }} €</td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="flex justify-center items-center font-medium">
@@ -134,13 +101,9 @@
                                 <div class="bg-yellow-200 rounded-full border border-yellow-800 text-yellow-800 px-5">
                                     In Approvazione
                                 </div>
-                                @elseif($project->is_approved == 'not_approved')
+                                @else
                                 <div class="bg-red-600 rounded-full  border border-red-800 text-white px-5">
                                     Non Approvato
-                                </div>
-                                @else
-                                <div class="bg-gray-200 rounded-full border border-gray-800 text-gray-800 px-5">
-                                    In Attesa
                                 </div>
                                 @endif
                             </div>
@@ -150,34 +113,6 @@
                         <td class="px-6 py-4 whitespace-nowrap text-sm">
                             <div class="flex justify-center">
                                 <x-button flat black icon="eye" wire:navigate href="/projects/{{ $project->id }}" />
-                                @role('super_admin')
-                                <x-button flat blue icon="pencil" wire:navigate
-                                    href="/projects/{{ $project->id }}/edit" />
-                                <x-button flat red icon="trash"
-                                    x-on:click="$openModal('simpleModal-{{ $project->id }}')" />
-                                <x-modal name="simpleModal-{{ $project->id }}" blur="sm" align="center">
-                                    <x-card shadow="xl">
-                                        <div
-                                            class="flex items-center justify-center py-2 bg-red-400 text-white rounded-md mb-2 text-xl">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                stroke-width="1.5" stroke="currentColor" class="size-6 me-2">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
-                                            </svg>
-                                            Attenzione!
-                                        </div>
-                                        <p class="text-base">
-                                            Sei sicuro di eliminare definitivamente il progetto?
-                                        </p>
-
-                                        <x-slot name="footer" class="flex justify-end gap-x-4 font-medium">
-                                            <x-button black label="Annulla" x-on:click="close" />
-                                            <x-button red label="Elimina"
-                                                wire:click="deleteProject({{ $project->id }})" />
-                                        </x-slot>
-                                    </x-card>
-                                </x-modal>
-                                @endrole
                             </div>
                         </td>
                     </tr>
@@ -185,7 +120,7 @@
                 </tbody>
             </table>
             <div class="py-3">
-                {{ $projects->links('vendor.pagination.tailwind') }}
+                {{ $projectsNotApproved->links('vendor.pagination.tailwind') }}
             </div>
             @else
             <div class="text-sm text-center font-medium italic text-gray-400">
@@ -194,9 +129,4 @@
             @endif
         </div>
     </div>
-
-    <!-- Componente Sidebar per le Note -->
-    <x-notes-sidebar wire:model="showDrawer2" :notes="$selectedProjectNotes" :item="$selectedProject"
-        :edit-note-id="$editNoteId" onClose="closeNotesSidebar" />
-
 </div>

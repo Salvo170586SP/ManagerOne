@@ -16,13 +16,21 @@
 
                 <div class="font-medium text-sm">Stato Approvazione:</div>
                 <div class="font-medium rounded text-sm text-center py-1 mt-1">
-                    @if ($project->is_available)
-                    <div class="bg-green-600 rounded-full text-white">
+                    @if ($project->is_approved == 'approved')
+                    <div class="bg-green-600 rounded-full  border border-green-800 text-green-50 px-5">
                         Approvato
                     </div>
+                    @elseif($project->is_approved == 'pending_approval')
+                    <div class="bg-yellow-200 rounded-full border border-yellow-800 text-yellow-800 px-5">
+                        In Approvazione
+                    </div>
+                    @elseif($project->is_approved == 'not_approved')
+                    <div class="bg-red-600 rounded-full  border border-red-800 text-white px-5">
+                        Non Approvato
+                    </div>
                     @else
-                    <div class="bg-red-600 rounded-full text-white">
-                        Da Approvare
+                    <div class="bg-gray-200 rounded-full border border-gray-800 text-gray-800 px-5">
+                        In Attesa
                     </div>
                     @endif
                 </div>

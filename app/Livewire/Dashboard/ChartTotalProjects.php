@@ -10,6 +10,7 @@ class ChartTotalProjects extends Component
     public $totalProjects;
     public $approved;
     public $notApproved;
+    public $pendingApproval;
     public $delivered;
     public $hasProjects;
 
@@ -17,10 +18,11 @@ class ChartTotalProjects extends Component
     public function mount()
     {
         $this->totalProjects = Project::count();
-        $this->approved = Project::where('is_available', 1)->count();
-        $this->notApproved = Project::where('is_available', 0)->count();
+        $this->approved = Project::where('is_approved', 'approved')->count();
+        $this->notApproved = Project::where('is_approved', 'not_approved')->count();
+        $this->pendingApproval = Project::where('is_approved', 'pending_approval')->count();
         $this->delivered = Project::where('state', 'delivered')->count();
-        $this->hasProjects = ($this->approved + $this->notApproved) > 0;
+        $this->hasProjects = ($this->approved + $this->notApproved + $this->pendingApproval) > 0;
     }
 
     public function render()

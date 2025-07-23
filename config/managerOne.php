@@ -73,7 +73,7 @@ return [
         [
             'id' => 'planning',
             'name' => 'In Progettazione',
-            'color' => 'bg-yellow-100 border border-yellow-300 text-yellow-700' ,
+            'color' => 'bg-yellow-100 border border-yellow-300 text-yellow-700',
         ],
         [
             'id' => 'pending',
@@ -89,6 +89,23 @@ return [
             'id' => 'delivered',
             'name' => 'Consegnato',
             'color' => 'bg-gray-100 border border-gray-300 text-gray-700',
+        ]
+    ],
+    'approved_types_project' => [
+        [
+            'id' => 'pending_approval',
+            'name' => 'In Approvazione',
+            'color' => 'bg-orange-100 border border-orange-300 text-orange-700',
+        ],
+        [
+            'id' => 'approved',
+            'name' => 'Approvato',
+            'color' => 'bg-yellow-100 border border-yellow-300 text-yellow-700',
+        ],
+        [
+            'id' => 'not_approved',
+            'name' => 'Non Approvato',
+            'color' => 'bg-red-100 border border-red-300 text-red-700',
         ]
     ],
     'states_task' => [

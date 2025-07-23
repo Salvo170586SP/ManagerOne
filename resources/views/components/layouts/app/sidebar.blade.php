@@ -39,6 +39,9 @@
                 <flux:navlist.item icon="shield-check" :href="route('approved-projects.index')"
                     :current="request()->routeIs('approved-projects.index')" wire:navigate>Progetti Approvati
                 </flux:navlist.item>
+                <flux:navlist.item icon="x-circle" :href="route('not-approved-projects.index')"
+                    :current="request()->routeIs('not-approved-projects.index')" wire:navigate>Progetti Non Approvati
+                </flux:navlist.item>
                 @role('super_admin')
                 <flux:navlist.item icon="lock-closed" :href="route('delivered-projects.index')"
                     :current="request()->routeIs('delivered-projects.index')" wire:navigate>Progetti Consegnati

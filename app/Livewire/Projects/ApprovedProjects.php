@@ -252,7 +252,7 @@ class ApprovedProjects extends Component
     public function render()
     {
         $user = Auth::user();
-        $query = Project::where('is_available', true);
+        $query = Project::where('is_approved', 'approved');
 
         if ($user->hasRole('developer')) {
             $developerTeamIds = $user->teams()->pluck('teams.id')->toArray();
