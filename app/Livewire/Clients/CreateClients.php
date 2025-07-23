@@ -6,6 +6,8 @@ use App\Jobs\GenerateIdClient;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class CreateClients extends Component
 {
@@ -66,6 +68,13 @@ class CreateClients extends Component
         session()->flash('message', 'Cliente creato con successo');
 
         $this->reset();
+
+        Log::info('Cliente aggiunto', [
+            'user_id' => Auth::id(),
+            'client_id' => $client->id,
+            'client_name' => $client->name,
+            'client_surname' => $client->surname,
+        ]);
 
         $this->redirect('/clients', navigate: true);
     }

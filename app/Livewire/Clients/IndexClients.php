@@ -7,6 +7,9 @@ use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+
 
 class IndexClients extends Component
 {
@@ -50,6 +53,14 @@ class IndexClients extends Component
             }
 
             $client->delete();
+
+
+            Log::info('Cliente eliminato', [
+                'user_id' => Auth::id(),
+                'client_id' => $client->id,
+                'client_name' => $client->name,
+                'client_surname' => $client->surname,
+            ]);
         }
 
         return $this->redirect('/clients', navigate: true);

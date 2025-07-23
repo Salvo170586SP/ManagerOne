@@ -43,7 +43,7 @@ class IndexLogs extends Component
             $lines = array_slice(file($logPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES), -1000); // prendo più righe per sicurezza
             // Filtro solo i log personalizzati
             $customLogs = array_filter($lines, function ($line) {
-                return str_contains($line, 'Progetto ') || str_contains($line, 'Task ') || str_contains($line, 'Developer ') || str_contains($line, 'Team ') || str_contains($line, 'Evento ');
+                return str_contains($line, 'Cliente') || str_contains($line, 'Progetto ') || str_contains($line, 'Task ') || str_contains($line, 'Developer ') || str_contains($line, 'Team ') || str_contains($line, 'Evento ');
             });
         }
 

@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class EditClients extends Component
 {
@@ -71,6 +73,13 @@ class EditClients extends Component
             'img_url' => $url,
             'phone' => $this->phone,
             'city' => $this->city,
+        ]);
+
+        Log::info('Cliente modificato', [
+            'user_id' => Auth::id(),
+            'client_id' => $this->client->id,
+            'client_name' => $this->client->name,
+            'client_surname' => $this->client->surname,
         ]);
 
         $this->redirect('/clients', navigate: true);
