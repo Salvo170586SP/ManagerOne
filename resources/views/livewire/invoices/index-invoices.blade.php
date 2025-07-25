@@ -52,45 +52,45 @@
 
 
         @if ($invoices->count() > 0)
-            <div class="table-scroll-x">
+            <div class="{{-- table-scroll-x --}}">
                 <table @if ($pollCondition) wire:poll.2s @endif
                     class="min-w-full divide-y border divide-gray-200">
                     <thead>
                         <tr>
                             <th scope="col"
-                                class="sticky left-0 sticky-col-left px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                class="sticky left-0 px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase">
                                 ID</th>
                             <th scope="col"
-                                class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase">
                                 Nome</th>
                             <th scope="col"
-                                class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase">
                                 Nome Cliente
                             </th>
                             <th scope="col"
-                                class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase">
                                 Progetto
                             </th>
                             <th scope="col"
-                                class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase">
                                 Prezzo</th>
                             <th scope="col"
-                                class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase">
                                 Stato Pagamento
                             </th>
                             <th scope="col"
-                                class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase">
                                 Data
                                 Creazione</th>
                             <th scope="col"
-                                class="sticky right-0 sticky-col-right px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                                class="sticky right-0 px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase">
                             </th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y text-sm divide-gray-200">
                         @foreach ($invoices as $invoice)
                             <tr wire:key="invoice-{{ $invoice->id }}-{{ str()->random(10) }}">
-                                <td class="sticky left-0 font-bold sticky-col-left px-6 py-4 whitespace-nowrap">
+                                <td class="font-bold px-6 py-4 whitespace-nowrap">
                                     @if ($invoice->IdInvoice)
                                         #IN-{{ $invoice->IdInvoice }}
                                     @else
@@ -108,20 +108,20 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $invoice->preventive }} €</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="flex justify-center items-center">
+                                    <div class="flex justify-center items-center font-medium">
                                         @if ($invoice->is_available)
-                                            <div class="bg-green-500 rounded-full text-white px-3">
-                                                Pagato
+                                            <div class="bg-green-500 rounded-full text-white px-3 py-1">
+                                                Pagata
                                             </div>
                                         @else
-                                            <div class="bg-red-600 rounded-full text-white px-3">
-                                                Non pagato
+                                            <div class="bg-red-600 rounded-full text-white px-3 py-1">
+                                                Non pagata
                                             </div>
                                         @endif
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $invoice->createDate() }}</td>
-                                <td class="sticky right-0 sticky-col-right px-6 py-4 whitespace-nowrap text-sm">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
                                     <div class="flex justify-center gap-1">
                                         <x-button flat gray icon="arrow-down-tray" title="scarica fattura"
                                             wire:click="downloadInvoicePdf({{ $invoice->id }})" />

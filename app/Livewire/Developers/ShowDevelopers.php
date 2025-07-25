@@ -8,6 +8,7 @@ use App\Models\Task;
 use Livewire\Component;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
 
@@ -33,17 +34,17 @@ class ShowDevelopers extends Component
     {
         $this->developer = $developer;
         $this->taskDates = collect();
-        
+
         // Initialize taskDates with current completed_at values
         foreach ($developer->tasks as $task) {
             $this->taskDates[$task->id] = $task->completed_at ? $task->completed_at->format('Y-m-d') : '';
         }
     }
-   
+
     public function updatedTaskDates($value, $key)
     {
         $task = Task::find($key);
-        
+
         if ($task) {
             $completed_at = $value ? \Carbon\Carbon::parse($value)->startOfDay() : null;
 
@@ -73,7 +74,7 @@ class ShowDevelopers extends Component
         $color = $categoryData['color'] ?? 'bg-gray-300';
         return $color;
     }
-   
+
     public function getNameCategory($category)
     {
         $categoryData = collect(config('managerOne.categories'))->firstWhere('id', $category);
@@ -87,21 +88,21 @@ class ShowDevelopers extends Component
         $color = $levelData['color'] ?? 'bg-gray-300';
         return $color;
     }
-  
+
     public function getNameLevel($level)
     {
         $levelData = collect(config('managerOne.levels'))->firstWhere('id', $level);
         $name = $levelData['name'] ?? '-';
         return $name;
     }
-   
+
     public function getColorWorkplace($workplace)
     {
         $workplaceData = collect(config('managerOne.workplaces'))->firstWhere('id', $workplace);
         $color = $workplaceData['color'] ?? 'bg-gray-300';
         return $color;
     }
-   
+
     public function getNameWorkplace($workplace)
     {
         $workplaceData = collect(config('managerOne.workplaces'))->firstWhere('id', $workplace);
@@ -126,7 +127,7 @@ class ShowDevelopers extends Component
 
         return $taskData['color'] ?? 'bg-gray-300';
     }
-   
+
     public function getStatusNameTask($priority)
     {
         $taskData = collect(config('managerOne.states_task'))->first(function ($item) use ($priority) {
@@ -307,6 +308,33 @@ class ShowDevelopers extends Component
         $task = Task::findOrFail($taskId);
         $this->selectedTask = $task;
         $this->selectedTaskNotes = $task->notes;
+    }
+
+    public function deleteTask($taskId)
+    {
+        // Trova il progetto
+        $task = Task::findOrFail($taskId);
+        /*     dd($task); */
+
+        if ($task) {
+            $task->delete();
+        }
+
+        Log::info('Task eliminata', [
+            'id' => $task->id,
+            'project_id' => $task->project_id,
+            'developer_id' => $task->developer_id,
+            'title' => $task->title,
+            'description' => $task->description,
+            'status' => $task->status,
+            'priority' => $task->priority,
+            'due_date' => $task->due_date
+        ]);
+        session()->flash('message', "Task eliminata con successo");
+
+        $developer = User::findOrFail($this->developer->id);
+
+        return $this->redirect("/developers/$developer->id", navigate: true);
     }
 
     public function render()
