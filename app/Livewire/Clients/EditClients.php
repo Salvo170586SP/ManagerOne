@@ -8,6 +8,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\On;
 
 class EditClients extends Component
 {
@@ -56,7 +57,7 @@ class EditClients extends Component
         $url = $this->client->img_url;  // MantieneF l'URL esistente come default
 
         // Se è stata caricata una nuova immagine
-        if ($this->img_url && !is_string($this->img_url)) { 
+        if ($this->img_url && !is_string($this->img_url)) {
             // Se esiste già un'immagine, la eliminiamo
             if ($this->client->img_url) {
                 Storage::disk('public')->delete($this->client->img_url);
@@ -82,8 +83,24 @@ class EditClients extends Component
             'client_surname' => $this->client->surname,
         ]);
 
+        session()->flash('message', 'Cliente aggiornato con successo');
+
         $this->redirect('/clients', navigate: true);
     }
+
+    public function deleteImg()
+    {
+        if ($this->client->img_url) {
+            Storage::disk('public')->delete($this->client->img_url);
+            $this->client->img_url = null;
+            $this->client->save();
+            $this->img_url = null;
+            $this->dispatch('img-deleted');
+        }
+
+        session()->flash('message', 'Immagine del cliente eliminata con successo');
+    }
+
     public function render()
     {
         return view('livewire.clients.edit-clients');

@@ -67,7 +67,7 @@
                 <x-slot name="trigger">
                     <x-button flat slate>
                         @isset(auth()->user()->img_url)
-                            <figure class="w-[40px] h-[40px] border">
+                            <figure class="w-[40px] h-[40px] border-full">
                                 <img src="{{ asset('storage/' . auth()->user()->img_url) }}"
                                     class="w-full h-full rounded-full border bg-white  object-cover object-top"
                                     alt="{{ auth()->user()->fullName() }}">

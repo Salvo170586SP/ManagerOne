@@ -67,6 +67,35 @@ new class extends Component {
             'imgUrl' => $user->img_url ? asset('storage/' . $user->img_url) : null,
         ]);
     }
+    
+    public function deleteImage()
+    {
+        try {
+            $user = Auth::user();
+            if ($user->img_url) {
+                // Elimina il file fisico
+                Storage::disk('public')->delete($user->img_url);
+                
+                // Aggiorna il record nel database
+                $user->update([
+                    'img_url' => null
+                ]);
+                
+                // Resetta la variabile locale
+                $this->img_url = null;
+                
+                $this->dispatch('profile-updated', [
+                    'imgUrl' => $user->img_url ? asset('storage/' . $user->img_url) : null,
+                ]);
+                session()->flash('message', 'Immagine eliminata con successo');
+
+               /*  return $this->redirect('/developers', navigate: true); */
+            }
+        } catch (\Exception $e) {
+            Log::error('Errore durante l\'eliminazione dell\'immagine: ' . $e->getMessage());
+            session()->flash('error', 'Errore durante l\'eliminazione dell\'immagine');
+        }
+    }
 
     /**
      * Send an email verification notification to the current user.
@@ -97,25 +126,30 @@ new class extends Component {
 
                 <div class="flex flex-col justify-center items-center mb-10 mt-5">
                     <div class="text-sm text-gray-600">
-                        <div class="space-y-2">
-                            <figure
-                                class="w-[150px] h-[150px] flex items-center justify-center overflow-hidden border border-gray-300 bg-gray-50 rounded-full">
-                                @if ($img_url && !is_string($img_url))
-                                    {{-- Preview temporanea Livewire --}}
-                                    <img src="{{ $img_url->temporaryUrl() }}"
-                                        class="w-full h-full object-cover object-top bg-gray-100 dark:bg-[#4b4b4b] opacity-100"
-                                        alt="Anteprima immagine">
-                                @elseif ($img_url)
-                                    {{-- Immagine già salvata --}}
-                                    <img src="{{ asset('storage/' . $img_url) }}"
+                        <div class="space-y-2 relative">
+                            <figure class="w-[150px] h-[150px] flex items-center justify-center overflow-hidden border border-gray-300 bg-gray-50 rounded-full">
+                                @if ($img_url)
+                                    {{-- Mostra l'immagine (sia temporanea che salvata) --}}
+                                    <div class="absolute top-0 right-0">
+                                        <button type="button"
+                                            class="font-bold w-[30px] h-[30px] bg-red-400 hover:bg-red-500 text-white flex justify-center items-center cursor-pointer rounded-full"
+                                            wire:click="{{ is_string($img_url) ? 'deleteImage' : '$set(\'img_url\', null)' }}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke-width="1.5" stroke="currentColor" class="size-5">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <img src="{{ !is_string($img_url) ? $img_url->temporaryUrl() : asset('storage/' . $img_url) }}"
                                         class="w-full h-full object-cover object-top bg-gray-100 dark:bg-[#4b4b4b] opacity-100"
                                         alt="Immagine profilo">
                                 @else
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke-width="1.5" stroke="currentColor" class="size-10">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                                    </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="size-10">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                                </svg>
                                 @endif
                             </figure>
                         </div>
@@ -137,46 +171,46 @@ new class extends Component {
                                 Seleziona File
                             </div>
                             @error('img_url')
-                                <small class="text-red-500">{{ $message }}</small>
+                            <small class="text-red-500">{{ $message }}</small>
                             @enderror
                         </div>
                     </div>
                 </div>
 
-                <flux:input wire:model="name" :label="__('Nome')" type="text" required autofocus
-                    autocomplete="name" />
+                <flux:input wire:model="name" :label="__('Nome')" type="text" required autofocus autocomplete="name" />
 
                 <flux:input wire:model="surname" :label="__('Cognome')" type="text" required autofocus
                     autocomplete="surname" />
 
                 <div>
-                    <flux:input wire:model="email" :label="__('Email')" type="email" required
-                        autocomplete="email" />
+                    <flux:input wire:model="email" :label="__('Email')" type="email" required autocomplete="email" />
 
 
-                    @if (auth()->user() instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && !auth()->user()->hasVerifiedEmail())
-                        <div>
-                            <flux:text class="mt-4">
-                                {{ __('Your email address is unverified.') }}
+                    @if (auth()->user() instanceof \Illuminate\Contracts\Auth\MustVerifyEmail &&
+                    !auth()->user()->hasVerifiedEmail())
+                    <div>
+                        <flux:text class="mt-4">
+                            {{ __('Your email address is unverified.') }}
 
-                                <flux:link class="text-sm cursor-pointer"
-                                    wire:click.prevent="resendVerificationNotification">
-                                    {{ __('Click here to re-send the verification email.') }}
-                                </flux:link>
-                            </flux:text>
+                            <flux:link class="text-sm cursor-pointer"
+                                wire:click.prevent="resendVerificationNotification">
+                                {{ __('Click here to re-send the verification email.') }}
+                            </flux:link>
+                        </flux:text>
 
-                            @if (session('status') === 'verification-link-sent')
-                                <flux:text class="mt-2 font-medium !dark:text-green-400 !text-green-600">
-                                    {{ __('A new verification link has been sent to your email address.') }}
-                                </flux:text>
-                            @endif
-                        </div>
+                        @if (session('status') === 'verification-link-sent')
+                        <flux:text class="mt-2 font-medium !dark:text-green-400 !text-green-600">
+                            {{ __('A new verification link has been sent to your email address.') }}
+                        </flux:text>
+                        @endif
+                    </div>
                     @endif
                 </div>
 
                 <div class="flex items-center gap-4">
                     <div class="flex items-center justify-end">
-                        <flux:button variant="primary" type="submit" class="w-full cursor-pointer">{{ __('Salva') }}</flux:button>
+                        <flux:button variant="primary" type="submit" class="w-full cursor-pointer">{{ __('Salva') }}
+                        </flux:button>
                     </div>
 
                     <x-action-message class="me-3" on="profile-updated">

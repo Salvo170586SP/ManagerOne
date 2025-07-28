@@ -11,7 +11,7 @@ use Livewire\WithFileUploads;
 class EditDevelopers extends Component
 {
     use WithFileUploads;
-    
+
     public $developer;
 
     public $name;
@@ -26,26 +26,6 @@ class EditDevelopers extends Component
     public $categories;
     public $workplaces;
     public $levels;
-
-    public function mount(?User $developer)
-    {
-        $this->developer = $developer;
-        $this->categories = config('managerOne.categories');
-        $this->workplaces = config('managerOne.workplaces');
-        $this->levels = config('managerOne.levels');
-
-        $this->name = $this->developer->name;
-        $this->surname = $this->developer->surname;
-        $this->phone = $this->developer->phone;
-        $this->city = $this->developer->city;
-        $this->category = $this->developer->category;
-        $this->workplace = $this->developer->workplace;
-        $this->level = $this->developer->level;
-
-        if ($this->developer->img_url) {
-            $this->img_url = asset('storage/' . $this->developer->img_url);
-        }
-    }
 
     protected $rules = [
         'name' => 'required',
@@ -68,6 +48,52 @@ class EditDevelopers extends Component
         'workplace.required' => 'Il campo è obbligatorio',
         'level.required' => 'Il campo è obbligatorio',
     ];
+
+    public function mount(?User $developer)
+    {
+        $this->developer = $developer;
+        $this->categories = config('managerOne.categories');
+        $this->workplaces = config('managerOne.workplaces');
+        $this->levels = config('managerOne.levels');
+
+        $this->name = $this->developer->name;
+        $this->surname = $this->developer->surname;
+        $this->phone = $this->developer->phone;
+        $this->city = $this->developer->city;
+        $this->category = $this->developer->category;
+        $this->workplace = $this->developer->workplace;
+        $this->level = $this->developer->level;
+
+        if ($this->developer->img_url) {
+            $this->img_url = asset('storage/' . $this->developer->img_url);
+        }
+    }
+
+    public function deleteImage()
+    {
+        try {
+            if ($this->developer->img_url) {
+                // Elimina il file fisico
+                Storage::disk('public')->delete($this->developer->img_url);
+
+                // Aggiorna il record nel database
+                $this->developer->update([
+                    'img_url' => null
+                ]);
+
+                // Resetta la variabile locale
+                $this->img_url = null;
+
+                session()->flash('message', 'Immagine eliminata con successo');
+
+                return $this->redirect('/developers', navigate: true);
+            }
+        } catch (\Exception $e) {
+            Log::error('Errore durante l\'eliminazione dell\'immagine: ' . $e->getMessage());
+            session()->flash('error', 'Errore durante l\'eliminazione dell\'immagine');
+        }
+    }
+
 
     public function editDeveloper()
     {
@@ -98,7 +124,6 @@ class EditDevelopers extends Component
             'level' => $this->level,
         ]);
 
-
         Log::info('Developer modificato', [
             'id' => $this->developer->id,
             'name' => $this->developer->name,
@@ -118,6 +143,7 @@ class EditDevelopers extends Component
 
         return $this->redirect('/developers', navigate: true);
     }
+
     public function render()
     {
         return view('livewire.developers.edit-developers');
