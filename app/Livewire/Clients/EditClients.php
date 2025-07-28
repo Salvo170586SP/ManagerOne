@@ -56,7 +56,7 @@ class EditClients extends Component
         $url = $this->client->img_url;  // MantieneF l'URL esistente come default
 
         // Se è stata caricata una nuova immagine
-        if ($this->img_url && !is_string($this->img_url)) {
+        if ($this->img_url && !is_string($this->img_url)) { 
             // Se esiste già un'immagine, la eliminiamo
             if ($this->client->img_url) {
                 Storage::disk('public')->delete($this->client->img_url);
