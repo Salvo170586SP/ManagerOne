@@ -1,6 +1,6 @@
 <div class="-mt-2">
     <div class="flex justify-between items-center h-20 -mt-7">
-        <h2 class="text-xl font-bold">Developers</h2>
+        <h2 class="text-xl font-bold">Membri</h2>
         <div x-data="{ showMessage: true }">
             @if (session('message'))
                 <x-alert title="{{ session('message') }}" positive class="bg-green-600 text-white" x-init="setTimeout(() => showMessage = false, 5000)"
@@ -9,7 +9,7 @@
         </div>
     </div>
 
-    <div class="bg-white rounded-lg border border-gray-300 h-full {{--  h-[calc(100vh-13rem)] --}} overflow-y-auto p-6">
+    <div class="bg-white rounded-lg border border-gray-300 h-full overflow-y-auto p-6">
 
         <div class="flex justify-between items-center">
             <div class="w-[350px] h-[32px]">
@@ -28,7 +28,7 @@
                     <x-select shadow placeholder="Seleziona una città" wire:model.live="searchCity" :options="$cities" />
                 </div>
 
-                <x-button icon="plus" black label="Aggiungi Developer" class="font-bold w-[200px] h-[32px]"
+                <x-button icon="plus" black label="Aggiungi Membro" class="font-bold w-[200px] h-[32px]"
                     wire:navigate href="/developers/create" />
 
             </div>
@@ -164,6 +164,10 @@
                                             class="rounded-full font-medium text-sm px-4 py-1 {{ $this->getColorCategory($developer->category) }}">
                                             {{ $this->getNameCategory($developer->category) }}
                                         </div>
+                                    @else
+                                        <div class="rounded-full font-medium text-sm px-4 py-1 bg-gray-200 text-gray-500">
+                                            -
+                                        </div>
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $developer->createDate() }}</td>
@@ -213,7 +217,7 @@
             </div>
         @else
             <div class="text-sm text-center font-medium italic text-gray-400">
-                Non ci sono developers registrati
+                Non ci sono membri registrati
             </div>
         @endif
     </div>

@@ -5,27 +5,37 @@ namespace App\Livewire\Forms\Developers\CreateDevelopers;
 use App\Models\User;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
+use Livewire\WithFileUploads;
 
 class Step2 extends Form
 {
+    use WithFileUploads;
+
     public ?User $user;
 
-    public $category;
-    public $workplace;
-    public $level;
-    public $type;
+    public $name;
+    public $surname;
+    public $phone;
+    public $city;
+    public $email;
+    public $img_url = null;
+    public $password = "password";
 
     protected $rules = [
-        'category' => 'required',
-        'workplace' =>  'required',
-        'level' => 'required',
-        'type' => 'required',
+        'name' => 'required',
+        'surname' => 'required',
+        'phone' => 'required|numeric',
+        'city' => 'required',
+        'email' => 'required|email',
+        'img_url' => 'nullable',
     ];
 
     protected $messages = [
-        'category.required' => 'Il campo è obbligatorio',
-        'workplace.required' => 'Il campo è obbligatorio',
-        'level.required' => 'Il campo è obbligatorio',
-        'type.required' => 'Il campo è obbligatorio',
+        'name.required' => 'Il campo è obbligatorio',
+        'surname.required' => 'Il campo è obbligatorio',
+        'phone.required' => 'Il campo è obbligatorio',
+        'phone.numeric' => 'Il campo deve contenere solo numeri',
+        'city.required' => 'Il campo è obbligatorio',
+        'email.required' => 'Il campo è obbligatorio',
     ];
 }

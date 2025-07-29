@@ -1,9 +1,9 @@
 <div class="-mt-2">
-    <h2 class="text-xl font-bold mb-5">Modifica Developer</h2>
+    <h2 class="text-xl font-bold mb-5">Modifica membro</h2>
     <div class="bg-white rounded-lg border border-gray-300 h-[calc(100vh-19rem)] overflow-y-auto p-6">
 
         <div class="flex justify-end items-center">
-            <x-button icon="arrow-left" black label="Torna ai Developers" class="font-bold w-[200px] h-[32px]"
+            <x-button icon="arrow-left" black label="Torna ai Membri" class="font-bold w-[200px] h-[32px]"
                 wire:navigate href="/developers" />
         </div>
 

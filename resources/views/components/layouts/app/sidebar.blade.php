@@ -19,21 +19,24 @@
             <h1 class="text-xl font-extrabold tracking-tight text-[#1b1b18] ms-2 mb-2">ManagerOne</h1>
         </div>
 
-     
+
 
         <flux:navlist variant="outline">
             <flux:navlist.group class="grid">
-                 @php $clients = \App\Models\User::where('type', 'client')->get(); @endphp
-                 @php $developers = \App\Models\User::whereIn('type', ['developer', 'project_manager'])->get(); @endphp
-                
+                @php
+                $clients = \App\Models\User::where('type', 'client')->get();
+                $hasDevs = \App\Models\User::where('type', 'developer')->count() > 0;
+                $hasPM = \App\Models\User::where('type', 'project_manager')->count() > 0;
+                @endphp
+
                 @role('super_admin')
-                 <flux:navlist.item icon="users" :href="route('clients.index')"
+                <flux:navlist.item icon="users" :href="route('clients.index')"
                     :current="request()->routeIs('clients.index')" wire:navigate>Anagrafica Clienti</flux:navlist.item>
-                    <hr class="my-3">
+                <hr class="my-3">
                 @endrole
-               
+
                 @if($clients->count() > 0)
-                 <flux:navlist.item icon="presentation-chart-line" :href="route('projects.index')"  
+                <flux:navlist.item icon="presentation-chart-line" :href="route('projects.index')"
                     :current="request()->routeIs('projects.index')" wire:navigate>Progetti
                 </flux:navlist.item>
                 <flux:navlist.item icon="shield-check" :href="route('approved-projects.index')"
@@ -51,38 +54,41 @@
                 @endif
                 @role('super_admin')
                 <flux:navlist.item icon="document-currency-euro" :href="route('invoices.index')"
-                :current="request()->routeIs('invoices.index')" wire:navigate>Fatture
+                    :current="request()->routeIs('invoices.index')" wire:navigate>Fatture
                 </flux:navlist.item>
                 @endrole
                 <flux:navlist.item icon="document-duplicate" :href="route('documents.index')"
-                :current="request()->routeIs('documents.index')" wire:navigate>Documenti
+                    :current="request()->routeIs('documents.index')" wire:navigate>Documenti
                 </flux:navlist.item>
-                
+
                 <flux:navlist.item icon="calendar" :href="route('calendar.index')"
-                :current="request()->routeIs('calendar.index')" wire:navigate>Calendario
+                    :current="request()->routeIs('calendar.index')" wire:navigate>Calendario
                 </flux:navlist.item>
                 <hr class="my-3">
                 @role('super_admin')
                 <flux:navlist.item icon="identification" :href="route('developers.index')"
-                :current="request()->routeIs('developers.index')" wire:navigate>Developers
+                    :current="request()->routeIs('developers.index')" wire:navigate>Membri
                 </flux:navlist.item>
                 @endrole
-                @if($developers->count() > 1)
+
+                @if($hasDevs && $hasPM)
                 <flux:navlist.item icon="user-group" :href="route('teams.index')"
-                :current="request()->routeIs('teams.index')" wire:navigate>Gestione Teams
+                    :current="request()->routeIs('teams.index')" wire:navigate>Gestione Teams
                 </flux:navlist.item>
                 @endif
+
                 <flux:navlist.item icon="puzzle-piece" :href="route('tasks.index-tasks')"
-                :current="request()->routeIs('tasks.index-tasks')" wire:navigate>Gestione Tasks
+                    :current="request()->routeIs('tasks.index-tasks')" wire:navigate>Gestione Tasks
                 </flux:navlist.item>
                 <hr class="my-3">
                 @role('super_admin')
                 <flux:navlist.item icon="exclamation-triangle" :href="route('logs.index')"
-                :current="request()->routeIs('logs.index')" wire:navigate>Logs
+                    :current="request()->routeIs('logs.index')" wire:navigate>Logs
                 </flux:navlist.item>
                 @endrole
-                <flux:navlist.item icon="home" :href="route('dashboard.index')" :current="request()->routeIs('dashboard.index')"
-                    wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
+                <flux:navlist.item icon="home" :href="route('dashboard.index')"
+                    :current="request()->routeIs('dashboard.index')" wire:navigate>{{ __('Dashboard') }}
+                </flux:navlist.item>
             </flux:navlist.group>
         </flux:navlist>
 
@@ -135,7 +141,7 @@
             </flux:menu>
         </flux:dropdown>
     </flux:header>
-    
+
     <livewire:headernav />
     {{ $slot }}
 

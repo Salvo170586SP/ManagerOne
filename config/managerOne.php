@@ -15,11 +15,6 @@ return [
     ],
     'categories' => [
         [
-            'id' => 'project_manager',
-            'name' => 'Project Manager',
-            'color' => 'bg-yellow-200 border border-yellow-400 text-yellow-800',
-        ],
-        [
             'id' => 'front_end',
             'name' => 'Front End',
             'color' => 'bg-yellow-100 border border-yellow-400 text-yellow-700',

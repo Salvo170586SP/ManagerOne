@@ -96,6 +96,10 @@
                         class="rounded-full min-w-[100px] max-w-[150px] text-center text-xs py-1 font-medium {{ $this->getColorCategory($developer->category) }}">
                         {{ $this->getNameCategory($developer->category) }}
                     </div>
+                    @else
+                    <div class="rounded-full font-medium text-sm px-4 py-1 bg-gray-200 text-gray-500">
+                        -
+                    </div>
                     @endif
                 </div>
                 <div class="flex gap-2 items-center justify-between">
@@ -112,9 +116,11 @@
             <div class="bg-white rounded-lg border border-gray-300  p-3 w-full flex flex-col justify-center">
                 <div class="flex gap-2 items-center">
                     <div class="font-medium text-sm">Team assegnato/i:</div>
-                    @foreach ($developer->teams as $team)
+                    @forelse ($developer->teams as $team)
                     {{ $team->name }}
-                    @endforeach
+                    @empty
+                    <div class="text-xs text-gray-500">Nessun team assegnato</div>
+                    @endforelse
                 </div>
             </div>
         </div>

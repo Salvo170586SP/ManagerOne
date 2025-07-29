@@ -1,36 +1,95 @@
 <div class="-mt-2">
-    <h2 class="text-xl font-bold mb-5">Aggiungi Developer</h2>
-    <div class="bg-white rounded-lg border border-gray-300 h-[calc(100vh-20rem)] overflow-y-auto p-6">
+    <h2 class="text-xl font-bold mb-5">Aggiungi Membro</h2>
+    <div class="bg-white rounded-lg border border-gray-300 {{-- h-[calc(100vh-20rem)] --}} overflow-y-auto p-6">
 
         <div class="flex justify-end items-center">
-            <x-button icon="arrow-left" black label="Torna ai Developers" class="font-bold w-[200px] h-[32px]"
-                wire:navigate href="/developers" />
+            <x-button icon="arrow-left" black label="Torna ai Membri" class="font-bold w-[200px] h-[32px]" wire:navigate
+                href="/developers" />
         </div>
 
-        <div class="px-5 w-full pb-[18px] mb-5 flex items-center justify-center ">
-            <div class="text-gray-500 text-base flex items-center justify-center font-medium">
+        <div class="px-5 w-full pb-[18px] -mt-5 mb-5 flex items-center justify-center ">
+            {{-- step1 --}}
+            <div
+                class="@if ($currentStep >= 1) text-gray-500 @else text-[#B9B9B9] @endif flex items-center justify-center font-medium">
                 <span
-                    class="flex items-center justify-center h-[25px] w-[40px] text-gray-500 border border-gray-300 bg-gray-200 me-1 rounded font-medium">1</span>
-                Generalità
+                    class="flex items-center font-medium justify-center h-[25px] w-[40px] @if ($currentStep >= 1) border border-gray-300 text-gray-500 bg-gray-200 @else  bg-gray-50 @endif me-1 rounded">1</span>
+                Scegli Tipo
             </div>
+
+            {{-- step2 --}}
             <span
                 class="inline-block @if ($currentStep >= 2) bg-gray-300 @else bg-gray-200 @endif w-[90px] h-[1px] mx-3"></span>
             <div
                 class="@if ($currentStep >= 2) text-gray-500 @else text-[#B9B9B9] @endif flex items-center justify-center font-medium">
                 <span
                     class="flex items-center font-medium justify-center h-[25px] w-[40px] @if ($currentStep >= 2) border border-gray-300 text-gray-500 bg-gray-200 @else  bg-gray-50 @endif me-1 rounded">2</span>
+                Generalità
+            </div>
+
+            {{-- step3 --}}
+            <span
+                class="inline-block @if ($currentStep == 3) bg-gray-300 @else bg-gray-200 @endif w-[90px] h-[1px] mx-3"></span>
+            <div
+                class="@if ($currentStep == 3) text-gray-500 @else text-[#B9B9B9] @endif flex items-center justify-center font-medium">
+                <span
+                    class="flex items-center font-medium justify-center h-[25px] w-[40px] @if ($currentStep == 3) border border-gray-300 text-gray-500 bg-gray-200 @else  bg-gray-50 @endif me-1 rounded">3</span>
                 Skills
             </div>
         </div>
 
 
-        <div class="border-t my-4">
+        <div class="border-t">
+
             @if ($currentStep == 1)
+            <div class="h-[400px] flex flex-col">
+                <p class="text-gray-600 text-sm font-medium text-center my-10">
+                    Seleziona il tipo di membro che vuoi aggiungere
+                </p>
+                <div class="flex justify-center items-center gap-5">
+                    <label class="relative cursor-pointer">
+                        <input type="radio" name="type" value="developer" wire:model="developerStep1.type"
+                            class="peer absolute opacity-0">
+                        <div
+                            class="w-[400px] h-[250px] text-gray-500 bg-gray-100  peer-checked:bg-gray-200 rounded-lg flex flex-col justify-center items-center border border-gray-400 gap-4 peer-checked:border-gray-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-16 h-16">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" />
+                            </svg>
+                            <span class="text-lg font-medium">Developer</span>
+                        </div>
+                    </label>
+                    <label class="relative cursor-pointer">
+                        <input type="radio" name="type" value="project_manager" wire:model="developerStep1.type"
+                            class="peer absolute opacity-0">
+                        <div
+                            class="w-[400px] h-[250px] text-gray-500 bg-gray-100  peer-checked:bg-gray-200 rounded-lg flex flex-col justify-center items-center border border-gray-400 gap-4 peer-checked:border-gray-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-16 h-16">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M11.42 15.17 17.25 21A2.652 2.652 0 0 0 21 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 1 1-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 0 0 4.486-6.336l-3.276 3.277a3.004 3.004 0 0 1-2.25-2.25l3.276-3.276a4.5 4.5 0 0 0-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437 1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008Z" />
+                            </svg>
+                            <span class="text-lg font-medium">Project Manager</span>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="mt-10 text-center">
+                    @error('developerStep1.type')
+                    <small class="text-red-500">{{ $message }}</small>
+                    @enderror
+                </div>
+            </div>
+            <div class="flex justify-end">
+                <x-button type="button" wire:click="addStep" black label="Avanti"
+                    class="font-bold w-[200px] h-[32px]" />
+            </div>
+            @elseif($currentStep == 2)
             <div wire:key="img-{{ $currentStep }}-{{ now() }}"
                 class="flex flex-col justify-center items-center mb-10 mt-5">
                 <div class="text-sm text-gray-600">
                     <div class="space-y-2 relative">
-                        @if ($developerStep1->img_url)
+                        @if ($developerStep2->img_url)
                         <div class="absolute top-0 right-0">
                             <button type="button"
                                 class="font-bold w-[30px] h-[30px] bg-red-400 hover:bg-red-500 text-white flex justify-center items-center cursor-pointer rounded-full"
@@ -42,9 +101,8 @@
                                 </svg>
                             </button>
                         </div>
-                        <figure
-                            class="w-[130px] h-[130px] overflow-hidden  border   border-gray-300  rounded-full">
-                            <img src="{{ $developerStep1->img_url->temporaryUrl() }}"
+                        <figure class="w-[130px] h-[130px] overflow-hidden  border   border-gray-300  rounded-full">
+                            <img src="{{ $developerStep2->img_url->temporaryUrl() }}"
                                 class="w-full h-full object-cover object-top bg-gray-100 dark:bg-[#4b4b4b] opacity-100"
                                 alt="Anteprima immagine">
                         </figure>
@@ -76,39 +134,42 @@
                             </svg>
                             Seleziona File
                         </div>
-                        @error('developerStep1.img_url')
+                        @error('developerStep2.img_url')
                         <small class="text-red-500">{{ $message }}</small>
                         @enderror
                     </div>
                 </div>
             </div>
             <div class="flex gap-2 mt-10">
-                <x-input label="Nome" id="name" shadow wire:model="developerStep1.name" />
-                <x-input label="Cognome" id="surname" shadow wire:model="developerStep1.surname" />
+                <x-input label="Nome" id="name" shadow wire:model="developerStep2.name" />
+                <x-input label="Cognome" id="surname" shadow wire:model="developerStep2.surname" />
             </div>
             <div class="flex gap-2 mt-10">
-                <x-input label="Numero di Telefono" id="phone" shadow wire:model="developerStep1.phone" />
-                <x-input label="Città" id="city" shadow wire:model="developerStep1.city" />
-                <x-input type="email" id="email" label="Email" shadow wire:model="developerStep1.email" />
+                <x-input label="Numero di Telefono" id="phone" shadow wire:model="developerStep2.phone" />
+                <x-input label="Città" id="city" shadow wire:model="developerStep2.city" />
+                <x-input type="email" id="email" label="Email" shadow wire:model="developerStep2.email" />
             </div>
 
-            <div class="flex justify-end mt-5">
+            <div class="flex justify-end mt-5 gap-2">
+                <x-button type="button" wire:click="backStep" gray label="Indietro"
+                    class="font-bold w-[200px] h-[32px]" />
                 <x-button type="button" wire:click="addStep" black label="Avanti"
                     class="font-bold w-[200px] h-[32px]" />
             </div>
             @else
             <div class="flex gap-2 mt-10">
-                <x-select label="Cerca un Tipo" id="type" shadow placeholder="Seleziona un Tipo"
+                {{--
+                <x-select label="Seleziona un Tipo" id="type" shadow placeholder="Seleziona"
                     wire:key="type-{{ $currentStep }}-{{ now() }}" wire:model.live="developerStep2.type"
-                    :options="$types" option-label="name" option-value="id" />
-                <x-select label="Cerca una categoria" id="category" wire:key="category-{{ $currentStep }}-{{ now() }}"
-                    shadow wire:model.live="developerStep2.category" placeholder="Seleziona una categoria"
-                    :options="$categories" option-label="name" option-value="id" />
-                <x-select label="Cerca una sede" id="workplace" wire:key="workplace-{{ $currentStep }}-{{ now() }}"
-                    shadow wire:model.live="developerStep2.workplace" placeholder="Seleziona una sede"
-                    :options="$workplaces" option-label="name" option-value="id" />
-                <x-select label="Cerca una posizione" id="level" wire:key="level-{{ $currentStep }}-{{ now() }}" shadow
-                    wire:model.live="developerStep2.level" placeholder="Seleziona una posizione" :options="$levels"
+                    :options="$types" option-label="name" option-value="id" /> --}}
+                <x-select label="Seleziona una categoria" id="category"
+                    wire:key="category-{{ $currentStep }}-{{ now() }}" shadow wire:model.live="developerStep3.category"
+                    placeholder="Seleziona" :options="$categories" option-label="name" option-value="id" />
+                <x-select label="Seleziona una sede" id="workplace" wire:key="workplace-{{ $currentStep }}-{{ now() }}"
+                    shadow wire:model.live="developerStep3.workplace" placeholder="Seleziona" :options="$workplaces"
+                    option-label="name" option-value="id" />
+                <x-select label="Seleziona una posizione" id="level" wire:key="level-{{ $currentStep }}-{{ now() }}"
+                    shadow wire:model.live="developerStep3.level" placeholder="Seleziona" :options="$levels"
                     option-label="name" option-value="id" />
             </div>
             <div class="flex justify-end items-end h-full  gap-2 mt-5">
