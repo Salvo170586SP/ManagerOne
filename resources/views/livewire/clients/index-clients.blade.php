@@ -18,7 +18,7 @@
         </div>
     </div>
 
-    <div class="bg-white border border-gray-300 rounded-lg {{-- h-[calc(100vh-13rem)] --}} overflow-y-auto p-6">
+    <div class="bg-white border border-gray-300 rounded-lg overflow-y-auto p-6">
 
         <div class="flex justify-between items-center">
 
