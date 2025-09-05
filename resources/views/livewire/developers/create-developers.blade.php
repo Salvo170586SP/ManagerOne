@@ -42,8 +42,8 @@
 
             @if ($currentStep == 1)
             <div class="h-[400px] flex flex-col">
-                <p class="text-gray-600 text-sm font-medium text-center my-10">
-                    Seleziona il tipo di membro che vuoi aggiungere
+                <p class="text-gray-600 text-sm font-medium text-center mt-5 mb-10">
+                    *Seleziona il tipo di membro che vuoi aggiungere e clicca su avanti
                 </p>
                 <div class="flex justify-center items-center gap-5">
                     <label class="relative cursor-pointer">
