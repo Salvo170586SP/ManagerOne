@@ -20,6 +20,7 @@ class CreateDevelopers extends Component
     public $workplaces;
     public $levels;
     public $types;
+    public $url = null;
 
     public Step1 $developerStep1;
     public Step2 $developerStep2;
@@ -56,15 +57,14 @@ class CreateDevelopers extends Component
         $this->developerStep3->validate();
 
         //salvo la foto di profilo
-        $url = null;
         if ($this->developerStep2->img_url) {
-            $url = $this->developerStep2->img_url->store('imgsDeveloper', 'public');
+            $this->url = $this->developerStep2->img_url->store('imgsDeveloper', 'public');
         }
 
         $dev = User::create([
             'name' => $this->developerStep2->name,
             'surname' => $this->developerStep2->surname,
-            'img_url' => $url,
+            'img_url' => $this->url,
             'phone' => $this->developerStep2->phone,
             'city' => $this->developerStep2->city,
             'type' => $this->developerStep1->type,
