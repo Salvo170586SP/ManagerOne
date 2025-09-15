@@ -61,12 +61,21 @@ class Project extends Model
 
     public function getProgressPercentage()
     {
-        if (!$this->end_date) {
+        if ($this->is_approved !== 'approved' || !$this->end_date) {
+            return 0;
+        }
+
+        // NOTA: Viene utilizzata la data di creazione della prima fattura come data di inizio del progetto.
+        // Una soluzione più robusta sarebbe aggiungere un campo `approved_at` alla tabella `projects`.
+        $firstInvoice = $this->invoices()->orderBy('created_at', 'asc')->first();
+
+        if (!$firstInvoice) {
+            // Se il progetto è approvato ma non ha fatture, non è possibile determinare la data di inizio. Ritorno 0.
             return 0;
         }
 
         $now = Carbon::now();
-        $start = Carbon::parse($this->created_at);
+        $start = $firstInvoice->created_at;
         $end = Carbon::parse($this->end_date);
 
         // Se la data di fine è passata, ritorna 100%
@@ -74,26 +83,34 @@ class Project extends Model
             return 100;
         }
 
-        // Se la data attuale è prima della data di inizio, ritorna 0%
+        // Se la data attuale è prima della data di inizio (approvazione), ritorna 0%
         if ($now->lessThan($start)) {
             return 0;
         }
 
-        // Calcola i giorni totali del progetto
+        // Calcola i giorni totali del progetto dall'approvazione
         $totalDays = $start->diffInDays($end);
         
-        // Calcola i giorni trascorsi dall'inizio
+        if ($totalDays <= 0) {
+            return 100;
+        }
+
+        // Calcola i giorni trascorsi dall'inizio (approvazione)
         $elapsedDays = $start->diffInDays($now);
-        
+
         // Calcola la percentuale di progresso
         $progress = ($elapsedDays / $totalDays) * 100;
-        
+
         // Assicurati che il progresso sia tra 0 e 100
         return max(0, min(100, round($progress)));
     }
 
     public function getRemainingTime()
     {
+        if ($this->is_approved !== 'approved') {
+            return 'In attesa di approvazione';
+        }
+
         if (!$this->end_date) {
             return 'Data di fine non impostata';
         }

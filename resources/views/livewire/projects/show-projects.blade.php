@@ -98,7 +98,7 @@
                         <div class="text-lg font-medium text-gray-700">
                             {{ $project->getProgressPercentage() }}%
                         </div>
-                        <div class="text-sm font-medium text-gray-700">
+                        <div class="text-lg font-bold text-gray-700">
                             Tempo rimanente: {{ $project->getRemainingTime() }}
                         </div>
                     </div>
