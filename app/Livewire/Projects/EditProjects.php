@@ -5,7 +5,6 @@ namespace App\Livewire\Projects;
 use App\Jobs\GenerateIdInvoces;
 use App\Models\Invoce;
 use App\Models\Project;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -64,25 +63,34 @@ class EditProjects extends Component
         ]);
 
         if ($this->project->is_approved == 'approved') {
-            $invoice =  Invoce::create([
-                'admin_id' => Auth::id(),
-                'client_id' => $this->project->client_id,
-                'project_id' => $this->project->id,
-                'name' => $this->project->name . '-' . $this->project->client->fullName(),
-                'client_name' => $this->project->client->fullName(),
-                'preventive' => $this->project->preventive,
-            ]);
+            if ($this->project->invoices->count() < 1) {
+                $invoice =  Invoce::create([
+                    'admin_id' => Auth::id(),
+                    'client_id' => $this->project->client_id,
+                    'project_id' => $this->project->id,
+                    'name' => $this->project->name . '-' . $this->project->client->fullName(),
+                    'client_name' => $this->project->client->fullName(),
+                    'preventive' => $this->project->preventive,
+                ]);
 
-            GenerateIdInvoces::dispatch($invoice);
+                GenerateIdInvoces::dispatch($invoice);
 
-            $this->generateInvoicePdf($invoice->id);
 
-            Log::info('Progetto modificato', [
-                'user_id' => Auth::id(),
-                'project_id' => $this->project->id,
-                'project_name' => $this->project->name,
-            ]);
+                $this->generateInvoicePdf($invoice->id);
+
+                Log::info('Progetto modificato', [
+                    'user_id' => Auth::id(),
+                    'project_id' => $this->project->id,
+                    'project_name' => $this->project->name,
+                ]);
+            }
         }
+
+        Log::info('Progetto modificato', [
+            'user_id' => Auth::id(),
+            'project_id' => $this->project->id,
+            'project_name' => $this->project->name,
+        ]);
 
         session()->flash('message', 'Progetto modificato con successo');
 
@@ -93,7 +101,7 @@ class EditProjects extends Component
 
     public function generateInvoicePdf($invoiceId)
     {
-        $invoice = Invoce::with(['client', 'project'/* , 'admin' */])->findOrFail($invoiceId);
+        $invoice = Invoce::with(['client', 'project'])->findOrFail($invoiceId);
 
         $data = [
             'invoice' => $invoice,

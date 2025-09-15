@@ -118,7 +118,20 @@
             <div class="flex gap-3">
                 <div class="w-full flex items-center p-6 bg-white rounded-lg border border-gray-300">
                     <div class="text-sm w-full h-full">
-                        <h3 class="font-bold text-xl mb-5">Fatturazione</h3>
+                        <div class="flex justify-between items-center h-[70px] mb-5">
+                            <h3 class="font-bold text-xl">Fatturazione</h3>
+                            <div x-data="{ show: true }">
+                                @if (session('message'))
+                                <x-alert title="{{ session('message') }}" positive class="bg-green-600 text-white "
+                                    x-init="setTimeout(() => show = false, 5000)" x-show="show" />
+                                @endif
+                            </div>
+
+                            @if($project->is_approved == 'approved')
+                            <x-button black label="Genera Fattura" class="font-bold w-[200px] h-[32px]"
+                                wire:click="generateInvoicePdf" />
+                            @endif
+                        </div>
 
                         <table class="min-w-full divide-y border divide-gray-200">
                             <thead>
@@ -148,7 +161,7 @@
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200 text-sm">
-                                @forelse ($project->invoices as $invoice)
+                                @forelse ($invoices_project as $invoice)
                                 <tr wire:key="invoice-{{ $invoice->id }}-{{  str()->random(10) }}">
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $invoice->name }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $invoice->project->name }}</td>
