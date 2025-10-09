@@ -150,6 +150,9 @@ class IndexChat extends Component
             ->orderBy('created_at', 'asc')
             ->get()
             ->all();
+
+        // Dispatch a browser event so the front-end can scroll to bottom after render
+        $this->dispatch('scroll-to-bottom');
     }
 
     public function sendMessage()
