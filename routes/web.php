@@ -14,7 +14,7 @@ Route::get('/', function () {
     ->name('dashboard'); */
 
 // logs access only for super_admin
-Route::middleware(['auth', 'role:super_admin|developer|project_manager'])->group(function () {
+Route::middleware(['auth', 'role:super_admin|admin|developer|project_manager'])->group(function () {
     //clients
     Volt::route('/clients', 'clients.index-clients')->name('clients.index');
     Volt::route('/clients/create', 'clients.create-clients')->name('clients.create');

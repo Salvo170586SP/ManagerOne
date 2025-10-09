@@ -8,7 +8,7 @@
         <div class="w-1/3 border-r border-gray-200 flex flex-col">
             <!-- Header sidebar -->
             <div class="h-[70px] p-4 border-b border-gray-200">
-                <x-input wire:model.live="search" placeholder="Cerca utenti..." icon="magnifying-glass" shadow="false" />
+                <x-input wire:model.live="search" class="bg-gray-200/30  rounded" placeholder="Cerca utenti..." icon="magnifying-glass" shadow="false" />
             </div>
 
             <!-- Lista utenti -->
@@ -214,3 +214,32 @@
     <x-details-sidebar wire:model="showDrawer2" :item="$selectedUser" :selectedUserAttachments="$selectedUserAttachments"
         onClose="closeDetailsSidebar" />
 </div>
+
+<script>
+    // Funzione per eseguire lo scroll in fondo al container dei messaggi
+    function scrollMessagesToBottom(delay = 50) {
+        setTimeout(() => {
+            const container = document.getElementById('messages-container');
+            if (container) {
+                container.scrollTop = container.scrollHeight;
+            }
+        }, delay);
+    }
+
+    // Ascolta l'evento custom emesso dal componente Livewire
+    window.addEventListener('scroll-to-bottom', () => {
+        scrollMessagesToBottom(50);
+    });
+
+    // Al caricamento iniziale
+    document.addEventListener('livewire:load', () => {
+        scrollMessagesToBottom(0);
+    });
+
+    // Hook Livewire: dopo ogni render/process, scrolla in fondo
+    if (window.Livewire && Livewire.hook) {
+        Livewire.hook('message.processed', () => {
+            scrollMessagesToBottom(30);
+        });
+    }
+</script>
