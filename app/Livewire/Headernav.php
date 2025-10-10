@@ -2,22 +2,25 @@
 
 namespace App\Livewire;
 
-use App\Models\Message;
-use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Component;
 use Livewire\Attributes\On;
 
 class Headernav extends Component
 {
     public $notifications;
     public $unreadCount;
-    public $unreadMessagesCount;
+    public $unreadMessages;
+    public $userId;
 
     public function mount()
     {
+        $this->userId = Auth::id();
         $this->refreshNotifications();
-        $this->unreadMessagesCount = Auth::user()->unreadMessagesCount();
+        $this->unreadMessages = Auth::user()->unreadMessagesCount();
     }
+
+
 
     #[On('notification-deleted')]
     #[On('all-notifications-deleted')]
@@ -28,10 +31,8 @@ class Headernav extends Component
         $user = Auth::user();
         $this->notifications = $user->notifications;
         $this->unreadCount = $user->unreadNotifications->count();
-        $this->unreadMessagesCount = $user->unreadMessagesCount();
+        $this->unreadMessages = $user->unreadMessagesCount();
     }
-
-
 
     public function markAsRead()
     {
@@ -52,6 +53,14 @@ class Headernav extends Component
         Auth::user()->notifications()->delete();
         $this->dispatch('all-notifications-deleted');
         $this->refreshNotifications();
+    }
+
+    // Metodo per ricevere gli eventi Echo tramite JavaScript
+    public function getListeners()
+    {
+        return [
+            "echo-private:App.Models.User.{$this->userId},Illuminate\\Notifications\\Events\\BroadcastNotificationCreated" => 'handleNotification',
+        ];
     }
 
     public function render()
