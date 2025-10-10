@@ -85,7 +85,7 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Team::class, 'team_user', 'developer_id', 'team_id');
     }
-   
+
     public function tasks()
     {
         return $this->hasMany(Task::class, 'developer_id');
@@ -123,7 +123,7 @@ class User extends Authenticatable
     public function messages()
     {
         return Message::where('sender_id', $this->id)
-                     ->orWhere('receiver_id', $this->id);
+            ->orWhere('receiver_id', $this->id);
     }
 
     /**
@@ -141,15 +141,11 @@ class User extends Authenticatable
     {
         $sentUserIds = $this->sentMessages()->pluck('receiver_id');
         $receivedUserIds = $this->receivedMessages()->pluck('sender_id');
-        
+
         return User::whereIn('id', $sentUserIds->merge($receivedUserIds))
-                  ->where('id', '!=', $this->id)
-                  ->distinct();
+            ->where('id', '!=', $this->id)
+            ->distinct();
     }
-    //
-
-
-
 
     public function fullName()
     {

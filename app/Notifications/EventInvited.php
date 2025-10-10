@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Notifications\Notification;
 use App\Models\Event;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 
 class EventInvited extends Notification implements ShouldBroadcast
 {
@@ -28,6 +29,20 @@ class EventInvited extends Notification implements ShouldBroadcast
     public function via(object $notifiable): array
     {
         return ['database', 'broadcast'];
+    }
+
+     /**
+     * Get the broadcastable representation of the notification.
+     */
+    public function toBroadcast(object $notifiable): BroadcastMessage
+    {
+        return new BroadcastMessage([
+            'event_id' => $this->event->id,
+            'title' => 'Hai un nuovo evento in calendario!',
+            'message' => $this->event->title,
+            'start' => $this->event->start,
+            'end' => $this->event->end,
+        ]);
     }
 
     /**

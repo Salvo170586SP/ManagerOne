@@ -76,7 +76,7 @@ class IndexCalendar extends Component
             // Recupera tutti i team dell'utente
             $teams = $user->teams;
             // Filtra solo i team dove l'utente ha type 'project_manager'
-            $pmTeams = $teams->filter(function($team) use ($user) {
+            $pmTeams = $teams->filter(function ($team) use ($user) {
                 return $user->type === 'project_manager';
             });
             // Recupera tutti i progetti di questi team
@@ -135,6 +135,7 @@ class IndexCalendar extends Component
             $event->end = $this->end_date;
             $event->is_available = $this->is_available;
             $event->save();
+
             $participants = User::find(Arr::wrap($this->selectedParticipants));
             $event->participants()->sync($participants->pluck('id'));
             $this->showCreateModal = false;
@@ -176,6 +177,7 @@ class IndexCalendar extends Component
                 $participant->notify(new \App\Notifications\EventInvited($event));
             }
             $this->showCreateModal = false;
+           
             $this->dispatch('event-created', eventData: [
                 'id' => $event->id,
                 'title' => $event->title,
@@ -197,7 +199,6 @@ class IndexCalendar extends Component
             ]);
 
             session()->flash('message', "Evento creato con successo");
-
         }
 
         $this->resetForm();
@@ -241,7 +242,7 @@ class IndexCalendar extends Component
 
         session()->flash('message', "Data dell evento modificata con successo");
     }
-    
+
     #[On('delete-event')]
     public function deleteEvent($eventId)
     {
@@ -274,7 +275,7 @@ class IndexCalendar extends Component
         if (!$user->hasRole('super_admin')) {
             return;
         }
-        
+
         $event = Event::with('participants')->findOrFail($eventId);
         if ($event->user_id !== Auth::id()) {
             return;
@@ -291,7 +292,7 @@ class IndexCalendar extends Component
 
     public function render()
     {
-        $tasksForJs = array_map(function($task) {
+        $tasksForJs = array_map(function ($task) {
             return [
                 'id' => $task['id'],
                 'title' => $task['title'],
