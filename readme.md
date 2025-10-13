@@ -12,17 +12,11 @@ Un'applicazione completa per la gestione di progetti e task costruita con Larave
 ## 📋 Indice
 
 - [Caratteristiche](#-caratteristiche)
-- [Demo](#-demo)
 - [Screenshot](#-screenshot)
 - [Requisiti](#-requisiti)
 - [Installazione](#-installazione)
-- [Configurazione](#️-configurazione)
 - [Utilizzo](#-utilizzo)
-- [Deployment](#-deployment)
-- [Troubleshooting](#-troubleshooting)
-- [Contribuire](#-contribuire)
 - [Licenza](#-licenza)
-- [Contatti](#-contatti)
 
 ---
 
@@ -60,18 +54,6 @@ Un'applicazione completa per la gestione di progetti e task costruita con Larave
 
 ### 🎨 UI/UX
 - Ricerca avanzata con filtri
-
----
-
-## 🌐 Demo
-
-Prova l'applicazione live: [https://taskmanager-pro-demo.com](https://taskmanager-pro-demo.com)
-
-**Credenziali di test:**
-- **Admin:** admin@test.com / password!
-- **Project Manager:** pm@test.com / password!
-- **Developer:** developer@test.com / password!
-- **Client:** client@test.com / password!
 
 ---
 
