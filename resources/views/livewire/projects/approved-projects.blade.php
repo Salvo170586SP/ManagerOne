@@ -3,8 +3,8 @@
         <h2 class="text-xl font-bold">Progetti Approvati</h2>
         <div x-data="{ showMessage: true }">
             @if (session('message'))
-                <x-alert title="{{ session('message') }}" positive class="bg-green-600 text-white" x-init="setTimeout(() => showMessage = false, 5000)"
-                    x-show="showMessage" />
+            <x-alert title="{{ session('message') }}" positive class="bg-green-600 text-white"
+                x-init="setTimeout(() => showMessage = false, 5000)" x-show="showMessage" />
             @endif
         </div>
     </div>
@@ -47,120 +47,127 @@
 
         <div {{-- class="overflow-x-auto" --}}>
             @if ($projects->count() > 0)
-                <table class="min-w-full divide-y border divide-gray-200">
-                    <thead>
-                        <tr>
-                            <th scope="col"
-                                class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
-                                ID</th>
-                            <th scope="col"
-                                class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
-                                Nome</th>
-                            <th scope="col"
-                                class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
-                                Team di sviluppo
-                            </th>
-                            <th scope="col"
-                                class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
-                                Cliente
-                            </th>
-                            @role(['super_admin', 'project_manager'])
-                                <th scope="col"
-                                    class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
-                                    Note
-                                </th>
+            <table class="min-w-full divide-y border divide-gray-200">
+                <thead>
+                    <tr>
+                        <th scope="col"
+                            class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                            ID</th>
+                        <th scope="col"
+                            class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                            Nome</th>
+                        <th scope="col"
+                            class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                            Team di sviluppo
+                        </th>
+                        <th scope="col"
+                            class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                            Cliente
+                        </th>
+                        @role(['admin', 'project_manager'])
+                        <th scope="col"
+                            class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                            Note
+                        </th>
+                        @endrole
+                        <th scope="col"
+                            class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                            Preventivo</th>
+                        @role(['admin', 'project_manager'])
+                        <th scope="col"
+                            class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                            Stato Progettazione
+                        </th>
+                        @endrole
+                        <th scope="col"
+                            class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                            Data
+                            Creazione</th>
+                        <th scope="col"
+                            class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y text-sm divide-gray-200">
+                    @foreach ($projects as $project)
+                    <tr wire:key="projectApproved-{{ $project->id }}-{{ str()->random(10) }}">
+                        <td class="px-6 py-4 font-bold whitespace-nowrap">
+                            @if ($project->IdProject)
+                            #PR-{{ $project->IdProject }}
+                            @else
+                            #PR
+                            @endif
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ $project->name }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-center">
+                            @role('developer')
+                            @if ($project->team)
+                            {{ $project->team->name }}
+                            @else
+                            -
+                            @endif
                             @endrole
-                            <th scope="col"
-                                class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
-                                Preventivo</th>
-                            @role(['super_admin', 'project_manager'])
-                                <th scope="col"
-                                    class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
-                                    Stato Progettazione
-                                </th>
-                            @endrole
-                            <th scope="col"
-                                class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
-                                Data
-                                Creazione</th>
-                            <th scope="col"
-                                class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y text-sm divide-gray-200">
-                        @foreach ($projects as $project)
-                            <tr wire:key="projectApproved-{{ $project->id }}-{{ str()->random(10) }}">
-                                <td class="px-6 py-4 font-bold whitespace-nowrap">
-                                    @if ($project->IdProject)
-                                        #PR-{{ $project->IdProject }}
-                                    @else
-                                        #PR
-                                    @endif
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $project->name }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-center">
-                                    @role('developer')
-                                        @if ($project->team)
-                                            {{ $project->team->name }}
-                                        @else
-                                            -
-                                        @endif
-                                    @endrole
 
-                                    @role(['super_admin', 'project_manager'])
-                                        @if (count($teams) > 0)
-                                            <x-select red shadow placeholder="Seleziona un Team"
-                                                wire:model.live="teamSelections.project-{{ $project->id }}"
-                                                :options="$teams" option-label="name" option-value="id" />
-                                        @else
-                                            <span class="text-gray-500 italic">Nessun team selezionabile</span>
-                                        @endif
-                                    @endrole
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $project->client->fullName() }}</td>
-                                @role(['super_admin', 'project_manager'])
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <x-button flat blue icon="document-text" class="relative"
-                                            wire:click="openNotesSidebar({{ $project->id }})" title="Visualizza Note">
-                                            <div
-                                                class="absolute right-2 top-0  rounded-full bg-blue-500 h-[15px] w-[15px] text-center text-xs font-bold text-white">
-                                                {{ $project->notes->count() }}</div>
-                                        </x-button>
-                                    </td>
-                                @endrole
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $project->preventive }} €</td>
-                                @role(['super_admin', 'project_manager'])
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <x-select shadow placeholder="Seleziona uno Stato"
-                                            wire:model.live="stateSelections.project-{{ $project->id }}" :options="$states_project"
-                                            option-label="name" option-value="id"
-                                            class="{{ $selectColors[$project->id] }} rounded" />
-                                    </td>
-                                @endrole
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $project->createDate() }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                    <div class="flex justify-center">
-                                        <x-button flat black icon="eye" wire:navigate
-                                            href="/projects/{{ $project->id }}" />
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-                <div class="py-3">
-                    {{ $projects->links('vendor.pagination.tailwind') }}
-                </div>
+                            @role(['admin', 'project_manager'])
+                            @if (count($teams) > 0)
+                            <x-select red shadow placeholder="Seleziona un Team"
+                                wire:model.live="teamSelections.project-{{ $project->id }}" :options="$teams"
+                                option-label="name" option-value="id" />
+                            @else
+                            <span class="text-gray-500 italic">Nessun team selezionabile</span>
+                            @endif
+                            @endrole
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            @role(['admin','projects_manager'])
+                            <x-button wire:navigate href="/clients/{{ $project->client->id }}"
+                                label="{{ $project->client->fullname() }}" class="border" black flat />
+                            @endrole
+                            @role('developer')
+                            {{ $project->client->fullname() }}
+                            @endrole
+                        </td>
+                        @role(['admin', 'project_manager'])
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <x-button flat blue icon="document-text" class="relative"
+                                wire:click="openNotesSidebar({{ $project->id }})" title="Visualizza Note">
+                                <div
+                                    class="absolute right-2 top-0  rounded-full bg-blue-500 h-[15px] w-[15px] text-center text-xs font-bold text-white">
+                                    {{ $project->notes->count() }}</div>
+                            </x-button>
+                        </td>
+                        @endrole
+                        <td class="px-6 py-4 whitespace-nowrap">{{ $project->preventive }} €</td>
+                        @role(['admin', 'project_manager'])
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <x-select shadow placeholder="Seleziona uno Stato"
+                                wire:model.live="stateSelections.project-{{ $project->id }}" :options="$states_project"
+                                option-label="name" option-value="id"
+                                class="{{ $selectColors[$project->id] }} rounded" />
+                        </td>
+                        @endrole
+                        <td class="px-6 py-4 whitespace-nowrap">{{ $project->createDate() }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <div class="flex justify-center">
+                                <x-button flat black icon="eye" wire:navigate href="/projects/{{ $project->id }}" />
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            <div class="py-3">
+                {{ $projects->links('vendor.pagination.tailwind') }}
+            </div>
             @else
-                <div class="text-sm text-center font-medium italic text-gray-400">
-                    Non ci sono progetti approvati
-                </div>
+            <div class="text-sm text-center font-medium italic text-gray-400">
+                Non ci sono progetti approvati
+            </div>
             @endif
         </div>
     </div>
 
     <!-- Componente Sidebar per le Note -->
-    <x-notes-sidebar wire:model="showDrawer2" :notes="$selectedProjectNotes" :item="$selectedProject" :edit-note-id="$editNoteId"
-        onClose="closeNotesSidebar" />
+    <x-notes-sidebar wire:model="showDrawer2" :notes="$selectedProjectNotes" :item="$selectedProject"
+        :edit-note-id="$editNoteId" onClose="closeNotesSidebar" />
 </div>

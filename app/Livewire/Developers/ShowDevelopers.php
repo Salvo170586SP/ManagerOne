@@ -314,7 +314,6 @@ class ShowDevelopers extends Component
     {
         // Trova il progetto
         $task = Task::findOrFail($taskId);
-        /*     dd($task); */
 
         if ($task) {
             $task->delete();

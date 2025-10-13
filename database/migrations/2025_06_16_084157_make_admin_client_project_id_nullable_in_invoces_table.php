@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('invoces', function (Blueprint $table) {
-            $table->unsignedBigInteger('admin_id')->nullable()->change();
-            $table->unsignedBigInteger('client_id')->nullable()->change();
+           /*  $table->unsignedBigInteger('admin_id')->nullable()->change(); */
+          /*   $table->unsignedBigInteger('client_id')->nullable()->change(); */
             $table->unsignedBigInteger('project_id')->nullable()->change();
         });
     }
@@ -24,8 +24,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('invoces', function (Blueprint $table) {
-            $table->unsignedBigInteger('admin_id')->nullable(false)->change();
-            $table->unsignedBigInteger('client_id')->nullable(false)->change();
+           /*  $table->unsignedBigInteger('admin_id')->nullable(false)->change(); */
+           /*  $table->unsignedBigInteger('client_id')->nullable(false)->change(); */
             $table->unsignedBigInteger('project_id')->nullable(false)->change();
         });
     }

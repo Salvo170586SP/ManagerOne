@@ -4,7 +4,7 @@
     </div>
 
     <div class="bg-white rounded-lg border border-gray-300 h-[calc(100vh-13rem)] overflow-y-auto p-6">
-        @role('super_admin')
+        @role('admin')
             <div class="flex justify-between items-center">
                 <div class="w-[350px] h-[32px]">
                     <x-input type="search" wire:model.live="search" placeholder="Cerca.." shadow="false" />

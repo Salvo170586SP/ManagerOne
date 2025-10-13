@@ -63,7 +63,7 @@ class CreateClients extends Component
             'password' => $this->password,
         ])->assignRole('client');
 
-        GenerateIdClient::dispatch($client);
+       /*  GenerateIdClient::dispatch($client); */
 
         session()->flash('message', 'Cliente creato con successo');
 

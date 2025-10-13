@@ -21,14 +21,14 @@
             </div>
         </div>
         <small class="font-bold">
-            @role('super_admin')
+            @role('admin')
                 (*) Clicca su una cella per creare un evento
             @endrole
         </small>
         <div id="{{ $componentId }}"></div>
     </div>
 
-    @role('super_admin')
+    @role('admin')
     <x-modal wire:model="showCreateModal" title="Crea Evento"  blur="sm" align="center">
         <x-form wire:submit.prevent="saveEvent" class="bg-white p-5 shadow-lg rounded-lg font-medium min-w-[1100px]">
             <h3 class="text-lg text-black">Crea Evento</h3>

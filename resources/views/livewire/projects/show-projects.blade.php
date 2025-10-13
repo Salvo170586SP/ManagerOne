@@ -114,7 +114,7 @@
                 </div>
             </div>
 
-            @role('super_admin')
+            @role('admin')
             <div class="flex gap-3">
                 <div class="w-full flex items-center p-6 bg-white rounded-lg border border-gray-300">
                     <div class="text-sm w-full h-full">

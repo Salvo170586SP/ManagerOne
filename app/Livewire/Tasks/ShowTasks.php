@@ -250,7 +250,7 @@ class ShowTasks extends Component
     {
         $user = Auth::user();
 
-        if ($user instanceof User && $user->hasRole('super_admin')) {
+        if ($user instanceof User && $user->hasRole('admin')) {
             $tasks = $this->project->tasks()->latest()->paginate(8);
         } else if ($user instanceof User && $user->hasRole('developer')) {
             $tasks = $this->project->tasks()

@@ -72,7 +72,7 @@
                             class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
                             Cliente
                         </th>
-                        @role('super_admin')
+                        @role('admin')
                         <th scope="col"
                             class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider">
                             Note
@@ -110,10 +110,15 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $project->name }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">
+                            @role(['admin','projects_manager'])
                             <x-button wire:navigate href="/clients/{{ $project->client->id }}"
                                 label="{{ $project->client->fullname() }}" class="border" black flat />
+                            @endrole
+                            @role('developer')
+                            {{ $project->client->fullname() }}
+                            @endrole
                         </td>
-                        @role('super_admin')
+                        @role('admin')
                         <td class="px-6 py-4 whitespace-nowrap">
                             <x-button flat blue icon="document-text" class="relative"
                                 wire:click="openNotesSidebar({{ $project->id }})" title="Visualizza Note">
@@ -150,7 +155,7 @@
                         <td class="px-6 py-4 whitespace-nowrap text-sm">
                             <div class="flex justify-center">
                                 <x-button flat black icon="eye" wire:navigate href="/projects/{{ $project->id }}" />
-                                @role('super_admin')
+                                @role('admin')
                                 <x-button flat blue icon="pencil" wire:navigate
                                     href="/projects/{{ $project->id }}/edit" />
                                 <x-button flat red icon="trash"

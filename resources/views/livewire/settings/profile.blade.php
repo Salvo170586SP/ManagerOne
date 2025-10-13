@@ -218,7 +218,7 @@ new class extends Component {
                     </x-action-message>
                 </div>
             </form>
-            @role('super_admin')
+            @role('admin')
             <livewire:settings.delete-user-form />
             @endrole
         </x-settings.layout>

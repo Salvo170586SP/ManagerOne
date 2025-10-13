@@ -7,7 +7,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
-class SuperAdminSeeder extends Seeder
+class PMSeeder extends Seeder
 {
     protected static ?string $password;
     /**
@@ -16,11 +16,12 @@ class SuperAdminSeeder extends Seeder
     public function run(): void
     {
         User::create([
-            'name' => 'Super',
-            'surname' => 'Admin',
-            'email' => 'sadmin@sadmin.com',
+            'name' => 'Pm',
+            'surname' => 'Test',
+            'email' => 'pm@test.com',
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
-        ])->assignRole('super_admin');
+            'type' => 'project_manager'
+        ])->assignRole('project_manager');
     }
 }

@@ -87,8 +87,13 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $project->name }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">
+                            @role(['admin','projects_manager'])
                             <x-button wire:navigate href="/clients/{{ $project->client->id }}"
                                 label="{{ $project->client->fullname() }}" class="border" black flat />
+                            @endrole
+                            @role('developer')
+                            {{ $project->client->fullname() }}
+                            @endrole
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $project->preventive }} €</td>
                         <td class="px-6 py-4 whitespace-nowrap">

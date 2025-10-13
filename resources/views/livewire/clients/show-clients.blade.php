@@ -23,16 +23,6 @@
                 {{ $client->fullName() }}
             </div>
             <div class="mb-5">
-                <div class="font-medium text-sm">ID:</div>
-                <div class="text-sm">
-                    @if ($client->IdClient)
-                    #CL-{{ $client->IdClient }}
-                    @else
-                    #CL
-                    @endif
-                </div>
-            </div>
-            <div class="mb-5">
                 <div class="font-medium text-sm">Email:</div>
                 <div class="text-sm">
                     {{ $client->email ?? '-' }}

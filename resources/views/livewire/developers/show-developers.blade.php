@@ -32,15 +32,6 @@
                     <div class="text-sm font-bold uppercase mb-1">
                         {{ $developer->fullName() }}
                     </div>
-                    <div class="flex mb-1">
-                        <div class="text-xs">
-                            @if ($developer->IdDev)
-                            #DEV-{{ $developer->IdDev }}
-                            @else
-                            #DEV
-                            @endif
-                        </div>
-                    </div>
                 </div>
             </div>
 
