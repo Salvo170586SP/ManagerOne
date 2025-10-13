@@ -18,8 +18,6 @@ Un'applicazione completa per la gestione di progetti e task costruita con Larave
 - [Installazione](#-installazione)
 - [Configurazione](#️-configurazione)
 - [Utilizzo](#-utilizzo)
-- [API Documentation](#-api-documentation)
-- [Testing](#-testing)
 - [Deployment](#-deployment)
 - [Troubleshooting](#-troubleshooting)
 - [Contribuire](#-contribuire)
@@ -133,11 +131,10 @@ php artisan db:seed
 php artisan storage:link
 ```
 
-### 8️⃣ Installa e compila gli Asset Frontend
+### 8️⃣ Compila gli Asset Frontend
 
 ```bash
 # Sviluppo
-npm install
 npm run dev
 ```
 
@@ -173,7 +170,7 @@ Dopo l'installazione e il seeding, puoi accedere con:
 | **Project Manager** | pm@test.com | password |
 | **Developer** | dev@test.com | password |
 
-> ⚠️ **Importante:** Cambia queste password in produzione!
+> ⚠️ **Importante:** Cambia queste password se in produzione!
 
 ### Creazione di un Nuovo Cliente
 
@@ -189,6 +186,7 @@ Dopo l'installazione e il seeding, puoi accedere con:
 2. Clicca su "Aggiungi Progetto"
 
 ### Creazione Membri
+> ⚠️ **Importante:** Cambia le password se in produzione!
  
 1. Clicca su "Membri" nel menu laterale
 2. Clicca su "Aggiungi membro"
@@ -257,7 +255,8 @@ Dopo l'installazione e il seeding, puoi accedere con:
 
 #### 1. Errore installazione composer
 ```bash
-aggiungere in .env BROADCAST_DRIVE=null
+#aggiungere in .env 
+BROADCAST_DRIVE=null
 ```
 
 ---
