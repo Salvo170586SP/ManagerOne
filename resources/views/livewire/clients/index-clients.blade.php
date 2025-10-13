@@ -67,12 +67,9 @@
 
         <div class="overflow-x-auto">
             @if ($clients->count() > 0)
-            <table @if ($pollCondition) wire:poll.2s @endif class="min-w-full divide-y border divide-gray-200">
+            <table  class="min-w-full divide-y border divide-gray-200">
                 <thead>
                     <tr>
-                        <th scope="col"
-                            class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider w-20">
-                            ID</th>
                         <th scope="col"
                             class="px-6 py-5 text-left text-xs font-medium border text-gray-500 uppercase tracking-wider w-48">
                             Nome
@@ -104,13 +101,6 @@
                 <tbody class="bg-white divide-y divide-gray-200 text-sm">
                     @foreach ($clients as $client)
                     <tr wire:key="client-{{ $client->id }}-{{ str()->random(10) }}">
-                        <td class="px-6 py-4 font-bold whitespace-nowrap">
-                            @if ($client->IdClient)
-                            #CL-{{ $client->IdClient }}
-                            @else
-                            #CL
-                            @endif
-                        </td>
                         <td class="px-6 py-4">
                             <div class="max-w-xs truncate" title="{{ $client->fullName() }}">
                                 {{ $client->fullName() }}

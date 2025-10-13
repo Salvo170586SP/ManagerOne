@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('surname')->nullable()->after('name');
-            $table->unsignedInteger('IdClient')->nullable()->after('surname');
-            $table->string('img_url')->nullable()->after('IdClient');
+          /*   $table->unsignedInteger('IdClient')->nullable()->after('surname'); */
+            $table->string('img_url')->nullable();
             $table->string('phone')->nullable()->after('img_url');
             $table->string('city')->nullable()->after('phone');
             $table->string('type')->nullable()->after('city');
@@ -28,7 +28,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('surname');
-            $table->dropColumn('IdClient');
+           /*  $table->dropColumn('IdClient'); */
             $table->dropColumn('img_url');
             $table->dropColumn('phone');
             $table->dropColumn('city');

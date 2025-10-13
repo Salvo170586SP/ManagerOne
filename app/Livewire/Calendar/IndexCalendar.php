@@ -93,7 +93,7 @@ class IndexCalendar extends Component
     public function showCreateModal($dateInfo)
     {
         $user = Auth::user();
-        if (!$user->hasRole('super_admin')) {
+        if (!$user->hasRole('admin')) {
             return;
         }
         $this->resetForm();
@@ -220,7 +220,7 @@ class IndexCalendar extends Component
     public function updateEvent($eventId, $newStart, $newEnd = null)
     {
         $user = Auth::user();
-        if (!$user->hasRole('super_admin')) {
+        if (!$user->hasRole('admin')) {
             return;
         }
 
@@ -247,7 +247,7 @@ class IndexCalendar extends Component
     public function deleteEvent($eventId)
     {
         $user = Auth::user();
-        if (!$user->hasRole('super_admin')) {
+        if (!$user->hasRole('admin')) {
             return;
         }
 

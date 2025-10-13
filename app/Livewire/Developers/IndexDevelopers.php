@@ -12,7 +12,7 @@ class IndexDevelopers extends Component
 {
     use WithPagination;
 
- 
+
     public $search = "";
     public $searchDate;
     public $searchCity;
@@ -38,7 +38,7 @@ class IndexDevelopers extends Component
         $color = $categoryData['color'] ?? 'bg-gray-300';
         return $color;
     }
-   
+
     public function getNameCategory($category)
     {
         $categoryData = collect(config('managerOne.categories'))->firstWhere('id', $category);
@@ -52,42 +52,42 @@ class IndexDevelopers extends Component
         $color = $levelData['color'] ?? 'bg-gray-300';
         return $color;
     }
-  
+
     public function getNameLevel($level)
     {
         $levelData = collect(config('managerOne.levels'))->firstWhere('id', $level);
         $name = $levelData['name'] ?? '-';
         return $name;
     }
-   
+
     public function getColorWorkplace($workplace)
     {
         $workplaceData = collect(config('managerOne.workplaces'))->firstWhere('id', $workplace);
         $color = $workplaceData['color'] ?? 'bg-gray-300';
         return $color;
     }
-   
+
     public function getNameWorkplace($workplace)
     {
         $workplaceData = collect(config('managerOne.workplaces'))->firstWhere('id', $workplace);
         $name = $workplaceData['name'] ?? '-';
         return $name;
     }
-   
+
     public function getColorType($type)
     {
         $workplaceData = collect(config('managerOne.types'))->firstWhere('id', $type);
         $color = $workplaceData['color'] ?? 'bg-gray-300';
         return $color;
     }
-   
+
     public function getNameType($type)
     {
         $workplaceData = collect(config('managerOne.types'))->firstWhere('id', $type);
         $name = $workplaceData['name'] ?? '-';
         return $name;
     }
-    
+
     public function deleteDev($devId)
     {
         $dev = User::findOrFail($devId);
@@ -101,7 +101,7 @@ class IndexDevelopers extends Component
             }
 
             $dev->delete();
-            
+
             Log::info('Developer eliminato', [
                 'id' => $dev->id,
                 'name' => $dev->name,
@@ -124,15 +124,15 @@ class IndexDevelopers extends Component
     public function render()
     {
         $developers = User::query()
-            ->where(function($query) {
+            ->where(function ($query) {
                 $query->where('type', 'developer')
-                      ->orWhere('type', 'project_manager');
+                    ->orWhere('type', 'project_manager');
             });
 
         if ($this->search) {
-            $developers = $developers->where(function($query) {
+            $developers = $developers->where(function ($query) {
                 $query->where('name', 'like', '%' . $this->search . '%')
-                      ->orWhere('surname', 'like', '%' . $this->search . '%');
+                    ->orWhere('surname', 'like', '%' . $this->search . '%');
             });
         }
 
@@ -149,24 +149,23 @@ class IndexDevelopers extends Component
         // Controlla se la pagina corrente supera l'ultima pagina disponibile
         if ($developers->lastPage() > 0 && $developers->currentPage() > $developers->lastPage()) {
             $this->setPage($developers->lastPage());
-        } 
+        }
 
         // Calcola i conteggi dalla query originale (senza paginazione)
         $numberDevs = User::where('type', 'developer')->count();
         $numberPms = User::where('type', 'project_manager')->count();
-        $pollCondition = User::where('type', ['developer','project_manager'])->whereNull('IdDev')->exists();
 
         // Ottieni la lista delle città disponibili per il filtro
-        $cities = User::where(function($query) {
+        $cities = User::where(function ($query) {
             $query->where('type', 'developer')
-                  ->orWhere('type', 'project_manager');
+                ->orWhere('type', 'project_manager');
         })
-        ->whereNotNull('city')
-        ->distinct()
-        ->pluck('city')
-        ->filter()
-        ->values();
+            ->whereNotNull('city')
+            ->distinct()
+            ->pluck('city')
+            ->filter()
+            ->values();
 
-        return view('livewire.developers.index-developers', compact('developers', 'numberDevs', 'numberPms', 'pollCondition', 'cities'));
+        return view('livewire.developers.index-developers', compact('developers', 'numberDevs', 'numberPms',  'cities'));
     }
 }

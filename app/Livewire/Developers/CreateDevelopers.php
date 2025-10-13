@@ -75,7 +75,7 @@ class CreateDevelopers extends Component
             'level' => $this->developerStep3->level,
         ]);
 
-        GenerateIdDev::dispatch($dev);
+/*         GenerateIdDev::dispatch($dev); */
 
         $dev->assignRole($dev->type);
 

@@ -100,7 +100,7 @@
                             wire:navigate href="/tasks" />
                     </div>
 
-                    @if ($tasks->count() > 0)
+                    @if ($tasks && $tasks->count() > 0)
                         <div class="overflow-x-auto py-5">
                             <table class="min-w-full border divide-y divide-gray-200">
                                 <thead>
@@ -136,7 +136,7 @@
                                             class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
                                             Progressione
                                         </th>
-                                        @role('super_admin')
+                                        @role('admin')
                                             <th scope="col"
                                                 class="px-6 py-5 text-center text-xs font-medium border text-gray-500 uppercase tracking-wider">
 
@@ -210,7 +210,7 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            @role('super_admin')
+                                            @role('admin')
                                                 <td class="px-6 py-2 whitespace-nowrap">
                                                     <x-button flat blue icon="pencil" wire:navigate
                                                         href="/tasks/{{ $task->id }}/{{ $project->id }}/edit" />

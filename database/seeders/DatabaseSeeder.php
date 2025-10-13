@@ -22,7 +22,10 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             RoleSeeder::class,
-            SuperAdminSeeder::class,
+            AdminSeeder::class,
+            PMSeeder::class,
+            DeveloperSeeder::class,
+            ClientSeeder::class
         ]);
     }
 }

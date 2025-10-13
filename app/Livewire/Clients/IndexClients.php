@@ -83,7 +83,7 @@ class IndexClients extends Component
         }
 
         $clients = $clients->where('type', 'client')->latest()->paginate(10);
-        $pollCondition = User::where('type', 'client')->whereNull('IdClient')->exists();
+       /*  $pollCondition = User::where('type', 'client')->whereNull('IdClient')->exists(); */
 
         // Ottieni la lista delle città disponibili per il filtro
         $cities = User::where(function ($query) {
@@ -95,6 +95,6 @@ class IndexClients extends Component
             ->filter()
             ->values();
 
-        return view('livewire.clients.index-clients', compact('clients', 'pollCondition', 'cities'));
+        return view('livewire.clients.index-clients', compact('clients', 'cities'));
     }
 }

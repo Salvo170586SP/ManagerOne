@@ -38,8 +38,8 @@ class IndexChat extends Component
     {
         $currentUser = Auth::user();
 
-        // Se è super admin, mostra tutti gli utenti tranne i clienti e se stesso
-        if ($currentUser->hasRole('super_admin')) {
+        // Se è admin, mostra tutti gli utenti tranne i clienti e se stesso
+        if ($currentUser->hasRole('admin')) {
             $this->users = User::whereDoesntHave('roles', function ($query) {
                 $query->where('name', 'client');
             })
@@ -62,10 +62,10 @@ class IndexChat extends Component
             }
             $collaboratorIds = $collaboratorIds->unique()->filter(fn($id) => $id != $currentUser->id);
 
-            // Recupera anche il super admin
-            $superAdminIds = User::role('super_admin')->pluck('id');
+            // Recupera anche  admin
+            $adminIds = User::role('admin')->pluck('id');
 
-            $userIds = $collaboratorIds->merge($superAdminIds)->unique();
+            $userIds = $collaboratorIds->merge($adminIds)->unique();
 
             $this->users = User::whereIn('id', $userIds)
                 ->orderBy('name')
@@ -86,19 +86,19 @@ class IndexChat extends Component
             $collaboratorIds = $collaboratorIds->unique()->filter(fn($id) => $id != $currentUser->id);
             $pmIds = $pmIds->unique();
 
-            // Recupera anche il super admin
-            $superAdminIds = User::role('super_admin')->pluck('id');
+            // Recupera anche admin
+            $adminIds = User::role('admin')->pluck('id');
 
-            $userIds = $collaboratorIds->merge($pmIds)->merge($superAdminIds)->unique();
+            $userIds = $collaboratorIds->merge($pmIds)->merge($adminIds)->unique();
 
             $this->users = User::whereIn('id', $userIds)
                 ->orderBy('name')
                 ->get()
                 ->all();
         } else {
-            // Per altri ruoli, mostra solo super admin e developer
+            // Per altri ruoli, mostra solo admin e developer
             $this->users = User::whereHas('roles', function ($query) {
-                $query->whereIn('name', ['super_admin', 'developer']);
+                $query->whereIn('name', ['admin', 'developer']);
             })
                 ->where('id', '!=', $currentUser->id)
                 ->orderBy('name')

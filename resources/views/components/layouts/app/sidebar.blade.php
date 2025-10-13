@@ -29,7 +29,7 @@
                 $hasPM = \App\Models\User::where('type', 'project_manager')->count() > 0;
                 @endphp
 
-                @role('super_admin')
+                @role('admin')
                 <flux:navlist.item icon="users" :href="route('clients.index')"
                     :current="request()->routeIs('clients.index')" wire:navigate>Anagrafica Clienti</flux:navlist.item>
                 <hr class="my-3">
@@ -45,14 +45,14 @@
                 <flux:navlist.item icon="x-circle" :href="route('not-approved-projects.index')"
                     :current="request()->routeIs('not-approved-projects.index')" wire:navigate>Progetti Non Approvati
                 </flux:navlist.item>
-                @role('super_admin')
+                @role('admin')
                 <flux:navlist.item icon="lock-closed" :href="route('delivered-projects.index')"
                     :current="request()->routeIs('delivered-projects.index')" wire:navigate>Progetti Consegnati
                 </flux:navlist.item>
                 @endrole
                 <hr class="my-3">
                 @endif
-                @role('super_admin')
+                @role('admin')
                 <flux:navlist.item icon="document-currency-euro" :href="route('invoices.index')"
                     :current="request()->routeIs('invoices.index')" wire:navigate>Fatture
                 </flux:navlist.item>
@@ -65,7 +65,7 @@
                     :current="request()->routeIs('calendar.index')" wire:navigate>Calendario
                 </flux:navlist.item>
                 <hr class="my-3">
-                @role('super_admin')
+                @role('admin')
                 <flux:navlist.item icon="identification" :href="route('developers.index')"
                     :current="request()->routeIs('developers.index')" wire:navigate>Membri
                 </flux:navlist.item>
@@ -81,7 +81,7 @@
                     :current="request()->routeIs('tasks.index-tasks')" wire:navigate>Gestione Tasks
                 </flux:navlist.item>
                 <hr class="my-3">
-                @role('super_admin')
+                @role('admin')
                 <flux:navlist.item icon="exclamation-triangle" :href="route('logs.index')"
                     :current="request()->routeIs('logs.index')" wire:navigate>Logs
                 </flux:navlist.item>

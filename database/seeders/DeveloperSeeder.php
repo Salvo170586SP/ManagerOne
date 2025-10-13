@@ -7,7 +7,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
-class ClientSeeder extends Seeder
+class DeveloperSeeder extends Seeder
 {
     protected static ?string $password;
     /**
@@ -16,12 +16,12 @@ class ClientSeeder extends Seeder
     public function run(): void
     {
         User::create([
-            'name' => 'Client',
+            'name' => 'Dev',
             'surname' => 'Test',
-            'email' => 'client@test.com',
+            'email' => 'dev@test.com',
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
-            'type' => 'client'
-        ])->assignRole('client');
+            'type' => 'developer'
+        ])->assignRole('developer');
     }
 }
