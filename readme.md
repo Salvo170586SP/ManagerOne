@@ -62,11 +62,6 @@ Un'applicazione completa per la gestione di progetti e task costruita con Larave
 ### Dashboard
 ![Dashboard](docs/screenshots/dashboard.png)
 
-### Gestione Task
-![Tasks](docs/screenshots/tasks.png)
-
-### Kanban Board
-![Kanban](docs/screenshots/kanban.png)
 
 ---
 
@@ -74,11 +69,6 @@ Un'applicazione completa per la gestione di progetti e task costruita con Larave
 
 ### Database Supportati
 - My0SQL 
-
-### Software Opzionali
-- Redis (per cache e code)
-- Supervisor (per gestione code in produzione)
-- Nginx/Apache
 
 ---
 
