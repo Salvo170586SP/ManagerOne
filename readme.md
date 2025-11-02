@@ -241,7 +241,7 @@ Questo progetto è totalmente opensource
 
 ## 👥 Autore
 
-- **Salvatore Pitanza** - *Sviluppatore principale* - [@mariorossi](https://github.com/Salvo170586SP)
+- **Salvatore Pitanza** - *Sviluppatore principale* - [@salvatorepitanza](https://github.com/Salvo170586SP)
 
  
 ---
