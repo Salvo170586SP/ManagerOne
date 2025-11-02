@@ -8,8 +8,7 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-// logs access only for super_admin
-Route::middleware(['auth', 'role:admin|developer|project_manager|client'])->group(function () {
+Route::middleware(['auth', 'role:admin|developer|project_manager'])->group(function () {
     //clients
     Volt::route('/clients', 'clients.index-clients')->name('clients.index');
     Volt::route('/clients/create', 'clients.create-clients')->name('clients.create');
