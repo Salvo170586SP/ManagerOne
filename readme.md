@@ -223,6 +223,144 @@ Dopo l'installazione e il seeding, puoi accedere con:
 
 ---
 
+### installare con laravel sail
+
+### file .yaml
+```bash
+services:
+    laravel.test:
+        build:
+            context: './vendor/laravel/sail/runtimes/8.5'
+            dockerfile: Dockerfile
+            args:
+                WWWGROUP: '${WWWGROUP}'
+        image: 'sail-8.5/app'
+        extra_hosts:
+            - 'host.docker.internal:host-gateway'
+        ports:
+            - '8080:80'
+            - '${VITE_PORT:-5173}:${VITE_PORT:-5173}'
+        environment:
+            WWWUSER: '${WWWUSER}'
+            LARAVEL_SAIL: 1
+            XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-off}'
+            XDEBUG_CONFIG: '${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}'
+            IGNITION_LOCAL_SITES_PATH: '${PWD}'
+        volumes:
+            - '.:/var/www/html'
+        networks:
+            - sail
+        depends_on:
+            - mysql
+    mysql:
+        image: 'mysql:8.4'
+        ports:
+            - '${FORWARD_DB_PORT:-3306}:3306'
+        environment:
+            MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_ROOT_HOST: '%'
+            MYSQL_DATABASE: '${DB_DATABASE}'
+            MYSQL_USER: '${DB_USERNAME}'
+            MYSQL_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_ALLOW_EMPTY_PASSWORD: 1
+            MYSQL_EXTRA_OPTIONS: '${MYSQL_EXTRA_OPTIONS:-}'
+        volumes:
+            - 'sail-mysql:/var/lib/mysql'
+            - './vendor/laravel/sail/database/mysql/create-testing-database.sh:/docker-entrypoint-initdb.d/10-create-testing-database.sh'
+        networks:
+            - sail
+        healthcheck:
+            test:
+                - CMD
+                - mysqladmin
+                - ping
+                - '-p${DB_PASSWORD}'
+            retries: 3
+            timeout: 5s
+    phpmyadmin:
+        image: phpmyadmin:latest
+        container_name: pma
+        environment:
+            PMA_HOST: mysql
+            PMA_PORT: 3306
+            PMA_USER: sail
+            PMA_PASSWORD: password
+            PMA_ARBITRARY: 1
+        restart: always
+        ports:
+            - 8081:80      
+        depends_on:
+            - mysql
+        networks:
+            - sail
+    reverb:
+        build:
+            context: ./vendor/laravel/sail/runtimes/8.3
+            dockerfile: Dockerfile
+            args:
+                WWWUSER: '${WWWUSER}'
+                WWWGROUP: '${WWWGROUP}'
+        image: sail-8.3/app
+        ports:
+            - "8082:8080"
+        environment:
+            REVERB_HOST: '0.0.0.0'
+            REVERB_PORT: '8080'
+        volumes:
+            - '.:/var/www/html'
+        networks:
+            - sail
+        depends_on:
+            - mysql
+networks:
+    sail:
+        driver: bridge
+volumes:
+    sail-mysql:
+        driver: local
+```
+
+
+
+```bash
+ #se si utilizza docker impostare i parametri e le porte nel file yaml
+reverb:
+        build:
+            context: ./vendor/laravel/sail/runtimes/8.3
+            dockerfile: Dockerfile
+            args:
+                WWWUSER: '${WWWUSER}'
+                WWWGROUP: '${WWWGROUP}'
+        image: sail-8.3/app
+        ports:
+            - "8082:8080"
+        environment:
+            REVERB_HOST: '0.0.0.0'
+            REVERB_PORT: '8080'
+        volumes:
+            - '.:/var/www/html'
+        networks:
+            - sail
+        depends_on:
+            - mysql
+
+
+#in .env impostare le porte
+REVERB_APP_ID=******
+REVERB_APP_KEY=********
+REVERB_APP_SECRET==********
+REVERB_HOST="0.0.0.0" #impostare su un altra porta se occupata
+REVERB_PORT=8080 #impostare su un altra porta se occupata
+REVERB_SCHEME=http
+VITE_REVERB_APP_KEY="${REVERB_APP_KEY}"
+VITE_REVERB_HOST="localhost"
+VITE_REVERB_PORT=8082 #impostare su un altra porta se occupata
+VITE_REVERB_SCHEME="${REVERB_SCHEME}"
+
+#avviare reverb con il comando
+sail exec reverb php artisan reverb:start
+```
+
 ### Problemi Comuni
 
 #### 1. Errore installazione composer

@@ -6,6 +6,7 @@
 /storage/*.key
 /storage/pail
 /vendor
+/tests
 compose.yaml
 .env
 .env.backup

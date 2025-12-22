@@ -1,0 +1,143 @@
+# Esempio di docker-compose per ambiente di produzione.
+# ADATTALO alle tue esigenze: domini, secrets e immagini.
+version: "3.8"
+
+services:
+  reverse-proxy:
+    image: traefik:latest
+    command:
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--api.insecure=false"
+      - "--log.level=INFO"
+      - "--certificatesresolvers.le.acme.tlschallenge=true"
+      - "--certificatesresolvers.le.acme.email=ops@example.com"
+      - "--certificatesresolvers.le.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - traefik_letsencrypt:/letsencrypt
+    networks:
+      - backend
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 512M
+      restart_policy:
+        condition: on-failure
+
+  app:
+    image: yourorg/managerone:latest
+    env_file: .env.production
+    environment:
+      - APP_ENV=production
+    depends_on:
+      - mysql
+    volumes:
+      - ./storage:/var/www/html/storage
+      - ./vendor:/var/www/html/vendor:ro
+    networks:
+      - backend
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.managerone.rule=Host(`managerone.example.com`)"
+      - "traefik.http.routers.managerone.entrypoints=websecure"
+      - "traefik.http.routers.managerone.tls=true"
+      - "traefik.http.routers.managerone.tls.certresolver=le"
+    healthcheck:
+      test: ["CMD-SHELL","curl -f http://localhost/ || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: "0.75"
+          memory: 1024M
+      restart_policy:
+        condition: on-failure
+
+  reverb:
+    image: yourorg/managerone-reverb:latest
+    env_file: .env.production
+    environment:
+      REVERB_HOST: "0.0.0.0"
+      REVERB_PORT: "8080"
+    volumes:
+      - ./reverb-data:/var/www/html
+    networks:
+      - backend
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.reverb.rule=Host(`reverb.example.com`)"
+      - "traefik.http.routers.reverb.entrypoints=websecure"
+      - "traefik.http.routers.reverb.tls=true"
+      - "traefik.http.routers.reverb.tls.certresolver=le"
+    healthcheck:
+      test: ["CMD-SHELL","curl -f http://localhost:8080/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 256M
+      restart_policy:
+        condition: on-failure
+
+  mysql:
+    image: mysql:8.0
+    env_file: .env.production
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD","mysqladmin","ping","-p${DB_ROOT_PASSWORD}"]
+      interval: 30s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 512M
+      restart_policy:
+        condition: on-failure
+
+secrets:
+  reverb_app_key:
+    external: true
+  reverb_app_secret:
+    external: true
+  db_root_password:
+    external: true
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  mysql-data:
+  traefik_letsencrypt:
+  reverb-data:
+
+
+#Avvio in production
+docker compose -f docker-compose.prod.yml up -d
+
+
+#controllo logs
+docker compose -f docker-compose.prod.yml logs -f reverb
+
+#Se usi Sail per sviluppo, il comando per avviare Reverb rimane:
+sail exec reverb php artisan reverb:start
