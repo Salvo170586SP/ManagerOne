@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->decimal('preventive', 8, 2)->nullable();
-            $table->string('is_approved')->nullable();
+            $table->string('is_approved')->default('pending');
             $table->timestamps();
         });
     }

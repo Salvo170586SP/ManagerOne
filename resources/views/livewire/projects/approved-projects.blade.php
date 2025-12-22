@@ -94,8 +94,6 @@
                         <td class="px-6 py-4 font-bold whitespace-nowrap">
                             @if ($project->IdProject)
                             #PR-{{ $project->IdProject }}
-                            @else
-                            #PR
                             @endif
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $project->name }}</td>
@@ -137,7 +135,7 @@
                             </x-button>
                         </td>
                         @endrole
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $project->preventive }} €</td>
+                        <td class="px-6 py-4 whitespace-nowrap font-bold">€ {{ $project->preventive }}</td>
                         @role(['admin', 'project_manager'])
                         <td class="px-6 py-4 whitespace-nowrap">
                             <x-select shadow placeholder="Seleziona uno Stato"

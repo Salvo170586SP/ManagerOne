@@ -20,7 +20,6 @@ class CreateProject extends Component
     public $description;
     public $preventive;
     public $end_date;
-    public $is_available = false;
 
     protected $rules = [
         'client_id' => 'required',
@@ -51,7 +50,6 @@ class CreateProject extends Component
             'name' => $this->name,
             'description' => $this->description,
             'preventive' => $this->preventive ?? 0.00,
-            'is_available' => $this->is_available,
             'end_date' => $this->end_date,
         ]);
 
@@ -66,7 +64,7 @@ class CreateProject extends Component
         $this->reset();
 
         session()->flash('message', 'Progetto creato con successo');
-        
+
         return  $this->redirect('/projects', navigate: true);
     }
 

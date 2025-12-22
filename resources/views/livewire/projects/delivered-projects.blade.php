@@ -107,7 +107,7 @@
                         {{ $project->client->fullname() }}
                         @endrole
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap">{{ $project->preventive }} €</td>
+                    <td class="px-6 py-4 whitespace-nowrap font-bold">€ {{ $project->preventive }} </td>
                     <td class="px-6 py-6 flex justify-center items-center">
                         <div class="flex justify-center items-center font-medium">
                             @if ($project->is_approved == 'approved')

@@ -3,9 +3,11 @@
 namespace App\Livewire\Clients\Components;
 
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class TableProjectsShow extends Component
 {
+    use WithPagination;
     public $client;
 
     public function getStateName($state)

@@ -26,7 +26,7 @@
                 <div class="me-5 h-[32px] flex justify-between items-center">
                     <span class="text-sm whitespace-nowrap me-2">Cerca per stato:</span>
                     <x-select shadow="false" placeholder="Seleziona Stato" wire:model.live="searchAvailable"
-                        :options="[['label' => 'Approvato', 'value' => 1], ['label' => 'Da Approvare', 'value' => 0]]"
+                        :options="[['label' => 'In Attesa', 'value' => 'pending'],['label' => 'Approvato', 'value' => 'approved'],['label' => 'Non Approvato', 'value' => 'not_approved']]"
                         option-label="label" option-value="value" />
                 </div>
 
@@ -104,8 +104,6 @@
                         <td class="px-6 py-4 font-bold whitespace-nowrap">
                             @if ($project->IdProject)
                             #PR-{{ $project->IdProject }}
-                            @else
-                            #PR
                             @endif
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $project->name }}</td>
@@ -128,7 +126,7 @@
                             </x-button>
                         </td>
                         @endrole
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $project->preventive }} €</td>
+                        <td class="px-6 py-4 whitespace-nowrap font-bold">€ {{ $project->preventive }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="flex justify-center items-center font-medium">
                                 @if ($project->is_approved == 'approved')

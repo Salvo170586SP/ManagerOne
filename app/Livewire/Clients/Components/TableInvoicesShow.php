@@ -3,9 +3,11 @@
 namespace App\Livewire\Clients\Components;
 
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class TableInvoicesShow extends Component
 {
+    use WithPagination;
     public $client;
     
     public function render()

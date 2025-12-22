@@ -263,8 +263,8 @@ class IndexProjects extends Component
             $projects = $projects->whereDate('created_at', '=', \Carbon\Carbon::parse($this->searchDate)->toDateString());
         }
 
-        if ($this->searchAvailable !== null && $this->searchAvailable !== '') {
-            $projects = $projects->where('is_available', (int) $this->searchAvailable);
+        if ($this->searchAvailable) {
+            $projects = $projects->where('is_approved', $this->searchAvailable);
         }
 
         $projects = $projects->latest()->paginate(8);
