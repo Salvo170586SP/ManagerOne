@@ -116,14 +116,26 @@
 
 @script
 <script>
-    // Rimuovi canale esistente
-    window.Echo.leave('App.Models.User.{{ Auth::id() }}');
+    // Rimuovi canale esistente (solo se Echo è inizializzato)
+    if (window.Echo && typeof window.Echo.leave === 'function') {
+        try {
+            window.Echo.leave('App.Models.User.{{ Auth::id() }}');
+        } catch (e) {
+            console.warn('Echo.leave failed:', e);
+        }
+    }
     
-    // Crea nuovo canale
-    window.Echo.private('App.Models.User.{{ Auth::id() }}')
-        .notification((notification) => {
-            console.log('Notifica ricevuta:', notification);
-            $wire.call('refreshNotifications');
-        });
+    // Crea nuovo canale (solo se Echo è inizializzato)
+    if (window.Echo && typeof window.Echo.private === 'function') {
+        try {
+            window.Echo.private('App.Models.User.{{ Auth::id() }}')
+                .notification((notification) => {
+                    console.log('Notifica ricevuta:', notification);
+                    $wire.call('refreshNotifications');
+                });
+        } catch (e) {
+            console.warn('Echo.private failed:', e);
+        }
+    }
 </script>
 @endscript
