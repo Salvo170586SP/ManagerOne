@@ -13,7 +13,7 @@
                 <x-textarea label="Descrizione" wire:model="description" shadow />
             </div>
             <div class="flex flex-col gap-2 mt-5">
-                <x-checkbox id="is_available" label="Fattura Pagata" wire:model="is_available" />
+                <x-checkbox id="is_available" label="Saldato" wire:model="is_available" />
             </div>
 
             <div class="flex justify-end mt-5">

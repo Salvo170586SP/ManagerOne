@@ -9,7 +9,7 @@
         </div>
     </div>
 
-    <div class="bg-white rounded-lg border border-gray-300 {{-- h-[calc(100vh-13rem)]  --}}overflow-y-auto p-6">
+    <div class="bg-white rounded-lg border border-gray-300 h-[calc(100vh-15rem)] overflow-y-auto p-6">
         <div class="flex justify-between items-center">
             <div class="w-[350px] h-[32px]">
                 <x-input type="search" wire:model.live="search" placeholder="Cerca.." shadow="false" />
@@ -110,12 +110,12 @@
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="flex justify-center items-center font-medium">
                                         @if ($invoice->is_available)
-                                            <div class="bg-green-500 rounded-full text-white px-3 py-1">
-                                                Pagata
+                                            <div class="bg-green-500 rounded-full text-white font-bold px-3 py-1">
+                                                Saldato
                                             </div>
                                         @else
-                                            <div class="bg-red-600 rounded-full text-white px-3 py-1">
-                                                Non pagata
+                                            <div class="bg-red-600 rounded-full font-bold text-white px-3 py-1">
+                                                Da Saldare
                                             </div>
                                         @endif
                                     </div>

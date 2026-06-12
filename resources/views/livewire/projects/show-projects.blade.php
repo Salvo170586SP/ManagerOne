@@ -169,13 +169,12 @@
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="flex justify-center items-center">
                                             @if ($invoice->is_available)
-                                            <div class="bg-green-500 rounded-full text-white px-3">
-                                                Pagato
+                                            <div class="bg-green-500 rounded-full font-semibold text-white px-3">
+                                                Saldato
                                             </div>
                                             @else
-                                            <div class="bg-red-600 rounded-full text-white px-3">
-                                                Non pagato
-                                            </div>
+                                            <div class="bg-red-600 rounded-full font-semibold text-white px-3">
+                                                Da saldare
                                             @endif
                                         </div>
                                     </td>
