@@ -103,17 +103,6 @@
                     @endif
                 </div>
             </div>
-
-            <div class="bg-white rounded-lg border border-gray-300  p-3 w-full flex flex-col justify-center">
-                <div class="flex gap-2 items-center">
-                    <div class="font-medium text-sm">Team assegnato/i:</div>
-                    @forelse ($developer->teams as $team)
-                    {{ $team->name }}
-                    @empty
-                    <div class="text-xs text-gray-500">Nessun team assegnato</div>
-                    @endforelse
-                </div>
-            </div>
         </div>
         <div class="flex-1 min-w-0 p-6 bg-white rounded-lg border border-gray-300">
             <div class="w-full flex justify-between items-center mb-5 pb-5">
