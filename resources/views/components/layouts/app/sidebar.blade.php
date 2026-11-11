@@ -5,8 +5,8 @@
     @include('partials.head')
 </head>
 
-<body class="min-h-screen bg-gray-100">
-    <flux:sidebar sticky stashable class="bg-white border border-gray-300">
+<body class="min-h-screen bg-gray-50 text-slate-900">
+    <flux:sidebar sticky stashable class="bg-white m-2 rounded-lg text-white border border-gray-300" aria-label="Primary navigation">
         <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
         <div class="flex items-center mt-2">
             <div class="bg-gradient-to-tr from-black to-gray p-2 rounded-full shadow-lg mb-4">
@@ -22,7 +22,7 @@
 
 
         <flux:navlist variant="outline">
-            <flux:navlist.group class="grid">
+            <flux:navlist.group class="grid text-white">
                 @php
                 $clients = \App\Models\User::where('type', 'client')->get();
                 $hasDevs = \App\Models\User::where('type', 'developer')->count() > 0;
@@ -36,7 +36,7 @@
                 @endrole
 
                 @if($clients->count() > 0)
-                <flux:navlist.item icon="presentation-chart-line" :href="route('projects.index')"
+                <flux:navlist.item icon="presentation-chart-line" :href="route('projects.index')" 
                     :current="request()->routeIs('projects.index')" wire:navigate>Progetti
                 </flux:navlist.item>
                 <flux:navlist.item icon="shield-check" :href="route('approved-projects.index')"
