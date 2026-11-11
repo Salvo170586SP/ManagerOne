@@ -5,8 +5,6 @@ Un'applicazione completa per la gestione di progetti e task costruita con Larave
 ![Laravel](https://img.shields.io/badge/Laravel-11.x-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
 ![PHP](https://img.shields.io/badge/PHP-8.2+-777BB4?style=for-the-badge&logo=php&logoColor=white)
 ![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
-
 ---
 
 ## 📋 Indice
@@ -60,7 +58,7 @@ Un'applicazione completa per la gestione di progetti e task costruita con Larave
 ## 📸 Screenshot
 
 ### Dashboard
-![Dashboard](docs/screenshots/dashboard.png)
+![Dashboard](./docs/screenshots/home.png)
 
 
 ---
@@ -139,10 +137,8 @@ Dopo l'installazione e il seeding, puoi accedere con:
 | Ruolo | Email | Password |
 |-------|-------|----------|
 | **Admin** | admin@test.com | password |
-| **Project Manager** | pm@test.com | password |
-| **Developer** | dev@test.com | password |
 
-> ⚠️ **Importante:** Cambia queste password se in produzione!
+> ⚠️ **Importante:** Cambia queste credenziali se in produzione!
 
 ### Creazione di un Nuovo Cliente
 
@@ -231,18 +227,6 @@ Questo progetto è totalmente opensource
 ## 👥 Autore
 
 - **Salvatore Pitanza** - *Sviluppatore principale* - [@salvatorepitanza](https://github.com/Salvo170586SP)
-
- 
----
-
-## 🙏 Ringraziamenti
-
-- [Laravel Framework](https://laravel.com) - Il framework PHP più elegante
-- [Tailwind CSS](https://tailwindcss.com) - Framework CSS utility-first
-- [Livewire](https://laravel-livewire.com) - Componenti dinamici per Laravel
-- [Alpine.js](https://alpinejs.dev) - Framework JavaScript minimalista
-- [Chart.js](https://www.chartjs.org) - Grafici interattivi
-- Tutti i contributors open source
 
 ---
 
